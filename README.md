@@ -26,6 +26,7 @@ This Github Action helps you build kernels. It reads multiple kernel sources fro
 </div>
 
 # Github Action
+[![Build kernels](https://github.com/AndroidHQ254/Android-Kernel-Builder/actions/workflows/build.yml/badge.svg?event=workflow_dispatch)](https://github.com/AndroidHQ254/Android-Kernel-Builder/actions/workflows/build.yml)
 
 This action contains two jobs: `Set-repos` and `Build-Kernel`.
 
