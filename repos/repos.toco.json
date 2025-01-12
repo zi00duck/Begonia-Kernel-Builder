@@ -1,13 +1,14 @@
 [
   {
     "kernelSource": {
-      "name": "VantomKernel",
-      "repo": "https://github.com/PixelOS-Devices/kernel_xiaomi_sm6150",
+      "name": "Astera",
+      "repo": "https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785",
       "branch": "fourteen",
-      "device": "toco",
-      "defconfig": "toco_defconfig"
+      "device": "begonia",
+      "defconfig": "begonia_user_defconfig"
     },
-    "withKernelSU": false,
+    "withKernelSU": true,
+    "withSUSFS": false,
     "toolchains": [
       {
         "repo": "https://gitlab.com/PixelOS-Devices/playgroundtc",
@@ -24,6 +25,8 @@
         "CROSS_COMPILE": "clang-playground/bin/aarch64-linux-gnu-",
         "CROSS_COMPILE_ARM32": "clang-playground/bin/arm-linux-gnueabi-",
         "LD": "clang-playground/bin/ld.lld",
+        "LLVM": "1",
+        "LLVM_IAS": "1",
         "AR": "clang-playground/bin/llvm-ar",
         "NM": "clang-playground/bin/llvm-nm",
         "OBJCOPY": "clang-playground/bin/llvm-objcopy",
@@ -39,8 +42,8 @@
     "AnyKernel3": {
       "use": true,
       "release": true,
-      "repo": "https://github.com/AndroidHQ254/AnyKernel3/",
-      "branch": "toco"
+      "repo": "https://github.com/Neebe3289/AnyKernel3/",
+      "branch": "begonia"
     }
   }
 ]
