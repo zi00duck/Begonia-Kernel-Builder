@@ -1,7 +1,9 @@
 #### ⚠️ [Original Repo](https://github.com/PhamtomK12/Android-Kernel-Builder)
 #### ⚠️ [Advanced Fork](https://github.com/AndroidHQ254/Android-Kernel-Builder)
 # Begonia-Kernel-Builder
-#### These builds are created for the Xiaomi Redmi Note 8 Pro(begonia) device. It is built with [KernelSU Next](https://github.com/rifsxd/KernelSU-Next) and [SUSFS](https://gitlab.com/simonpunk/susfs4ksu)...
+
+These builds are created for the Xiaomi Redmi Note 8 Pro(begonia) device. It is built with [KernelSU Next](https://github.com/rifsxd/KernelSU-Next) and [SUSFS](https://gitlab.com/simonpunk/susfs4ksu)
+
 [![Build kernels](https://github.com/cvnertnc/Begonia-Kernel-Builder/actions/workflows/build.yml/badge.svg?event=workflow_dispatch)](https://github.com/cvnertnc/Begonia-Kernel-Builder/actions/workflows/build.yml)
 
 Kernel By [MrErenK and Xiaomi Begonia Dev](https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785)
