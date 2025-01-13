@@ -3,7 +3,7 @@
     "kernelSource": {
       "name": "Astera",
       "repo": "https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785",
-      "branch": "fourteen",
+      "branch": "fifteen",
       "device": "begonia",
       "defconfig": "begonia_user_defconfig"
     },

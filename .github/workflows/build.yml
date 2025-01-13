@@ -290,7 +290,7 @@ jobs:
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
         with:
-          name: Image.gz-${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}-${{ env.builddate }}_KernelSU-Next_${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}_SUSFS
+          name: Image.gz-${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}-${{ env.builddate }}_KernelSU-Next_${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}
           path: ${{ env.OUT_DIR }}/arch/${{ env.arch }}/boot/Image.gz
           if-no-files-found: ignore
           retention-days: 90
@@ -300,7 +300,7 @@ jobs:
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
         with:
-          name: dtb-${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}-${{ env.builddate }}_KernelSU-Next_${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}_SUSFS
+          name: dtb-${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}-${{ env.builddate }}_KernelSU-Next_${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}
           path: ${{ env.OUT_DIR }}/arch/${{ env.arch }}/boot/dtb
           if-no-files-found: ignore
           retention-days: 90
@@ -310,7 +310,7 @@ jobs:
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
         with:
-          name: dtbo.img-${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}-${{ env.builddate }}_KernelSU-Next_${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}_SUSFS
+          name: dtbo.img-${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}-${{ env.builddate }}_KernelSU-Next_${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}
           path: ${{ env.OUT_DIR }}/arch/${{ env.arch }}/boot/dtbo.img
           if-no-files-found: ignore
           retention-days: 90
@@ -319,7 +319,7 @@ jobs:
         if: ${{ env.useAnykernel == 'true' }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
-          anykernel: "${{ env.WORKSPACE }}/${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}_${{ env.builddate }}_KernelSU-Next_${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}_SUSFS"
+          anykernel: "${{ env.WORKSPACE }}/${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}_${{ env.builddate }}_KernelSU-Next_${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}"
         run: |
           ls -al
 
@@ -340,7 +340,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: ${{ env.useAnykernel == 'true' }}
         with:
-          name: "${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}_${{ env.builddate }}_KernelSU-Next_${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}_SUSFS"
+          name: "${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}_${{ env.builddate }}_KernelSU-Next_${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}"
           path: AnyKernel3/*
 
       - name: 🧧 Create GitHub Release => (${{ env.builddate }})
@@ -348,13 +348,13 @@ jobs:
         uses: softprops/action-gh-release@v2.1.0
         if: ${{ env.useAnykernel == 'true' && env.release == 'true' }}
         with:
-          tag_name: v${{ env.builddate }}.${{ github.run_number }}_KernelSU-Next_${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}_SUSFS
-          name: v${{ env.builddate }}.${{ github.run_number }} (KernelSU Next ${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }} + SUSFS)
+          tag_name: v${{ env.builddate }}.${{ github.run_number }}_KernelSU-Next_${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}
+          name: v${{ env.builddate }}.${{ github.run_number }} (KernelSU Next ${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }})
           make_latest: true
           prerelease: false
           draft: false
           generate_release_notes: false
-          body: "Astera Kernel by [MrErenK](https://github.com/MrErenK) and Build with Github by [cvnertnc](https://github.com/cvnertnc)\nAstera Linux kernel patched with [KernelSU Next](https://github.com/rifsxd/KernelSU-Next) ${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }} + [SUSFS patches](https://gitlab.com/simonpunk/susfs4ksu) for Xiaomi Redmi Note 8 Pro (begonia).\n\n**Installation:**\n1. Flash the kernel from this release.\n2. Download and install the KernelSU Next manager APK from here: https://github.com/rifsxd/KernelSU-Next/releases/${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}"
-          files: "${{ env.WORKSPACE }}/${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}_${{ env.builddate }}_KernelSU-Next_${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}_SUSFS.zip"
+          body: "Astera Kernel by [MrErenK](https://github.com/MrErenK) and Build with Github by [cvnertnc](https://github.com/cvnertnc)\nAstera Linux kernel patched with [KernelSU Next](https://github.com/rifsxd/KernelSU-Next) ${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }} for Xiaomi Redmi Note 8 Pro (begonia).\n\n**Installation:**\n1. Flash the kernel from this release.\n2. Download and install the KernelSU Next manager APK from here: https://github.com/rifsxd/KernelSU-Next/releases/${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}"
+          files: "${{ env.WORKSPACE }}/${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}_${{ env.builddate }}_KernelSU-Next_${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}.zip"
           fail_on_unmatched_files: true
           preserve_order: true
