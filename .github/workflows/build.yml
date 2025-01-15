@@ -304,7 +304,7 @@ jobs:
           prerelease: false
           draft: false
           generate_release_notes: false
-          body: "Astera Kernel by [MrErenK](https://github.com/MrErenK) and Build with Github by [cvnertnc](https://github.com/cvnertnc)\nAstera Linux kernel patched with [KernelSU Next](https://github.com/rifsxd/KernelSU-Next) ${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }} for Xiaomi Redmi Note 8 Pro (begonia).\n\n**Installation:**\n1. Flash the kernel from this release.\n2. Download and install the KernelSU Next manager APK from here: https://github.com/rifsxd/KernelSU-Next/releases/${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}"
-          files: "${{ env.WORKSPACE }}/${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}_${{ env.builddate }}_KernelSU-Next_${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}.zip"
+          body: "Astera Kernel by [MrErenK](https://github.com/MrErenK) and Build with Github by [cvnertnc](https://github.com/cvnertnc)\nAstera Linux kernel patched with [KernelSU Next](https://github.com/rifsxd/KernelSU-Next) ${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }} + [SUSFS patches](https://gitlab.com/simonpunk/susfs4ksu) for Xiaomi Redmi Note 8 Pro (begonia).\n\n**Installation:**\n1. Flash the kernel from this release.\n2. Download and install the KernelSU Next manager APK from here: https://github.com/rifsxd/KernelSU-Next/releases/${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}"
+          files: "${{ env.WORKSPACE }}/${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}_${{ env.builddate }}_KernelSU-Next_${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}_SUSFS.zip"
           fail_on_unmatched_files: true
           preserve_order: true
