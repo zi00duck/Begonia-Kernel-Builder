@@ -8,6 +8,7 @@
       "defconfig": "begonia_user_defconfig"
     },
     "withKernelSU": true,
+    "withSUSFS": true,
     "toolchains": [
       {
         "repo": "https://gitlab.com/PixelOS-Devices/playgroundtc",
