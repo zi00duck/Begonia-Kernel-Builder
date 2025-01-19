@@ -226,6 +226,8 @@ jobs:
           echo -e 'CONFIG_KSU=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
 
           cat arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          git clone --recursive -j $(nproc) --branch $SUSFS_BRANCH https://github.com/cvnertnc/susfs4ksu-begonia KSU
+          patch -p1 --verbose < KSU/kernel_patches/KernelSU/0001-fs-implement-KernelSU.patch
 
       - name: "🥷 Add SUSFS patches"
         id: add-susfs-patches
@@ -251,7 +253,7 @@ jobs:
           cp -v SUSFS/kernel_patches/include/linux/* include/linux/
 
           patch -d KernelSU-Next -p1 --verbose < SUSFS/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch
-          patch -p1 --verbose < SUSFS/kernel_patches/50_add_susfs_in_kernel-4.14.patch
+          patch -p1 --verbose < SUSFS/kernel_patches/0002-fs-Implement-susfs-v1.5.3.patch
 
           echo -e "CONFIG_KSU_SUSFS=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
           echo -e "CONFIG_KSU_SUSFS_HAS_MAGIC_MOUNT=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
