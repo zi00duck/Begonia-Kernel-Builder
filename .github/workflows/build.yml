@@ -211,7 +211,7 @@ jobs:
             rm -rf "./drivers/kernelsu"
           fi
 
-          curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/next/kernel/setup.sh" | bash -s main
+          curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
 
           git clone --recursive -j $(nproc) --branch next https://github.com/rifsxd/KernelSU-Next KernelSU
 
