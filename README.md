@@ -15,6 +15,8 @@ These repositories are not my own repositories but I would like to thank all the
 Also see here [`CONFIG.md`](./CONFIG.md).
 
 ## Thanks
+  
+> Many Thanks [Sidex15](https://github.com/sidex15) for all the [Bug Fixes](https://github.com/cvnertnc/Begonia-Kernel-Builder/pull/10)
 
 [MrErenK](https://github.com/MrErenK)  
 [rifsxd](https://github.com/rifsxd)  
