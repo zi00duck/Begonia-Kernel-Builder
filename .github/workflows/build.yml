@@ -260,7 +260,7 @@ jobs:
           cp -v SUSFS/kernel_patches/fs/* fs/
           cp -v SUSFS/kernel_patches/include/linux/* include/linux/
 
-          patch -d KernelSU -p1 --verbose < SUSFS/kernel_patches/10_enable_susfs_for_ksu.patch
+          patch -d KernelSU -p1 --verbose < SUSFS/kernel_patches/0001-KernelSU-Next-Implement-susfs-v1.5.3-plus-non-gki.patch
           patch -p1 --verbose < SUSFS/kernel_patches/0002-fs-Implement-susfs-v1.5.3.patch
 
           echo -e "CONFIG_KSU_SUSFS=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
