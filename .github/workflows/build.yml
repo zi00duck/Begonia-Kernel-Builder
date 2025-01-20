@@ -213,6 +213,8 @@ jobs:
 
           curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
 
+          rm -rf KernelSU
+
           git clone --recursive -j $(nproc) --branch next https://github.com/rifsxd/KernelSU-Next KernelSU
 
           KERNELSU_NEXT_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
