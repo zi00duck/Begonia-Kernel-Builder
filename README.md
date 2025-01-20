@@ -10,6 +10,10 @@ Kernel By [MrErenK and Xiaomi Begonia Dev](https://github.com/xiaomi-begonia-dev
 
 Get the [latest Build release](https://github.com/cvnertnc/Begonia-Kernel-Builder/releases)
 
+Download and install [KernelSU-Next Manager](https://github.com/rifsxd/KernelSU-Next/releases/latest)
+
+Download and install [SUSFS Module](https://github.com/sidex15/susfs4ksu-module/releases/latest)
+
 These repositories are not my own repositories but I would like to thank all the Credits. Please use the original repo or use a more advanced fork. If you wish, you can also use these repositories.
 
 Also see here [`CONFIG.md`](./CONFIG.md).
