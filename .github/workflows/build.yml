@@ -257,9 +257,6 @@ jobs:
           echo -e "SUSFS_REF=$SUSFS_REF" >> $GITHUB_OUTPUT
           echo -e "SUSFS_BRANCH=$SUSFS_BRANCH" >> $GITHUB_OUTPUT
 
-          cp -v SUSFS/kernel_patches/fs/* fs/
-          cp -v SUSFS/kernel_patches/include/linux/* include/linux/
-
           patch -d KernelSU -p1 < SUSFS/kernel_patches/0001-KernelSU-Next-Implement-susfs-v1.5.3-plus-non-gki.patch
           patch -p1 < SUSFS/kernel_patches/0002-fs-Implement-susfs-v1.5.3.patch
 
