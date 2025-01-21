@@ -1,11 +1,12 @@
 #### ⚠️ [Original Repo](https://github.com/PhamtomK12/Android-Kernel-Builder)
 # Begonia-Kernel-Builder
+> Automatically follow daily KernelSU-Next updates and build the android kernel for Xiaomi Redmi Note 8 Pro(begonia)
 
 These builds are created for the Xiaomi Redmi Note 8 Pro(begonia) device. It is built with [KernelSU Next](https://github.com/rifsxd/KernelSU-Next) and [SUSFS](https://gitlab.com/simonpunk/susfs4ksu)
 
 If you are using a kernel with magisk installed, uninstall magisk before installing the Astera kernel. After removing magisk, you can install the Astera kernel.
 
-[![Build kernels](https://github.com/cvnertnc/Begonia-Kernel-Builder/actions/workflows/build.yml/badge.svg?event=workflow_dispatch)](https://github.com/cvnertnc/Begonia-Kernel-Builder/actions/workflows/ci.yml)
+[![Build kernels](https://github.com/cvnertnc/Begonia-Kernel-Builder/actions/workflows/ci.yml/badge.svg?event=workflow_dispatch)](https://github.com/cvnertnc/Begonia-Kernel-Builder/actions/workflows/ci.yml)
 
 Kernel By [MrErenK and Xiaomi Begonia Dev](https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785)
 
