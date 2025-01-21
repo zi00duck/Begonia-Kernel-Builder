@@ -1,46 +1,97 @@
-name: CI
+name: CI for Updates
 
 on:
-  workflow_dispatch:
   schedule:
-    - cron: "0 16 * * *" # Her gün saat 16:00'da çalışır (UTC)
+    - cron: '0 16 * * *'
+  workflow_dispatch:
 
 jobs:
-  check:
-    permissions: write-all
+  check-updates:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          repository: rifsxd/kernelsu-next # Takip edilecek repo
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0
 
-      - name: Should build?
-        id: should_build
-        shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Fetch the latest commit from rifsxd/KernelSU-Next
+        id: fetch_latest_commit
         run: |
-          if ! git checkout origin/main build.md; then
-            echo "First time building!"
-            echo "SHOULD_BUILD=1" >> $GITHUB_OUTPUT
+          curl -s https://api.github.com/repos/rifsxd/KernelSU-Next/commits/next > latest_commit.json
+          latest_commit=$(jq -r '.sha' latest_commit.json)
+          latest_commit_date=$(jq -r '.commit.author.date' latest_commit.json)
+          echo "latest_commit=$latest_commit" >> $GITHUB_ENV
+          echo "latest_commit_date=$latest_commit_date" >> $GITHUB_ENV
+
+      - name: Check if update branch exists
+        id: check_branch
+        run: |
+          git fetch
+          if git branch -r | grep -q "origin/update"; then
+            echo "Update branch exists"
+            echo "branch_exists=true" >> $GITHUB_ENV
           else
-            UPDATE_CFG=$(./build.sh config.toml --config-update)
-            if [ "$UPDATE_CFG" ]; then
-              echo "SHOULD_BUILD=1" >> $GITHUB_OUTPUT
-            else
-              echo "SHOULD_BUILD=0" >> $GITHUB_OUTPUT
-            fi
+            echo "Update branch does not exist"
+            echo "branch_exists=false" >> $GITHUB_ENV
           fi
 
+      - name: Create update branch if it does not exist
+        if: env.branch_exists == 'false'
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git checkout --orphan update
+          git rm -rf .
+          git commit --allow-empty -m "Initial commit for update branch"
+          git push origin update
+
+      - name: Checkout update branch
+        run: |
+          git checkout update
+          git pull origin update
+
+      - name: Compare commits and decide
+        id: compare_commits
+        run: |
+          if [ -f build.md ]; then
+            last_commit=$(grep 'Commit ID:' build.md | awk '{print $3}')
+          else
+            last_commit=""
+          fi
+
+          if [ "$last_commit" != "$latest_commit" ]; then
+            echo "New update available"
+            echo "update=true" >> $GITHUB_ENV
+          else
+            echo "No update"
+            echo "update=false" >> $GITHUB_ENV
+          fi
+
+      - name: Update build.md and trigger build
+        if: env.update == 'true' || env.branch_exists == 'false'
+        run: |
+          # Remove all files except build.md
+          git rm -rf --ignore-unmatch .
+          echo "Commit ID: $latest_commit" > build.md
+          echo "Commit Date: $latest_commit_date" >> build.md
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add build.md
+          git commit -m "Update build.md with latest commit info"
+          git push origin update
+
+      - name: Clear older runs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh run list -L400 --json databaseId -q '.[].databaseId' | tail -n+5 | xargs -IID gh api "repos/$GITHUB_REPOSITORY/actions/runs/ID" -X DELETE || :
+
     outputs:
-      SHOULD_BUILD: ${{ steps.should_build.outputs.SHOULD_BUILD }}
+      update: ${{ env.update }}
+      branch_exists: ${{ env.branch_exists }}
 
   build:
     permissions: write-all
-    needs: check
+    needs: check-updates
     uses: ./.github/workflows/build.yml
-    if: ${{ needs.check.outputs.SHOULD_BUILD == 1 }}
+    if: ${{ needs.check-updates.outputs.update == 'true' || needs.check-updates.outputs.branch_exists == 'false' }}
     secrets: inherit
