@@ -234,7 +234,7 @@ jobs:
 
           cat arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
 
-          SUSFS_BRANCH=kernel-4.14
+          SUSFS_BRANCH=next-4.14
 
           git clone --recursive -j $(nproc) --branch $SUSFS_BRANCH https://github.com/cvnertnc/susfs4ksu-begonia SUSFS
 
