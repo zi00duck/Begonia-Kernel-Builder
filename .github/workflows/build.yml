@@ -46,14 +46,10 @@ jobs:
         repos: ${{ fromJSON(needs.Set-repos.outputs.repos) }}
     env:
       WORKSPACE: ${{ github.workspace }}
-
       builddate: "${{ needs.Set-repos.outputs.builddate }}"
 
-      KERNEL_NAME: ${{ matrix.repos.kernelSource.name }}
-      KERNEL_REPO: ${{ matrix.repos.kernelSource.repo }}
-      KERNEL_BRANCH: ${{ matrix.repos.kernelSource.branch }}
+      KNAME: ${{ matrix.repos.kernelName }}
       KERNEL_DEVICE: ${{ matrix.repos.kernelSource.device }}
-
       DEFCONFIG_NAME: ${{ matrix.repos.kernelSource.defconfig }}
 
       withKernelSU: ${{ matrix.repos.withKernelSU }}
@@ -61,7 +57,24 @@ jobs:
       ccache: ${{ matrix.repos.ccache }}
       useAnykernel: ${{ matrix.repos.AnyKernel3.use }}
       release: ${{ matrix.repos.AnyKernel3.release }}
+
     steps:
+      - name: "🟣 Set Kernel Variables"
+        run: |
+          if [[ "$KNAME" == "Power" ]]; then
+            echo "KERNEL_NAME=Power" >> $GITHUB_ENV
+            echo "KERNEL_REPO=${{ matrix.repos.kernelSource.power.repo }}" >> $GITHUB_ENV
+            echo "KERNEL_BRANCH=${{ matrix.repos.kernelSource.power.branch }}" >> $GITHUB_ENV
+          elif [[ "$KNAME" == "Nova" ]]; then
+            echo "KERNEL_NAME=Nova" >> $GITHUB_ENV
+            echo "KERNEL_REPO=${{ matrix.repos.kernelSource.nova.repo }}" >> $GITHUB_ENV
+            echo "KERNEL_BRANCH=${{ matrix.repos.kernelSource.nova.branch }}" >> $GITHUB_ENV
+          else
+            echo "KERNEL_NAME=Astera" >> $GITHUB_ENV
+            echo "KERNEL_REPO=${{ matrix.repos.kernelSource.astera.repo }}" >> $GITHUB_ENV
+            echo "KERNEL_BRANCH=${{ matrix.repos.kernelSource.astera.branch }}" >> $GITHUB_ENV
+          fi
+
       - name: "⭐ Install prerequisites"
         run: |
           sudo apt-get update
@@ -242,7 +255,13 @@ jobs:
           echo -e "SUSFS_REF=$SUSFS_REF" >> $GITHUB_OUTPUT
           echo -e "SUSFS_BRANCH=$SUSFS_BRANCH" >> $GITHUB_OUTPUT
 
-          patch -p1 < SUSFS/kernel_patches/0001-fs-implement-KernelSU.patch
+          if [[ "$KNAME" == "Power" ]]; then
+            patch -p1 < SUSFS/kernel_patches/kernels/power/0001-fs-implement-KernelSU.patch
+          elif [[ "$KNAME" == "Nova" ]]; then
+            patch -p1 < SUSFS/kernel_patches/kernels/nova/0001-fs-implement-KernelSU.patch
+          else
+            patch -p1 < SUSFS/kernel_patches/0001-fs-implement-KernelSU.patch
+          fi
 
       - name: "🥷 Add SUSFS patches"
         id: add-susfs-patches
@@ -268,7 +287,14 @@ jobs:
           cp -v SUSFS/kernel_patches/include/linux/* include/linux/
 
           patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch
-          patch -p1 < SUSFS/kernel_patches/50_add_susfs_in_kernel-4.14.patch
+
+          if [[ "$KNAME" == "Power" ]]; then
+            patch -p1 < SUSFS/kernel_patches/kernels/power/50_add_susfs_in_kernel-4.14.patch
+          elif [[ "$KNAME" == "Nova" ]]; then
+            patch -p1 < SUSFS/kernel_patches/kernels/nova/50_add_susfs_in_kernel-4.14.patch
+          else
+            patch -p1 < SUSFS/kernel_patches/50_add_susfs_in_kernel-4.14.patch
+          fi
 
           echo -e "#Susfs4ksu" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
           echo -e "CONFIG_KSU_SUSFS=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
