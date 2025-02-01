@@ -61,11 +61,7 @@ jobs:
     steps:
       - name: "🟣 Set Kernel Variables"
         run: |
-          if [[ "$KNAME" == "Power" ]]; then
-            echo "KERNEL_NAME=Power" >> $GITHUB_ENV
-            echo "KERNEL_REPO=${{ matrix.repos.kernelSource.power.repo }}" >> $GITHUB_ENV
-            echo "KERNEL_BRANCH=${{ matrix.repos.kernelSource.power.branch }}" >> $GITHUB_ENV
-          elif [[ "$KNAME" == "PowerFork" ]]; then
+          if [[ "$KNAME" == "PowerFork" ]]; then
             echo "KERNEL_NAME=PowerFork" >> $GITHUB_ENV
             echo "KERNEL_REPO=${{ matrix.repos.kernelSource.powerfork.repo }}" >> $GITHUB_ENV
             echo "KERNEL_BRANCH=${{ matrix.repos.kernelSource.powerfork.branch }}" >> $GITHUB_ENV
@@ -243,6 +239,9 @@ jobs:
           if [ -d "./drivers/kernelsu" ]; then
             rm -rf "./drivers/kernelsu"
           fi
+          if [ -d "./SUSFS" ]; then
+            rm -rf "./SUSFS"
+          fi
 
           curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
 
@@ -270,9 +269,7 @@ jobs:
           echo -e "SUSFS_REF=$SUSFS_REF" >> $GITHUB_OUTPUT
           echo -e "SUSFS_BRANCH=$SUSFS_BRANCH" >> $GITHUB_OUTPUT
 
-          if [[ "$KNAME" == "Power" ]]; then
-            patch -p1 < SUSFS/kernel_patches/kernels/power/0001-fs-implement-KernelSU.patch
-          elif [[ "$KNAME" == "Nova" ]]; then
+          if [[ "$KNAME" == "Nova" ]]; then
             patch -p1 < SUSFS/kernel_patches/kernels/nova/0001-fs-implement-KernelSU.patch
           elif [[ "$KNAME" != "PowerFork" ]]; then
             patch -p1 < SUSFS/kernel_patches/0001-fs-implement-KernelSU.patch
@@ -303,9 +300,7 @@ jobs:
 
           patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch
 
-          if [[ "$KNAME" == "Power" ]]; then
-            patch -p1 < SUSFS/kernel_patches/kernels/power/50_add_susfs_in_kernel-4.14.patch
-          elif [[ "$KNAME" == "Nova" ]]; then
+          if [[ "$KNAME" == "Nova" ]]; then
             patch -p1 < SUSFS/kernel_patches/kernels/nova/50_add_susfs_in_kernel-4.14.patch
           else
             patch -p1 < SUSFS/kernel_patches/50_add_susfs_in_kernel-4.14.patch

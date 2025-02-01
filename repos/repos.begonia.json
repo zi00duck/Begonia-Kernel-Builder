@@ -9,11 +9,6 @@
         "repo": "https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785",
         "branch": "fifteen"
       },
-      "power": {
-        "name": "Power",
-        "repo": "https://github.com/Saikrishna1504/kernel_xiaomi_mt6785",
-        "branch": "vic"
-      },
       "powerfork": {
         "name": "PowerFork",
         "repo": "https://github.com/wodanesdag/android_kernel_xiaomi_mt6785",
