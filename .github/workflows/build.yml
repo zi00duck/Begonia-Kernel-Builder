@@ -233,6 +233,18 @@ jobs:
       - name: "🌀 Power Kernel"
         if: ${{ env.KNAME == 'Power' }}
         run: |
+          if [ -d "./SUSFS" ]; then
+            rm -rf "./SUSFS"
+          fi
+
+          SUSFS_BRANCH=next-4.14
+
+          git clone --recursive -j $(nproc) --branch $SUSFS_BRANCH https://github.com/cvnertnc/susfs4ksu-begonia SUSFS
+
+          SUSFS_REF=$(git -C SUSFS rev-parse --short HEAD)
+          echo -e "SUSFS_REF=$SUSFS_REF" >> $GITHUB_OUTPUT
+          echo -e "SUSFS_BRANCH=$SUSFS_BRANCH" >> $GITHUB_OUTPUT
+
           patch -p1 < SUSFS/kernel_patches/kernels/power/0001-fs-implement-namespace.patch
 
       - name: "😋 Integrate KernelSU Next"
