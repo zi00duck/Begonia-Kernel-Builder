@@ -230,6 +230,11 @@ jobs:
           echo "ARCH=$ARCH" >> $GITHUB_OUTPUT
           echo "args=$args" >> $GITHUB_OUTPUT
 
+      - name: "🌀 Power Kernel"
+        if: ${{ env.KNAME == 'Power' }}
+        run: |
+          patch -p1 < SUSFS/kernel_patches/kernels/power/0001-fs-implement-namespace.patch
+
       - name: "😋 Integrate KernelSU Next"
         id: integrate-kernelsu-next
         working-directory: ${{ env.KERNEL_NAME }}
@@ -271,7 +276,7 @@ jobs:
           echo -e "SUSFS_BRANCH=$SUSFS_BRANCH" >> $GITHUB_OUTPUT
 
           if [[ "$KNAME" == "Power" ]]; then
-            patch -p1 < SUSFS/kernel_patches/kernels/power/0001-fs-implement-KernelSU.patch
+            patch -p1 < SUSFS/kernel_patches/kernels/power/0002-fs-implement-KernelSU.patch
           elif [[ "$KNAME" == "Nova" ]]; then
             patch -p1 < SUSFS/kernel_patches/kernels/nova/0001-fs-implement-KernelSU.patch
           elif [[ "$KNAME" != "PowerFork" ]]; then
