@@ -27,8 +27,11 @@ Also see here [`CONFIG.md`](./CONFIG.md).
 | Kernels | Build | KernelSU-Next | SUSFS |
 |---------|-------|--------------|-------|
 | [Astera](https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ |
-| [Power](https://github.com/Saikrishna1504/kernel_xiaomi_mt6785) | ✅ | ❌ | ❌ |
+| [Power](https://github.com/Saikrishna1504/kernel_xiaomi_mt6785) | ❌ | ❌ | ❌ |
+| [PowerFork](https://github.com/wodanesdag/android_kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ |
 | [Nova](https://github.com/Nova-Kernels/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ |
+
+If you would like to help build the Power Kernel, fork the repo and make your changes to my dev branch.
 
 ## Thanks
   

@@ -65,6 +65,10 @@ jobs:
             echo "KERNEL_NAME=Power" >> $GITHUB_ENV
             echo "KERNEL_REPO=${{ matrix.repos.kernelSource.power.repo }}" >> $GITHUB_ENV
             echo "KERNEL_BRANCH=${{ matrix.repos.kernelSource.power.branch }}" >> $GITHUB_ENV
+          elif [[ "$KNAME" == "PowerFork" ]]; then
+            echo "KERNEL_NAME=PowerFork" >> $GITHUB_ENV
+            echo "KERNEL_REPO=${{ matrix.repos.kernelSource.powerfork.repo }}" >> $GITHUB_ENV
+            echo "KERNEL_BRANCH=${{ matrix.repos.kernelSource.powerfork.branch }}" >> $GITHUB_ENV
           elif [[ "$KNAME" == "Nova" ]]; then
             echo "KERNEL_NAME=Nova" >> $GITHUB_ENV
             echo "KERNEL_REPO=${{ matrix.repos.kernelSource.nova.repo }}" >> $GITHUB_ENV
@@ -73,6 +77,20 @@ jobs:
             echo "KERNEL_NAME=Astera" >> $GITHUB_ENV
             echo "KERNEL_REPO=${{ matrix.repos.kernelSource.astera.repo }}" >> $GITHUB_ENV
             echo "KERNEL_BRANCH=${{ matrix.repos.kernelSource.astera.branch }}" >> $GITHUB_ENV
+          fi
+      
+          if [[ "$KNAME" == "PowerFork" ]]; then
+            echo "toolchains=$(echo '${{ toJSON(matrix.repos.toolchains.powerfork) }}' | jq -c)" >> $GITHUB_ENV
+          else
+            echo "toolchains=$(echo '${{ toJSON(matrix.repos.toolchains.default) }}' | jq -c)" >> $GITHUB_ENV
+          fi
+      
+          if [[ "$KNAME" == "PowerFork" ]]; then
+            echo "params=$(echo '${{ toJSON(matrix.repos.params.powerfork) }}' | jq -c)" >> $GITHUB_ENV
+            echo "THREAD=$(nproc --all)" >> $GITHUB_ENV
+          else
+            echo "params=$(echo '${{ toJSON(matrix.repos.params.default) }}' | jq -c)" >> $GITHUB_ENV
+            echo "THREAD=$(nproc --all)" >> $GITHUB_ENV
           fi
 
       - name: "⭐ Install prerequisites"
@@ -129,8 +147,6 @@ jobs:
           echo "🤔 Clone kernel source => ($KERNEL_REPO)"
 
       - name: "💫 Get toolchains"
-        env:
-          toolchains: "${{ toJSON(matrix.repos.toolchains) }}"
         run: |
           toolchains_num="$(echo $toolchains | jq 'length')"
           echo "🤔 There is $toolchains_num defined toolchains."
@@ -176,9 +192,6 @@ jobs:
 
       - name: "😎 Set args"
         id: generate-args
-        env:
-          params: "${{ toJSON(matrix.repos.params) }}"
-          THREAD: $(nproc --all)
         run: |
           echo "🤔 PATH Variable: $PATH"
 
@@ -243,7 +256,9 @@ jobs:
 
           echo -e "KERNELSU_NEXT_VERSION=$KERNELSU_NEXT_VERSION" >> $GITHUB_OUTPUT
 
-          echo -e 'CONFIG_KSU=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          if [[ "$KNAME" != "PowerFork" ]]; then
+            echo -e 'CONFIG_KSU=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          fi
 
           cat arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
 
@@ -259,7 +274,7 @@ jobs:
             patch -p1 < SUSFS/kernel_patches/kernels/power/0001-fs-implement-KernelSU.patch
           elif [[ "$KNAME" == "Nova" ]]; then
             patch -p1 < SUSFS/kernel_patches/kernels/nova/0001-fs-implement-KernelSU.patch
-          else
+          elif [[ "$KNAME" != "PowerFork" ]]; then
             patch -p1 < SUSFS/kernel_patches/0001-fs-implement-KernelSU.patch
           fi
 
@@ -268,7 +283,7 @@ jobs:
         working-directory: ${{ env.KERNEL_NAME }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
-        if: ${{ env.withKernelSU == 'true' && env.withSUSFS == 'true' }}
+        if: ${{ env.withKernelSU == 'true' && env.withSUSFS == 'true' && env.KNAME != 'PowerFork' }}
         run: |
 
           if [ -d "./SUSFS" ]; then
