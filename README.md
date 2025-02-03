@@ -32,7 +32,7 @@ Also see here [`CONFIG.md`](./CONFIG.md).
 
 ## Thanks
   
-> Many Thanks [Sidex15](https://github.com/sidex15) for all the [Bug Fixes]([https://github.com/cvnertnc/Begonia-Kernel-Builder/pull/10](https://github.com/cvnertnc/Begonia-Kernel-Builder/commit/a6aad58fa292b0fab54199ab4f982c286b35cb6d))
+> Many Thanks [Sidex15](https://github.com/sidex15) for all the [Bug Fixes](https://github.com/cvnertnc/Begonia-Kernel-Builder/commit/a6aad58fa292b0fab54199ab4f982c286b35cb6d)
 
 [MrErenK](https://github.com/MrErenK)  
 [rifsxd](https://github.com/rifsxd)  
