@@ -36,6 +36,9 @@ Also see here [`CONFIG.md`](./CONFIG.md).
 
 [MrErenK](https://github.com/MrErenK)  
 [rifsxd](https://github.com/rifsxd)  
+[Nova-Kernels](https://github.com/Nova-Kernels)  
+[Saikrishna1504](https://github.com/Saikrishna1504)  
+[wodanesdag](https://github.com/wodanesdag)  
 [PhamtomK12](https://github.com/PhamtomK12)  
 [AndroidHQ254](https://github.com/AndroidHQ254)  
 [AKR Android Developer Community](https://www.akr-developers.com/)  
