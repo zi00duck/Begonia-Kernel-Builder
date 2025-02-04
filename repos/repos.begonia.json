@@ -20,7 +20,8 @@
         "branch": "fifteen"
       }
     },
-    "withKernelSU": true,
+    "withKernelSUNext": true,
+    "withKernelSU": false,
     "withSUSFS": true,
     "toolchains": {
       "default": [

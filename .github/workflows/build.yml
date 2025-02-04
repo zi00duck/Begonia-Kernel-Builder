@@ -226,12 +226,61 @@ jobs:
           echo "ARCH=$ARCH" >> $GITHUB_OUTPUT
           echo "args=$args" >> $GITHUB_OUTPUT
 
-      - name: "😋 Integrate KernelSU Next"
+      - name: "😋 Integrate KernelSU"
         id: integrate-kernelsu-next
         working-directory: ${{ env.KERNEL_NAME }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
         if: ${{ env.withKernelSU == 'true' }}
+        run: |
+          if [ -d "./KernelSU" ]; then
+            rm -rf "./KernelSU"
+          fi
+          if [ -d "./drivers/kernelsu" ]; then
+            rm -rf "./drivers/kernelsu"
+          fi
+          if [ -d "./SUSFS" ]; then
+            rm -rf "./SUSFS"
+          fi
+
+          curl -LSs "https://raw.githubusercontent.com/rsuntk/KernelSU/main/kernel/setup.sh" | bash -s main
+
+          rm -rf KernelSU
+
+          git clone --recursive -j $(nproc) --branch susfs-v1.5.5 https://github.com/rsuntk/KernelSU KernelSU
+
+          KERNELSU_NEXT_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
+
+          echo -e "\n💡 KernelSU Next version: $KERNELSU_NEXT_VERSION\n"
+
+          echo -e "KERNELSU_NEXT_VERSION=$KERNELSU_NEXT_VERSION" >> $GITHUB_OUTPUT
+
+          if [[ "$KNAME" != "PowerFork" ]]; then
+            echo -e 'CONFIG_KSU=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          fi
+
+          cat arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+
+          SUSFS_BRANCH=next-4.14
+
+          git clone --recursive -j $(nproc) --branch $SUSFS_BRANCH https://github.com/cvnertnc/susfs4ksu-begonia SUSFS
+
+          SUSFS_REF=$(git -C SUSFS rev-parse --short HEAD)
+          echo -e "SUSFS_REF=$SUSFS_REF" >> $GITHUB_OUTPUT
+          echo -e "SUSFS_BRANCH=$SUSFS_BRANCH" >> $GITHUB_OUTPUT
+
+          if [[ "$KNAME" == "Nova" ]]; then
+            patch -p1 < SUSFS/kernel_patches/kernels/nova/0001-fs-implement-KernelSU.patch
+          elif [[ "$KNAME" != "PowerFork" ]]; then
+            patch -p1 < SUSFS/kernel_patches/0001-fs-implement-KernelSU.patch
+          fi
+
+      - name: "😋 Integrate KernelSU Next"
+        id: integrate-kernelsu-next
+        working-directory: ${{ env.KERNEL_NAME }}
+        env:
+          arch: ${{ steps.generate-args.outputs.ARCH }}
+        if: ${{ env.withKernelSUNext == 'true' }}
         run: |
           if [ -d "./KernelSU" ]; then
             rm -rf "./KernelSU"
@@ -280,7 +329,7 @@ jobs:
         working-directory: ${{ env.KERNEL_NAME }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
-        if: ${{ env.withKernelSU == 'true' && env.withSUSFS == 'true' && env.KNAME != 'PowerFork' }}
+        if: ${{ (env.withKernelSU == 'true' || env.withKernelSUNext == 'true') && env.withSUSFS == 'true' && env.KNAME != 'PowerFork' }}
         run: |
 
           if [ -d "./SUSFS" ]; then
