@@ -303,7 +303,11 @@ jobs:
           cp -v SUSFS/kernel_patches/fs/* fs/
           cp -v SUSFS/kernel_patches/include/linux/* include/linux/
 
-          patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch
+          if [[ "$withKernelSUNext" == "true" ]]; then
+              patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch
+          else
+              echo "withKernelSUNext variable is not true."
+          fi
 
           if [[ "$KNAME" == "Nova" ]]; then
             patch -p1 < SUSFS/kernel_patches/kernels/nova/50_add_susfs_in_kernel-4.14.patch
