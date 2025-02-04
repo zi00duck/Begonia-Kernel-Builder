@@ -24,11 +24,11 @@ These repositories are not my own repositories but I would like to thank all the
 Also see here [`CONFIG.md`](./CONFIG.md).
 
 ## Supported Begonia Kernels
-| Kernels | Build | KernelSU-Next | SUSFS |
-|---------|-------|--------------|-------|
-| [Astera](https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ |
-| [PowerFork](https://github.com/wodanesdag/android_kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ |
-| [Nova](https://github.com/Nova-Kernels/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ |
+| Kernels | Build | KernelSU-Next | KernelSU | SUSFS |
+|---------|-------|--------------|----------|-------|
+| [Astera](https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ |
+| [PowerFork](https://github.com/wodanesdag/android_kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ |
+| [Nova](https://github.com/Nova-Kernels/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ |
 
 ## Thanks
   
