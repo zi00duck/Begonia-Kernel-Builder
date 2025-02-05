@@ -4,31 +4,38 @@
 
 These builds are created for the Xiaomi Redmi Note 8 Pro(begonia) device. It is built with [KernelSU Next](https://github.com/rifsxd/KernelSU-Next) and [SUSFS](https://gitlab.com/simonpunk/susfs4ksu)
 
-If you are using a kernel with magisk installed, uninstall magisk before installing the Astera kernel. After removing magisk, you can install the Astera kernel.
+If you are using a kernel with magisk installed, uninstall magisk before installing the Your kernel. After removing magisk, you can install the Your kernel.
 
 [![Build kernels](https://github.com/cvnertnc/Begonia-Kernel-Builder/actions/workflows/ci.yml/badge.svg?event=workflow_dispatch)](https://github.com/cvnertnc/Begonia-Kernel-Builder/actions/workflows/ci.yml)
 
-Kernel By [MrErenK and Xiaomi Begonia Dev](https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785)
+Astera Kernel By [MrErenK and Xiaomi Begonia Dev](https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785)
 
-Get the [latest Build release](https://github.com/cvnertnc/Begonia-Kernel-Builder/releases)
+Power Kernel By [Saikrishna1504](https://github.com/Saikrishna1504/kernel_xiaomi_mt6785)
+
+Nova Kernel By [Nova-Kernels Dev](https://github.com/Nova-Kernels/kernel_xiaomi_mt6785)
+
+Get the [latest Build release](https://github.com/cvnertnc/Begonia-Kernel-Builder/releases/latest)
 
 Download and install KernelSU-Next Manager
 > [Stable Version](https://github.com/rifsxd/KernelSU-Next/releases/latest) || [Nightly Version](https://nightly.link/rifsxd/KernelSU-Next/workflows/build-manager/next/manager)
+
+If you are using KernelSU, download and install the manager
+> [Stable Version](https://github.com/rsuntk/kernelsu/releases/latest)
 
 Download and install [SUSFS Module](https://github.com/sidex15/susfs4ksu-module/releases/latest)
 
 Download and install [Mountify Module](https://github.com/backslashxx/mountify?tab=readme-ov-file#links)
 
-These repositories are not my own repositories but I would like to thank all the Credits. Please use the original repo or use a more advanced fork. If you wish, you can also use these repositories.
-
 Also see here [`CONFIG.md`](./CONFIG.md).
 
 ## Supported Begonia Kernels
-| Kernels | Build | KernelSU-Next | KernelSU | SUSFS |
+| Kernels | Build | [KernelSU-Next(https://github.com/rifsxd/KernelSU-Next)] | [KernelSU](https://github.com/rsuntk/kernelsu) | [SUSFS](https://gitlab.com/simonpunk/susfs4ksu) |
 |---------|-------|--------------|----------|-------|
 | [Astera](https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ |
-| [PowerFork](https://github.com/wodanesdag/android_kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ |
+| [Power](https://github.com/Saikrishna1504/kernel_xiaomi_mt6785) | SOON | ⏰ | ⏰ | ⏰ |
 | [Nova](https://github.com/Nova-Kernels/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ |
+
+⚠️ The susfs patched version for power kernel will be coming soon from sai side. So wait for a while and be patient.
 
 ## Thanks
   
@@ -36,9 +43,8 @@ Also see here [`CONFIG.md`](./CONFIG.md).
 
 [MrErenK](https://github.com/MrErenK)  
 [rifsxd](https://github.com/rifsxd)  
-[Nova-Kernels](https://github.com/Nova-Kernels)  
 [Saikrishna1504](https://github.com/Saikrishna1504)  
-[wodanesdag](https://github.com/wodanesdag)  
+[Nova-Kernels](https://github.com/Nova-Kernels)  
 [PhamtomK12](https://github.com/PhamtomK12)  
 [AndroidHQ254](https://github.com/AndroidHQ254)  
 [AKR Android Developer Community](https://www.akr-developers.com/)  
