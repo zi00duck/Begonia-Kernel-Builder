@@ -29,7 +29,7 @@ Download and install [Mountify Module](https://github.com/backslashxx/mountify?t
 Also see here [`CONFIG.md`](./CONFIG.md).
 
 ## Supported Begonia Kernels
-| Kernels | Build | [KernelSU-Next(https://github.com/rifsxd/KernelSU-Next)] | [KernelSU](https://github.com/rsuntk/kernelsu) | [SUSFS](https://gitlab.com/simonpunk/susfs4ksu) |
+| Kernels | Build | [KernelSU-Next](https://github.com/rifsxd/KernelSU-Next) | [KernelSU](https://github.com/rsuntk/kernelsu) | [SUSFS](https://gitlab.com/simonpunk/susfs4ksu) |
 |---------|-------|--------------|----------|-------|
 | [Astera](https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ |
 | [Power](https://github.com/Saikrishna1504/kernel_xiaomi_mt6785) | SOON | ⏰ | ⏰ | ⏰ |
