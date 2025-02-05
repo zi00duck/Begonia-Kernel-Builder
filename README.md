@@ -35,7 +35,7 @@ Also see here [`CONFIG.md`](./CONFIG.md).
 | [Power](https://github.com/Saikrishna1504/kernel_xiaomi_mt6785) | SOON | ⏰ | ⏰ | ⏰ |
 | [Nova](https://github.com/Nova-Kernels/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ |
 
-⚠️ The susfs patched version for power kernel will be coming soon from sai side. So wait for a while and be patient.
+⚠️ The susfs patched version for power kernel will be coming soon from [Saikrishna1504](https://github.com/Saikrishna1504) side. So wait for a while and be patient.
 
 ## Thanks
   
