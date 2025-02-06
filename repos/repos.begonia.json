@@ -1,6 +1,5 @@
 [
   {
-    // kernelName Write the name of the kernel you want to build. Example: Astera, Power, Nova
     "kernelName": "Astera",
     "kernelSource": {
       "device": "begonia",
@@ -10,7 +9,6 @@
         "repo": "https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785",
         "branch": "fifteen"
       },
-      // Power kernel support will be activated when it becomes buildable with current susfs patches.
       "power": {
         "name": "Power",
         "repo": "https://github.com/Saikrishna1504/kernel_xiaomi_mt6785",

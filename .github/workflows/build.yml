@@ -237,8 +237,6 @@ jobs:
 
           if [[ "$withKernelSU" == "true" ]]; then
             curl -LSs "https://raw.githubusercontent.com/rsuntk/KernelSU/main/kernel/setup.sh" | bash -s main
-            rm -rf KernelSU
-            git clone --recursive -j $(nproc) --branch susfs-v1.5.5 https://github.com/rsuntk/KernelSU KernelSU
           else
             curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
             rm -rf KernelSU
@@ -297,7 +295,8 @@ jobs:
           if [[ "$withKernelSUNext" == "true" ]]; then
               patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch
           else
-              echo "withKernelSUNext variable is not true."
+            rm -rf KernelSU
+            git clone --recursive -j $(nproc) --branch susfs-v1.5.5 https://github.com/rsuntk/KernelSU KernelSU
           fi
 
           if [[ "$KNAME" == "Nova" ]]; then
