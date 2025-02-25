@@ -75,8 +75,8 @@ jobs:
             echo "KERNEL_BRANCH=${{ matrix.repos.kernelSource.astera.branch }}" >> $GITHUB_ENV
           fi
 
-          echo "toolchains=$(echo '${{ toJSON(matrix.repos.toolchains.default) }}' | jq -c)" >> $GITHUB_ENV
-          echo "params=$(echo '${{ toJSON(matrix.repos.params.default) }}' | jq -c)" >> $GITHUB_ENV
+          echo "toolchains=$(echo '${{ toJSON(matrix.repos.toolchains) }}' | jq -c)" >> $GITHUB_ENV
+          echo "params=$(echo '${{ toJSON(matrix.repos.params) }}' | jq -c)" >> $GITHUB_ENV
           echo "THREAD=$(nproc --all)" >> $GITHUB_ENV
 
       - name: "⭐ Install prerequisites"
