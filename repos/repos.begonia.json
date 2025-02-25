@@ -20,7 +20,7 @@
         "branch": "fifteen"
       }
     },
-    "withRoot": "none",
+    "withRoot": "ksun",
     "withSUSFS": true,
     "toolchains": [
       {
