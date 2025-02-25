@@ -24,9 +24,10 @@ Download and install KernelSU-Next Manager
 If you are using KernelSU, download and install the manager
 > [Stable Version](https://github.com/rsuntk/kernelsu/releases/latest)
 
-Download and install [SUSFS Module](https://github.com/sidex15/susfs4ksu-module/releases/latest)
+Download and install SUSFS Module
+> [Stable Version](https://github.com/sidex15/susfs4ksu-module/releases/latest) || [Nightly Version](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)
 
-Download and install [Mountify Module](https://github.com/backslashxx/mountify?tab=readme-ov-file#links)
+Download and install [Mountify Module](https://github.com/backslashxx/mountify/releases/latest)
 
 Also see here [`CONFIG.md`](./CONFIG.md).
 
