@@ -1,6 +1,6 @@
 [
   {
-    "kernelName": "Astera",
+    "kernelName": "astera",
     "kernelSource": {
       "device": "begonia",
       "defconfig": "begonia_user_defconfig",
@@ -20,41 +20,36 @@
         "branch": "fifteen"
       }
     },
-    "withKernelSUNext": true,
-    "withKernelSU": false,
+    "withRoot": "none",
     "withSUSFS": true,
-    "toolchains": {
-      "default": [
-        {
-          "repo": "https://gitlab.com/PixelOS-Devices/playgroundtc",
-          "branch": "17",
-          "name": "clang-playground",
-          "binPath": ["./bin"]
-        }
-      ]
-    },
+    "toolchains": [
+      {
+        "repo": "https://gitlab.com/PixelOS-Devices/playgroundtc",
+        "branch": "17",
+        "name": "clang-playground",
+        "binPath": ["./bin"]
+      }
+    ],
     "ccache": true,
     "params": {
-      "default": {
-        "ARCH": "arm64",
-        "CC": "clang-playground/bin/clang",
-        "externalCommand": {
-          "CROSS_COMPILE": "clang-playground/bin/aarch64-linux-gnu-",
-          "CROSS_COMPILE_ARM32": "clang-playground/bin/arm-linux-gnueabi-",
-          "LD": "clang-playground/bin/ld.lld",
-          "LLVM": "1",
-          "LLVM_IAS": "1",
-          "AR": "clang-playground/bin/llvm-ar",
-          "NM": "clang-playground/bin/llvm-nm",
-          "OBJCOPY": "clang-playground/bin/llvm-objcopy",
-          "OBJDUMP": "clang-playground/bin/llvm-objdump",
-          "READELF": "clang-playground/bin/llvm-readelf",
-          "OBJSIZE": "clang-playground/bin/llvm-size",
-          "STRIP": "clang-playground/bin/llvm-strip",
-          "LDGOLD": "clang-playground/bin/aarch64-linux-gnu-ld.gold",
-          "LLVM_AR": "clang-playground/bin/llvm-ar",
-          "LLVM_DIS": "clang-playground/bin/llvm-dis"
-        }
+      "ARCH": "arm64",
+      "CC": "clang-playground/bin/clang",
+      "externalCommand": {
+        "CROSS_COMPILE": "clang-playground/bin/aarch64-linux-gnu-",
+        "CROSS_COMPILE_ARM32": "clang-playground/bin/arm-linux-gnueabi-",
+        "LD": "clang-playground/bin/ld.lld",
+        "LLVM": "1",
+        "LLVM_IAS": "1",
+        "AR": "clang-playground/bin/llvm-ar",
+        "NM": "clang-playground/bin/llvm-nm",
+        "OBJCOPY": "clang-playground/bin/llvm-objcopy",
+        "OBJDUMP": "clang-playground/bin/llvm-objdump",
+        "READELF": "clang-playground/bin/llvm-readelf",
+        "OBJSIZE": "clang-playground/bin/llvm-size",
+        "STRIP": "clang-playground/bin/llvm-strip",
+        "LDGOLD": "clang-playground/bin/aarch64-linux-gnu-ld.gold",
+        "LLVM_AR": "clang-playground/bin/llvm-ar",
+        "LLVM_DIS": "clang-playground/bin/llvm-dis"
       }
     },
     "AnyKernel3": {
