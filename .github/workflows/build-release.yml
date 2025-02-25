@@ -54,11 +54,6 @@ jobs:
 
       withRoot: ${{ matrix.repos.withRoot }}
       withSUSFS: ${{ matrix.repos.withSUSFS }}
-
-      toolchains: $(echo '${{ toJSON(matrix.repos.toolchains) }}' | jq -c)
-      params: $(echo '${{ toJSON(matrix.repos.params) }}' | jq -c)
-      THREAD: $(nproc --all)
-
       ccache: ${{ matrix.repos.ccache }}
       useAnykernel: ${{ matrix.repos.AnyKernel3.use }}
       release: ${{ matrix.repos.AnyKernel3.release }}
@@ -79,6 +74,10 @@ jobs:
             echo "KERNEL_REPO=${{ matrix.repos.kernelSource.astera.repo }}" >> $GITHUB_ENV
             echo "KERNEL_BRANCH=${{ matrix.repos.kernelSource.astera.branch }}" >> $GITHUB_ENV
           fi
+
+          echo "toolchains=$(echo '${{ toJSON(matrix.repos.toolchains) }}' | jq -c)" >> $GITHUB_ENV
+          echo "params=$(echo '${{ toJSON(matrix.repos.params) }}' | jq -c)" >> $GITHUB_ENV
+          echo "THREAD=$(nproc --all)" >> $GITHUB_ENV
 
       - name: "⭐ Install prerequisites"
         run: |
