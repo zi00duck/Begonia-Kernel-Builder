@@ -1,4 +1,4 @@
-name: "Build kernels for release"
+name: "Build kernels for test"
 
 env:
   OUT_DIR: "${{ github.workspace }}/out"
