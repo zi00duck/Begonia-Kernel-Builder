@@ -4,7 +4,7 @@
 
 > Automatically follow daily KernelSU-Next updates and build the android kernel for Xiaomi Redmi Note 8 Pro(begonia)
 
-These builds are created for the Xiaomi Redmi Note 8 Pro(begonia) device. It is built with [KernelSU Next](https://github.com/rifsxd/KernelSU-Next) and [SUSFS](https://gitlab.com/simonpunk/susfs4ksu)
+These builds are created for the Xiaomi Redmi Note 8 Pro(begonia) device. It is built with [KernelSU Next](https://github.com/KernelSU-Next/KernelSU-Next) and [SUSFS](https://gitlab.com/simonpunk/susfs4ksu)
 
 If you are using a kernel with magisk installed, uninstall magisk before installing the Your kernel. After removing magisk, you can install the Your kernel.
 
@@ -19,7 +19,7 @@ Nova Kernel By [Nova-Kernels Dev](https://github.com/Nova-Kernels/kernel_xiaomi_
 Get the [latest Build release](https://github.com/cvnertnc/Begonia-Kernel-Builder/releases/latest)
 
 Download and install KernelSU-Next Manager
-> [Stable Version](https://github.com/rifsxd/KernelSU-Next/releases/latest) || [Nightly Version](https://nightly.link/rifsxd/KernelSU-Next/workflows/build-manager/next/manager)
+> [Stable Version](https://github.com/KernelSU-Next/KernelSU-Next/releases/latest) || [Nightly Version](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager/next/manager)
 
 If you are using KernelSU, download and install the manager
 > [Stable Version](https://github.com/rsuntk/kernelsu/releases/latest)
@@ -32,7 +32,7 @@ Download and install [Mountify Module](https://github.com/backslashxx/mountify/r
 Also see here [`CONFIG.md`](./CONFIG.md).
 
 ## Supported Begonia Kernels
-| Kernels | Build | [KernelSU-Next](https://github.com/rifsxd/KernelSU-Next) | [KernelSU](https://github.com/rsuntk/kernelsu) | [SUSFS](https://gitlab.com/simonpunk/susfs4ksu) |
+| Kernels | Build | [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) | [KernelSU](https://github.com/rsuntk/kernelsu) | [SUSFS](https://gitlab.com/simonpunk/susfs4ksu) |
 |---------|-------|--------------|----------|-------|
 | [Astera](https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ |
 | [Power](https://github.com/Saikrishna1504/kernel_xiaomi_mt6785) | SOON | ⏰ | ⏰ | ⏰ |
