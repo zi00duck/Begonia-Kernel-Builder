@@ -377,6 +377,35 @@ jobs:
           name: "${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}-KSUNext-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-SUSFS-${{ env.builddate }}"
           path: AnyKernel3/*
 
+      - name:🔃 Upload Kernel to Telegram
+        if: ${{ env.useAnykernel == 'true' && env.release == 'true' }}
+        uses: appleboy/telegram-action@master
+        with:
+          to: "@cvnertnc"  # Kanal adı (@ ile başlamalı) veya CHAT_ID
+          files: "${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}-KSUNext-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-SUSFS-${{ env.builddate }}.zip"
+          caption: |
+            *${{ env.KERNEL_NAME }} Kernel - v${{ env.builddate }}.${{ github.run_number }}*
+            ```
+            \${{ github.event.head_commit.message }}
+            ```
+            [Commit](${{ github.event.head_commit.url }}) | [Workflow](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+            **Build Details:**
+            - Device: ${{ env.KERNEL_DEVICE }}
+            - Build Date: ${{ env.builddate }}
+            - KernelSU-Next: ${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}
+            - SUSFS: Supported
+            - Mountify: Supported
+
+            [KSU Manager (Stable)](https://github.com/KernelSU-Next/KernelSU-Next/releases/latest)
+            [KSU Manager (Nightly)](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager/next/manager)
+
+            _Built with [Begonia-Kernel-Builder](https://github.com/cvnertnc/Begonia-Kernel-Builder)_
+            _By @the_CEHunter_
+          parse_mode: Markdown
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.BOT_TOKEN }}
+
       - name: 🧧 Create GitHub Release => (${{ env.builddate }})
         continue-on-error: false
         uses: softprops/action-gh-release@v2.1.0
