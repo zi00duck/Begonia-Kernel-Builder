@@ -377,30 +377,42 @@ jobs:
           name: "${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}-KSUNext-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-SUSFS-${{ env.builddate }}"
           path: AnyKernel3/*
 
-      - name: "📤 Upload to Telegram"
+      - name: 📤 Upload to Telegram
         if: ${{ env.useAnykernel == 'true' && env.release == 'true' }}
         env:
-          API_ID: ${{ secrets.API_ID }}
-          API_HASH: ${{ secrets.API_HASH }}
+          TG_TOKEN: ${{ secrets.BOT_TOKEN }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
-          COMMIT_URL: ${{ github.event.head_commit.url }}
-          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          TITLE: "${{ env.KERNEL_NAME }} Kernel"
-          VERSION: "v${{ env.builddate }}.${{ github.run_number }}"
-          KERNEL_NAME: "${{ env.KERNEL_NAME }}"
-          KERNEL_DEVICE: "${{ env.KERNEL_DEVICE }}"
-          BUILD_DATE: "${{ env.builddate }}"
-          KERNELSU_NEXT_VERSION: "${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}"
         run: |
-          if [ ! -z "$BOT_TOKEN" ]; then
-            KERNEL_FILE="${{ env.WORKSPACE }}/${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}-${{ env.builddate }}.zip"
-            echo "Kernel file: $KERNEL_FILE"
-            
-            pip3 install telethon
-            python3 $WORKSPACE/scripts/cvnbot.py "$KERNEL_FILE"
-          fi
+          KERNEL_FILE="${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}-KSUNext-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-SUSFS-${{ env.builddate }}.zip"
+          RELEASE_TAG="v${{ env.builddate }}.${{ github.run_number }}-KernelSU-Next-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-SUSFS"
+          DOWNLOAD_URL="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/download/$RELEASE_TAG/$KERNEL_FILE"
+      
+          MSG="*${{ env.KERNEL_NAME }} Kernel - v${{ env.builddate }}.${{ github.run_number }}*
+          \`\`\`
+          ${{ github.event.head_commit.message }}
+          \`\`\`
+          [Commit](${{ github.event.head_commit.url }}) | [Workflow](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+      
+          *Build Details:*
+          - Device: ${{ env.KERNEL_DEVICE }}
+          - Build Date: ${{ env.builddate }}
+          - KernelSU-Next: ${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}
+          - SUSFS: Supported
+          - Mountify: Supported
+      
+          [Download Kernel]($DOWNLOAD_URL)
+          [KSU Manager (Stable)](https://github.com/KernelSU-Next/KernelSU-Next/releases/latest)
+          [KSU Manager (Nightly)](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager/next/manager)
+      
+          _Built with [Begonia-Kernel-Builder](https://github.com/cvnertnc/Begonia-Kernel-Builder)_
+          _By @the_CEHunter_"
+      
+          # Telegram'a gönder
+          curl -F document=@$KERNEL_FILE \
+               -F "caption=${MSG}" \
+               -F "parse_mode=Markdown" \
+               -F "chat_id=$CHAT_ID" \
+               "https://api.telegram.org/bot$TG_TOKEN/sendDocument"
 
       - name: 🧧 Create GitHub Release => (${{ env.builddate }})
         continue-on-error: false
