@@ -377,16 +377,32 @@ jobs:
           name: "${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}-KSUNext-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-SUSFS-${{ env.builddate }}"
           path: AnyKernel3/*
 
-      - name: 📤 Upload to Telegram
+      - name: 🧧 Create GitHub Release => (${{ env.builddate }})
+        continue-on-error: false
+        uses: softprops/action-gh-release@v2.1.0
+        if: ${{ env.useAnykernel == 'true' && env.release == 'true' }}
+        with:
+          tag_name: v${{ env.builddate }}.${{ github.run_number }}-KernelSU-Next-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-SUSFS
+          name: v${{ env.builddate }}.${{ github.run_number }} (KernelSU-Next ${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }} + SUSFS)
+          make_latest: true
+          prerelease: false
+          draft: false
+          generate_release_notes: false
+          body: "Astera Kernel by [MrErenK](https://ithub.com/MrErenK), Nova Kernel by [Nova-Kernels](https://github.com/Nova-Kernels), Power kernel By [Saikrishna1504](https://github.com/Saikrishna1504) and Build with Github by [cvnertnc](https://github.com/cvnertnc)\nAll Linux kernel patched with [KernelSU Next](https://github.com/KernelSU-Next/KernelSU-Next) ${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }} + [SUSFS patches](https://gitlab.com/simonpunk/susfs4ksu) for Xiaomi Redmi Note 8 Pro (begonia).\n\n**Installation:**\n1. Flash the kernel from this release.\n2. Download and install the KernelSU Next manager APK from here:\n> [Stable Version](https://github.com/KernelSU-Next/KernelSU-Next/releases/${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}) ||[Nightly Version](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager/next/manager)\n\n3. Download and install the SUSFS Module from here: https://github.com/sidex15/susfs4ksu-module/releases/latest\n4. Download and install the Mountify Module from here: https://github.com/backslashxx/mountify?tab=readme-ov-file#links"
+          files: "${{ env.WORKSPACE }}/${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}-KSUNext-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-SUSFS-${{ env.builddate }}.zip"
+          fail_on_unmatched_files: true
+          preserve_order: true
+
+      - name: Upload to Telegram
         if: ${{ env.useAnykernel == 'true' && env.release == 'true' }}
         env:
           TG_TOKEN: ${{ secrets.BOT_TOKEN }}
-          CHAT_ID: ${{ secrets.CHAT_ID }}
         run: |
           KERNEL_FILE="${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}-KSUNext-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-SUSFS-${{ env.builddate }}.zip"
           RELEASE_TAG="v${{ env.builddate }}.${{ github.run_number }}-KernelSU-Next-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-SUSFS"
           DOWNLOAD_URL="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/download/$RELEASE_TAG/$KERNEL_FILE"
       
+          TG_CHAT="@cvnertnc"  # Kanal adını buraya yazın
           MSG="*${{ env.KERNEL_NAME }} Kernel - v${{ env.builddate }}.${{ github.run_number }}*
           \`\`\`
           ${{ github.event.head_commit.message }}
@@ -411,21 +427,5 @@ jobs:
           curl -F document=@$KERNEL_FILE \
                -F "caption=${MSG}" \
                -F "parse_mode=Markdown" \
-               -F "chat_id=$CHAT_ID" \
+               -F "chat_id=$TG_CHAT" \
                "https://api.telegram.org/bot$TG_TOKEN/sendDocument"
-
-      - name: 🧧 Create GitHub Release => (${{ env.builddate }})
-        continue-on-error: false
-        uses: softprops/action-gh-release@v2.1.0
-        if: ${{ env.useAnykernel == 'true' && env.release == 'true' }}
-        with:
-          tag_name: v${{ env.builddate }}.${{ github.run_number }}-KernelSU-Next-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-SUSFS
-          name: v${{ env.builddate }}.${{ github.run_number }} (KernelSU-Next ${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }} + SUSFS)
-          make_latest: true
-          prerelease: false
-          draft: false
-          generate_release_notes: false
-          body: "Astera Kernel by [MrErenK](https://ithub.com/MrErenK), Nova Kernel by [Nova-Kernels](https://github.com/Nova-Kernels), Power kernel By [Saikrishna1504](https://github.com/Saikrishna1504) and Build with Github by [cvnertnc](https://github.com/cvnertnc)\nAll Linux kernel patched with [KernelSU Next](https://github.com/KernelSU-Next/KernelSU-Next) ${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }} + [SUSFS patches](https://gitlab.com/simonpunk/susfs4ksu) for Xiaomi Redmi Note 8 Pro (begonia).\n\n**Installation:**\n1. Flash the kernel from this release.\n2. Download and install the KernelSU Next manager APK from here:\n> [Stable Version](https://github.com/KernelSU-Next/KernelSU-Next/releases/${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}) ||[Nightly Version](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager/next/manager)\n\n3. Download and install the SUSFS Module from here: https://github.com/sidex15/susfs4ksu-module/releases/latest\n4. Download and install the Mountify Module from here: https://github.com/backslashxx/mountify?tab=readme-ov-file#links"
-          files: "${{ env.WORKSPACE }}/${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}-KSUNext-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-SUSFS-${{ env.builddate }}.zip"
-          fail_on_unmatched_files: true
-          preserve_order: true
