@@ -395,11 +395,11 @@ jobs:
 
       - name: "🔃 Upload Kernel to Telegram"
         if: ${{ env.useAnykernel == 'true' && env.release == 'true' }}
-        uses: appleboy/telegram-action@v1.0.0
+        uses: appleboy/telegram-action@master
         with:
           to: "@cvnertnc"
           document: "${{ env.WORKSPACE }}/${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}-KSUNext-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-SUSFS-${{ env.builddate }}.zip"
-          caption: |
+          message: |
             *${{ env.KERNEL_NAME }} Kernel - v${{ env.builddate }}.${{ github.run_number }}*
             ```
             ${{ github.event.head_commit.message }}
@@ -418,6 +418,6 @@ jobs:
       
             _Built with [Begonia-Kernel-Builder](https://github.com/cvnertnc/Begonia-Kernel-Builder)_
             _By @the_CEHunter_
-          parse_mode: Markdown
+          format: markdown
         env:
-          token: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
