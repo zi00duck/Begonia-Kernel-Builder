@@ -1,0 +1,89 @@
+# .github/workflows/telegram-report.yml
+name: "📢 Telegram Report"
+
+on:
+  workflow_run:
+    workflows: ["Build kernels for release"] # build.yml'in name'i ile eşleşmeli
+    branches: [main] # repo branch'ınıza göre değiştirin
+    types:
+      - completed
+
+jobs:
+  generate-report:
+    name: "📤 Send Notification to Telegram"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+      
+    if: >
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event != 'pull_request'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+
+      - name: Get workflow artifacts
+        uses: actions/github-script@v7
+        id: get_artifacts
+        with:
+          script: |
+            const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: ${{ github.event.workflow_run.id }},
+            });
+            return artifacts.data.artifacts
+              .filter(a => a.name.startsWith('Image.gz'))
+              .map(a => ({
+                name: a.name,
+                url: a.archive_download_url
+              }));
+
+      - name: Parse artifact info
+        id: parse_info
+        run: |
+          # Kernel bilgilerini artifact isminden çıkar
+          ARTIFACT_NAME=$(echo "${{ toJSON(steps.get_artifacts.outputs.result) }}" | jq -r '.[0].name')
+          IFS='-' read -ra ADDR <<< "$ARTIFACT_NAME"
+          
+          echo "DEVICE=${ADDR[2]}" >> $GITHUB_ENV
+          echo "KERNEL_NAME=${ADDR[3]}" >> $GITHUB_ENV
+          echo "KERNELSU_VERSION=${ADDR[5]}" >> $GITHUB_ENV
+          echo "BUILDDATE=${ADDR[7]}" >> $GITHUB_ENV
+
+      - name: Get release tag
+        id: get_tag
+        run: |
+          gh release list --limit 1 --json tagName -q '.[0].tagName' > tag.txt
+          echo "TAG=$(cat tag.txt)" >> $GITHUB_ENV
+          echo "RELEASE_URL=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/tag/$(cat tag.txt)" >> $GITHUB_ENV
+
+      - name: Prepare Telegram message
+        id: prepare_msg
+        env:
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+        run: |
+          MSG="*🔥 Yeni Kernel Derlendi!* 🚀
+          \n▫️ *Cihaz:* \`${{ env.DEVICE }}\`
+          \n▫️ *Kernel:* \`${{ env.KERNEL_NAME }}\`
+          \n▫️ *Sürüm:* \`${{ env.BUILDDATE }}\`
+          \n▫️ *KernelSU:* \`${{ env.KERNELSU_VERSION }}\`
+          \n\n📦 *Release:* [GitHub](${{ env.RELEASE_URL }})
+          \n\n#Kernel #Android #CustomROM"
+
+          echo "message<<EOF" >> $GITHUB_OUTPUT
+          echo "$MSG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Send to Telegram
+        if: env.TG_TOKEN != null
+        uses: appleboy/telegram-action@master
+        with:
+          to: "@cvnertnc" # Telegram kanalı/grubunuz
+          token: ${{ secrets.TG_TOKEN }}
+          message: ${{ steps.prepare_msg.outputs.message }}
+          parse_mode: markdown
