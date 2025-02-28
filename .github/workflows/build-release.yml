@@ -395,29 +395,26 @@ jobs:
 
       - name: "🔃 Upload Kernel to Telegram"
         if: ${{ env.useAnykernel == 'true' && env.release == 'true' }}
-        uses: appleboy/telegram-action@v1.0.0
+        uses: appleboy/telegram-action@master  # 1. Sürüm güncellendi
         with:
-          to: -1002480367639
+          to: "-1002480367639"
           document: "${{ env.WORKSPACE }}/${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}-KSUNext-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-SUSFS-${{ env.builddate }}.zip"
-          caption: |
+          message: |
             *${{ env.KERNEL_NAME }} Kernel - v${{ env.builddate }}.${{ github.run_number }}*
             ```
             ${{ github.event.head_commit.message }}
             ```
             [Commit](${{ github.event.head_commit.url }}) | [Workflow](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
-      
             **Build Details:**
             - Device: ${{ env.KERNEL_DEVICE }}
             - Build Date: ${{ env.builddate }}
             - KernelSU-Next: ${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}
             - SUSFS: Supported
             - Mountify: Supported
-      
             [KSU Manager (Stable)](https://github.com/KernelSU-Next/KernelSU-Next/releases/latest)
             [KSU Manager (Nightly)](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager/next/manager)
-      
             _Built with [Begonia-Kernel-Builder](https://github.com/cvnertnc/Begonia-Kernel-Builder)_
             _By @the_CEHunter_
-          parse_mode: Markdown
+          format: markdown
         env:
-          token: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
