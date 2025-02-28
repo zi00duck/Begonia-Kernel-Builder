@@ -3,10 +3,10 @@ name: "📢 Telegram Report"
 
 on:
   workflow_run:
-    workflows: ["Build kernels for release"] # build.yml'in name'i ile eşleşmeli
-    branches: [main] # repo branch'ınıza göre değiştirin
+    workflows: ["Build kernels for release"]
     types:
       - completed
+  workflow_dispatch:
 
 jobs:
   generate-report:
