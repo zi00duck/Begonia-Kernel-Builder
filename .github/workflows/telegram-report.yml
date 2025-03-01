@@ -1,0 +1,92 @@
+name: Report Release to Telegram
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set builddate
+        id: generate-builddate
+        run: echo "builddate=$(date +'%Y%m%d')" >> $GITHUB_ENV
+
+      - name: Fetch Latest Release
+        id: fetch_release
+        run: |
+          if [ "${{ github.event_name }}" == "release" ]; then
+            echo "Using release event data"
+            echo "RELEASE_NAME=${{ github.event.release.name }}" >> $GITHUB_ENV
+            echo "RELEASE_URL=${{ github.event.release.html_url }}" >> $GITHUB_ENV
+            echo "RELEASE_TAG=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+          else
+            echo "Fetching latest release data"
+            LATEST_RELEASE=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/latest)
+            echo "RELEASE_NAME=$(echo $LATEST_RELEASE | jq -r '.name')" >> $GITHUB_ENV
+            echo "RELEASE_URL=$(echo $LATEST_RELEASE | jq -r '.html_url')" >> $GITHUB_ENV
+            echo "RELEASE_TAG=$(echo $LATEST_RELEASE | jq -r '.tag_name')" >> $GITHUB_ENV
+          fi
+
+      - name: Getting KernelSU-Next version
+        id: integrate-kernelsu-next
+        env:
+          arch: ${{ steps.generate-args.outputs.ARCH }}
+        run: |
+          if [ -d "./KernelSU" ]; then
+            rm -rf "./KernelSU"
+          fi
+
+          git clone --recursive -j $(nproc) --branch next https://github.com/KernelSU-Next/KernelSU-Next KernelSU
+
+          KERNELSU_NEXT_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
+
+          echo "KernelSU Next version: $KERNELSU_NEXT_VERSION"
+
+          echo "KERNELSU_NEXT_VERSION=$KERNELSU_NEXT_VERSION" >> $GITHUB_ENV
+
+      - name: Report to Telegram
+        env:
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+        if: env.TG_TOKEN != null
+        run: |
+          TG_CHAT="@cvnertnc"
+
+          MSG="🚀 *New Kernel Released!* 🔥
+
+          ▫️ *Device:* Begonia
+          ▫️ *Kernel:* 4.14.366.Astera
+          ▫️ *KernelSU-Next:* ${{ env.KERNELSU_NEXT_VERSION }}
+          ▫️ *SUSFS:* Supported
+          ▫️ *Mountify:* Supported
+          ▫️ *Release:* ${{ env.RELEASE_NAME }}
+
+          📥 *Download Links:*
+          - [GitHub Release: ${{ env.RELEASE_NAME }}](${{ env.RELEASE_URL }})
+          - KernelSU-Next Manager: [Release](https://github.com/KernelSU-Next/KernelSU-Next/releases/${{ env.KERNELSU_NEXT_VERSION }}) | [Nightly](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager-ci/next/Manager)
+          - [SUSFS Module: Nightly](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)
+          - [Mountify Module: Release](https://github.com/backslashxx/mountify/releases/latest)
+
+          🌀 *Supports:*
+          - [Begonia | UserOS Chat](https://t.me/cvnertnc_chat)
+          - [KernelSU-Next Group](https://t.me/ksunext_group)
+
+          ⚠️ *Built with Begonia-Kernel-Builder:*
+          https://github.com/cvnertnc/Begonia-Kernel-Builder
+
+          ⚠️ *Follow my channel to be informed about new kernel updates.*
+          https://t.me/cvnertnc
+
+          ⚠️ *Note:* It should be tested on new A15 roms... Backup your current kernel before flashing to avoid bootloop risk...
+
+          Astera Kernel by @Mr_ErenK
+          KernelSU-Next and Susfs patches by @the_CEHunter
+          "
+
+          POST="https://api.telegram.org/bot${TG_TOKEN}/sendMessage"
+          curl -X POST --data-urlencode "parse_mode=Markdown" --data-urlencode "disable_web_page_preview=true" --data-urlencode "text=${MSG}" --data-urlencode "chat_id=${TG_CHAT}" "$POST"
