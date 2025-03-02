@@ -1,6 +1,8 @@
 name: Report Release to Telegram
 
 on:
+  repository_dispatch:
+    types: [trigger-telegram-report]
   release:
     types: [published]
   workflow_dispatch:
@@ -60,7 +62,7 @@ jobs:
           MSG="🚀 *New Kernel Released!* 🔥
 
           ▫️ *Device:* Begonia
-          ▫️ *Kernel:* 4.14.366.Astera
+          ▫️ *Kernel:* 4.14.336.Astera
           ▫️ *KernelSU-Next:* ${{ env.KERNELSU_NEXT_VERSION }}
           ▫️ *SUSFS:* Supported
           ▫️ *Mountify:* Supported
@@ -84,8 +86,8 @@ jobs:
 
           ⚠️ *Note:* It should be tested on new A15 roms... Backup your current kernel before flashing to avoid bootloop risk...
 
-          Astera Kernel by @Mr_ErenK
-          KernelSU-Next and Susfs patches by @the_CEHunter
+          Astera Kernel by [MrErenK](https://t.me/Mr_ErenK)
+          KernelSU-Next and Susfs patches by [CEHunter ⚝](https://t.me/the_CEHunter)
           "
 
           POST="https://api.telegram.org/bot${TG_TOKEN}/sendMessage"
