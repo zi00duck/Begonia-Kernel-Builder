@@ -40,7 +40,6 @@ jobs:
     needs:
       - Set-repos
     strategy:
-      max-parallel: 4
       fail-fast: false
       matrix:
         repos: ${{ fromJSON(needs.Set-repos.outputs.repos) }}
@@ -61,19 +60,9 @@ jobs:
     steps:
       - name: "🟣 Set Kernel Variables"
         run: |
-          if [[ "$KNAME" == "power" ]]; then
-            echo "KERNEL_NAME=${{ matrix.repos.kernelSource.power.name }}" >> $GITHUB_ENV
-            echo "KERNEL_REPO=${{ matrix.repos.kernelSource.power.repo }}" >> $GITHUB_ENV
-            echo "KERNEL_BRANCH=${{ matrix.repos.kernelSource.power.branch }}" >> $GITHUB_ENV
-          elif [[ "$KNAME" == "nova" ]]; then
-            echo "KERNEL_NAME=${{ matrix.repos.kernelSource.nova.name }}" >> $GITHUB_ENV
-            echo "KERNEL_REPO=${{ matrix.repos.kernelSource.nova.repo }}" >> $GITHUB_ENV
-            echo "KERNEL_BRANCH=${{ matrix.repos.kernelSource.nova.branch }}" >> $GITHUB_ENV
-          else
-            echo "KERNEL_NAME=${{ matrix.repos.kernelSource.astera.name }}" >> $GITHUB_ENV
-            echo "KERNEL_REPO=${{ matrix.repos.kernelSource.astera.repo }}" >> $GITHUB_ENV
-            echo "KERNEL_BRANCH=${{ matrix.repos.kernelSource.astera.branch }}" >> $GITHUB_ENV
-          fi
+          echo "KERNEL_NAME=${{ matrix.repos.kernelSource.name }}" >> $GITHUB_ENV
+          echo "KERNEL_REPO=${{ matrix.repos.kernelSource.repo }}" >> $GITHUB_ENV
+          echo "KERNEL_BRANCH=${{ matrix.repos.kernelSource.branch }}" >> $GITHUB_ENV
 
           echo "toolchains=$(echo '${{ toJSON(matrix.repos.toolchains) }}' | jq -c)" >> $GITHUB_ENV
           echo "params=$(echo '${{ toJSON(matrix.repos.params) }}' | jq -c)" >> $GITHUB_ENV
@@ -249,7 +238,9 @@ jobs:
           echo -e "KERNELSU_NEXT_VERSION=$KERNELSU_NEXT_VERSION" >> $GITHUB_OUTPUT
 
           echo -e 'CONFIG_KSU=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
-          echo -e 'CONFIG_KSU_WITH_KPROBES=n' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          if [[ "$withRoot" == "ksun" ]]; then
+            echo -e 'CONFIG_KSU_WITH_KPROBES=n' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          fi
 
           cat arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
 
@@ -261,12 +252,22 @@ jobs:
           echo -e "SUSFS_REF=$SUSFS_REF" >> $GITHUB_OUTPUT
           echo -e "SUSFS_BRANCH=$SUSFS_BRANCH" >> $GITHUB_OUTPUT
 
-          if [[ "$KNAME" == "power" ]]; then
-            patch -p1 < SUSFS/kernel_patches/kernels/power/0001-fs-implement-KernelSU.patch
-          elif [[ "$KNAME" == "nova" ]]; then
-            patch -p1 < SUSFS/kernel_patches/kernels/nova/0001-fs-implement-KernelSU.patch
+          if [[ "$withRoot" == "ksu" ]]; then
+            if [[ "$KNAME" == "power" ]]; then
+              patch -p1 < SUSFS/kernel_patches/kernels/power/0001-fs-implement-KSU.patch
+            elif [[ "$KNAME" == "nova" ]]; then
+              patch -p1 < SUSFS/kernel_patches/kernels/nova/0001-fs-implement-KSU.patch
+            else
+              patch -p1 < SUSFS/kernel_patches/0001-fs-implement-KSU.patch
+            fi
           else
-            patch -p1 < SUSFS/kernel_patches/0001-fs-implement-KernelSU.patch
+            if [[ "$KNAME" == "power" ]]; then
+              patch -p1 < SUSFS/kernel_patches/kernels/power/0001-fs-implement-KSUN.patch
+            elif [[ "$KNAME" == "nova" ]]; then
+              patch -p1 < SUSFS/kernel_patches/kernels/nova/0001-fs-implement-KSUN.patch
+            else
+              patch -p1 < SUSFS/kernel_patches/0001-fs-implement-KSUN.patch
+            fi
           fi
 
       - name: "🥷 Add SUSFS patches"
@@ -274,7 +275,7 @@ jobs:
         working-directory: ${{ env.KERNEL_NAME }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
-        if: ${{ (env.withRoot == 'true' || env.withRoot == 'ksun') && env.withSUSFS == 'true' }}
+        if: ${{ (env.withRoot == 'ksu' || env.withRoot == 'ksun') && env.withSUSFS == 'true' }}
         run: |
 
           if [ -d "./SUSFS" ]; then
@@ -350,7 +351,7 @@ jobs:
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
         with:
-          name: Image.gz-${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}-KSUNext-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-SUSFS-${{ env.builddate }}
+          name: Image.gz-${{ env.KERNEL_DEVICE }}-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-${{ env.KERNEL_NAME }}-${{ env.builddate }}
           path: ${{ env.OUT_DIR }}/arch/${{ env.arch }}/boot/Image.gz
           if-no-files-found: ignore
           retention-days: 90
@@ -359,7 +360,7 @@ jobs:
         if: ${{ env.useAnykernel == 'true' }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
-          anykernel: "${{ env.WORKSPACE }}/${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}-KSUNext-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-SUSFS-${{ env.builddate }}"
+          anykernel: "${{ env.WORKSPACE }}/${{ env.KERNEL_DEVICE }}-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-${{ env.KERNEL_NAME }}-${{ env.builddate }}"
         run: |
           ls -al
 
@@ -374,7 +375,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: ${{ env.useAnykernel == 'true' }}
         with:
-          name: "${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}-KSUNext-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-SUSFS-${{ env.builddate }}"
+          name: "${{ env.KERNEL_DEVICE }}-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-${{ env.KERNEL_NAME }}-${{ env.builddate }}"
           path: AnyKernel3/*
 
       - name: 🧧 Create GitHub Release => (${{ env.builddate }})
@@ -382,13 +383,13 @@ jobs:
         uses: softprops/action-gh-release@v2.1.0
         if: ${{ env.useAnykernel == 'true' && env.release == 'true' }}
         with:
-          tag_name: v${{ env.builddate }}.${{ github.run_number }}-KernelSU-Next-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-SUSFS
-          name: v${{ env.builddate }}.${{ github.run_number }} (KernelSU-Next ${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }} + SUSFS)
+          tag_name: v${{ env.builddate }}.${{ github.run_number }}
+          name: v${{ env.builddate }}.${{ github.run_number }}
           make_latest: true
           prerelease: false
           draft: false
           generate_release_notes: false
-          body: "Astera Kernel by [MrErenK](https://ithub.com/MrErenK), Nova Kernel by [Nova-Kernels](https://github.com/Nova-Kernels), Power kernel By [Saikrishna1504](https://github.com/Saikrishna1504) and Build with Github by [cvnertnc](https://github.com/cvnertnc)\nAll Linux kernel patched with [KernelSU Next](https://github.com/KernelSU-Next/KernelSU-Next) ${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }} + [SUSFS patches](https://gitlab.com/simonpunk/susfs4ksu) for Xiaomi Redmi Note 8 Pro (begonia).\n\n**Installation:**\n1. Flash the kernel from this release.\n2. Download and install the KernelSU Next manager APK from here:\n> [Stable Version](https://github.com/KernelSU-Next/KernelSU-Next/releases/${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}) ||[Nightly Version](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager/next/manager)\n\n3. Download and install the SUSFS Module from here: https://github.com/sidex15/susfs4ksu-module/releases/latest\n4. Download and install the Mountify Module from here: https://github.com/backslashxx/mountify?tab=readme-ov-file#links"
-          files: "${{ env.WORKSPACE }}/${{ env.KERNEL_DEVICE }}-${{ env.KERNEL_NAME }}-KSUNext-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-SUSFS-${{ env.builddate }}.zip"
+          body: "Astera Kernel by [MrErenK](https://ithub.com/MrErenK), Nova Kernel by [Nova-Kernels](https://github.com/Nova-Kernels), Power kernel By [Saikrishna1504](https://github.com/Saikrishna1504) and Build with Github by [cvnertnc](https://github.com/cvnertnc)\nAll Linux kernel patched with [KernelSU](https://github.com/rsuntk/KernelSU) and [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) + [SUSFS patches](https://gitlab.com/simonpunk/susfs4ksu) for Xiaomi Redmi Note 8 Pro (begonia).\n\n**Installation:**\n1. Flash the kernel from this release.\n2. Download and install the Manager\nKernelSU:\n> [Stable Version](https://github.com/rsuntk/KernelSU/releases/latest) || [Nightly Version](https://nightly.link/rsuntk/KernelSU/workflows/build-manager/main)\nKernelSU Next:\n> [Stable Version](https://github.com/KernelSU-Next/KernelSU-Next/releases/latest) || [Nightly Version](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager/next/manager)\n\n3. Download and install the SUSFS Module from here: https://github.com/sidex15/susfs4ksu-module/releases/latest\n4. Download and install the Mountify Module from here: https://github.com/backslashxx/mountify?tab=readme-ov-file#links"
+          files: "${{ env.WORKSPACE }}/${{ env.KERNEL_DEVICE }}-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-${{ env.KERNEL_NAME }}-${{ env.builddate }}.zip"
           fail_on_unmatched_files: true
           preserve_order: true
