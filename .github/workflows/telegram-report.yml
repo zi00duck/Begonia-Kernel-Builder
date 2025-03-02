@@ -35,18 +35,31 @@ jobs:
             echo "RELEASE_TAG=$(echo $LATEST_RELEASE | jq -r '.tag_name')" >> $GITHUB_ENV
           fi
 
-      - name: Getting KernelSU-Next version
+      - name: Getting KernelSU version
         id: integrate-kernelsu-next
-        env:
-          arch: ${{ steps.generate-args.outputs.ARCH }}
         run: |
           if [ -d "./KernelSU" ]; then
             rm -rf "./KernelSU"
           fi
 
-          git clone --recursive -j $(nproc) --branch next https://github.com/KernelSU-Next/KernelSU-Next KernelSU
+          git clone --recursive -j $(nproc) --branch next https://github.com/rsuntk/KernelSU KernelSU
 
-          KERNELSU_NEXT_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
+          KERNELSU_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
+
+          echo "KernelSU version: $KERNELSU_VERSION"
+
+          echo "KERNELSU_VERSION=$KERNELSU_VERSION" >> $GITHUB_ENV
+
+      - name: Getting KernelSU-Next version
+        id: integrate-kernelsu-next
+        run: |
+          if [ -d "./KernelSU-Next" ]; then
+            rm -rf "./KernelSU-Next"
+          fi
+
+          git clone --recursive -j $(nproc) --branch next https://github.com/KernelSU-Next/KernelSU-Next KernelSU-Next
+
+          KERNELSU_NEXT_VERSION=$(git -C KernelSU-Next describe --abbrev=0 --tags)
 
           echo "KernelSU Next version: $KERNELSU_NEXT_VERSION"
 
@@ -61,33 +74,39 @@ jobs:
 
           MSG="🚀 *New Kernel Released!* 🔥
 
-          ▫️ *Device:* Begonia
           ▫️ *Kernel:* 4.14.336.Astera
+          ▫️ *Kernel:* 4.14.336.Nova
+
+          ▫️ *Device:* Begonia
+          ▫️ *Non-Patch Variant*
+          ▫️ *KernelSU:* ${{ env.KERNELSU_VERSION }}
           ▫️ *KernelSU-Next:* ${{ env.KERNELSU_NEXT_VERSION }}
+
           ▫️ *SUSFS:* Supported
           ▫️ *Mountify:* Supported
           ▫️ *Release:* ${{ env.RELEASE_NAME }}
 
           📥 *Download Links:*
-          - [GitHub Release: ${{ env.RELEASE_NAME }}](${{ env.RELEASE_URL }})
-          - KernelSU-Next Manager: [Release](https://github.com/KernelSU-Next/KernelSU-Next/releases/${{ env.KERNELSU_NEXT_VERSION }}) | [Nightly](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager-ci/next/Manager)
-          - [SUSFS Module: Nightly](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)
-          - [Mountify Module: Release](https://github.com/backslashxx/mountify/releases/latest)
-
-          🌀 *Supports:*
-          - [Begonia | UserOS Chat](https://t.me/cvnertnc_chat)
-          - [KernelSU-Next Group](https://t.me/ksunext_group)
+          - GitHub Release: [${{ env.RELEASE_NAME }}](${{ env.RELEASE_URL }})
+          - KernelSU Manager:
+            [Release](https://github.com/rsuntk/KernelSU/releases/${{ env.KERNELSU_VERSION }}) | [Nightly](https://nightly.link/rsuntk/KernelSU/workflows/build-manager/main)
+          - KernelSU-Next Manager:
+            [Release](https://github.com/KernelSU-Next/KernelSU-Next/releases/${{ env.KERNELSU_NEXT_VERSION }}) | [Nightly](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager-ci/next/Manager)
+          - SUSFS Module: [Release](https://github.com/sidex15/susfs4ksu-module/releases/latest) | [Nightly](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)
+          - Mountify Module: [Release](https://github.com/backslashxx/mountify/releases/latest)
 
           ⚠️ *Built with Begonia-Kernel-Builder:*
           https://github.com/cvnertnc/Begonia-Kernel-Builder
 
-          ⚠️ *Follow my channel to be informed about new kernel updates.*
-          https://t.me/cvnertnc
-
-          ⚠️ *Note:* It should be tested on new A15 roms... Backup your current kernel before flashing to avoid bootloop risk...
+          ⚠️ *Note:* Aster Kernel, It should be tested on new A15 roms... Backup your current kernel before flashing to avoid bootloop risk...
+          ⚠️ *Note:* Nova Kernel, It needs to be tested. Backup your current kernel before flashing to avoid bootloop risk...
 
           Astera Kernel by [MrErenK](https://t.me/Mr_ErenK)
+          Nova Kernel by [Nova-Kernels Dev](https://github.com/Nova-Kernels)
           KernelSU-Next and Susfs patches by [CEHunter ⚝](https://t.me/the_CEHunter)
+
+          *Follow for Updates:* [cvnertnc](https://t.me/cvnertnc)
+          *Join for Supports:* [cvnertnc-Chat](https://t.me/cvnertnc_chat)
           "
 
           POST="https://api.telegram.org/bot${TG_TOKEN}/sendMessage"
