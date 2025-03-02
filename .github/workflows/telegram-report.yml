@@ -42,7 +42,7 @@ jobs:
             rm -rf "./KernelSU"
           fi
 
-          git clone --recursive -j $(nproc) --branch next https://github.com/rsuntk/KernelSU KernelSU
+          git clone --recursive -j $(nproc) --branch main https://github.com/rsuntk/KernelSU KernelSU
 
           KERNELSU_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
 
