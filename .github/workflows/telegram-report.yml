@@ -36,7 +36,7 @@ jobs:
           fi
 
       - name: Getting KernelSU version
-        id: integrate-kernelsu-next
+        id: integrate-kernelsu
         run: |
           if [ -d "./KernelSU" ]; then
             rm -rf "./KernelSU"
