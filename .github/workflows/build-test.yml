@@ -117,7 +117,11 @@ jobs:
 
       - name: "🌟 Clone kernel source => (${{ env.KERNEL_REPO }})"
         run: |
-          git clone --recursive --depth=1 -j $(nproc) --branch $KERNEL_BRANCH $KERNEL_REPO $KERNEL_NAME
+          if [[ "$KNAME" == "power" ]]; then
+            git clone --recursive --depth=1 -j $(nproc) --branch bport https://github.com/cvnertnc/power $KERNEL_NAME
+          else
+            git clone --recursive --depth=1 -j $(nproc) --branch $KERNEL_BRANCH $KERNEL_REPO $KERNEL_NAME
+          fi
           echo -e "\n⚠️ Kernel is at commit: $(git -C $KERNEL_NAME rev-parse HEAD)\n"
 
           echo "🤔 Clone kernel source => ($KERNEL_REPO)"
@@ -300,7 +304,9 @@ jobs:
             git clone --recursive -j $(nproc) --branch susfs-v1.5.5 https://github.com/rsuntk/KernelSU KernelSU
           fi
 
-          if [[ "$KNAME" == "nova" ]]; then
+          if [[ "$KNAME" == "power" ]]; then
+            patch -p1 < SUSFS/kernel_patches/kernels/power/50_add_susfs_in_kernel-4.14.patch
+          elif [[ "$KNAME" == "nova" ]]; then
             patch -p1 < SUSFS/kernel_patches/kernels/nova/50_add_susfs_in_kernel-4.14.patch
           else
             patch -p1 < SUSFS/kernel_patches/50_add_susfs_in_kernel-4.14.patch
