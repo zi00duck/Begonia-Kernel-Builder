@@ -35,10 +35,8 @@ Also see here [`CONFIG.md`](./CONFIG.md).
 | Kernels | Build | [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) | [KernelSU](https://github.com/rsuntk/kernelsu) | [SUSFS](https://gitlab.com/simonpunk/susfs4ksu) |
 |---------|-------|--------------|----------|-------|
 | [Astera](https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ |
-| [Power](https://github.com/Saikrishna1504/kernel_xiaomi_mt6785) | SOON | ⏰ | ⏰ | ⏰ |
+| [Power](https://github.com/Saikrishna1504/kernel_xiaomi_mt6785) | SOON | ✅ | ⏰ | ✅ |
 | [Nova](https://github.com/Nova-Kernels/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ |
-
-⚠️ The susfs patched version for power kernel will be coming soon from [Saikrishna1504](https://github.com/Saikrishna1504) side. So wait for a while and be patient.
 
 ## Thanks
   
