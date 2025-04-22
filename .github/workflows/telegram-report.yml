@@ -77,6 +77,7 @@ jobs:
           ▫️ *Kernel:* 4.14.336.Astera
           ▫️ *Kernel:* 4.14.355.Power
           ▫️ *Kernel:* 4.14.336.Nova
+          ▫️ *Kernel:* 4.14.356.AsteraFork
 
           ▫️ *Device:* Begonia
           ▫️ *Non-Patch Variant*
@@ -100,6 +101,7 @@ jobs:
           ⚠️ *Note:* Aster Kernel, It should be tested on new A15 roms... Backup your current kernel before flashing to avoid bootloop risk...
           ⚠️ *Note:* Power Kernel, Backup your current kernel before flashing to avoid bootloop risk...
           ⚠️ *Note:* Nova Kernel, Backup your current kernel before flashing to avoid bootloop risk...
+          ⚠️ *Note:* AsteraFork Kernel, Backup your current kernel before flashing to avoid bootloop risk...
 
           *Please Read:*
           https://t.me/cvnertnc/218
@@ -107,7 +109,8 @@ jobs:
           Astera Kernel by [MrErenK](https://t.me/Mr_ErenK)
           Power Kernel by [Sai Krishna](https://t.me/Saikrishna1504)
           Nova Kernel by [Nova-Kernels Dev](https://github.com/Nova-Kernels)
-          KernelSU-Next and Susfs patches by [CEHunter ⚝](https://t.me/the_CEHunter)
+          AsteraFork Kernel by [CEHunter ⚝](https://t.me/the_CEHunter)
+          KernelSU, KernelSU-Next and Susfs patches by [CEHunter ⚝](https://t.me/the_CEHunter)
 
           *Follow:* [cvnertnc](https://t.me/cvnertnc)
           *Join:* [cvnertnc-Chat](https://t.me/cvnertnc_chat)

@@ -16,6 +16,8 @@ Power Kernel By [Saikrishna1504](https://github.com/Saikrishna1504/kernel_xiaomi
 
 Nova Kernel By [Nova-Kernels Dev](https://github.com/Nova-Kernels/kernel_xiaomi_mt6785)
 
+AsteraFork Kernel By [cvnertnc](https://github.com/cvnertnc/kernel_xiaomi_mt6785)
+
 Get the [latest Build release](https://github.com/cvnertnc/Begonia-Kernel-Builder/releases/latest)
 
 Download and install KernelSU-Next Manager
@@ -37,6 +39,7 @@ Also see here [`CONFIG.md`](./CONFIG.md).
 | [Astera](https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ |
 | [Power](https://github.com/Saikrishna1504/kernel_xiaomi_mt6785) | ✅ | ✅ | ⏰ | ✅ |
 | [Nova](https://github.com/Nova-Kernels/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ |
+| [AsteraFork](https://github.com/cvnertnc/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ |
 
 ## Thanks
   
