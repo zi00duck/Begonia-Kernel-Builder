@@ -24,7 +24,7 @@ Download and install KernelSU-Next Manager
 > [Stable Version](https://github.com/KernelSU-Next/KernelSU-Next/releases/latest) || [Nightly Version](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager/next/manager)
 
 If you are using KernelSU, download and install the manager
-> [Stable Version](https://github.com/rsuntk/kernelsu/releases/latest)
+> [Stable Version](https://github.com/rsuntk/kernelsu/releases/latest) || [Nightly Version](https://nightly.link/rsuntk/KernelSU/workflows/build-manager/main)
 
 Download and install SUSFS Module
 > [Stable Version](https://github.com/sidex15/susfs4ksu-module/releases/latest) || [Nightly Version](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)
