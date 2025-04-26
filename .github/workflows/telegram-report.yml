@@ -77,7 +77,6 @@ jobs:
           ▫️ *Kernel:* 4.14.336.Astera
           ▫️ *Kernel:* 4.14.355.Power
           ▫️ *Kernel:* 4.14.336.Nova
-          ▫️ *Kernel:* 4.14.356.AsteraFork
 
           ▫️ *Device:* Begonia
           ▫️ *Non-Patch Variant*
@@ -98,18 +97,16 @@ jobs:
           - SUSFS Module: [Release](https://github.com/sidex15/susfs4ksu-module/releases/latest) | [Nightly](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)
           - Mountify Module: [Release](https://github.com/backslashxx/mountify/releases/latest)
 
-          ⚠️ *Note:* Aster Kernel, It should be tested on new A15 roms... Backup your current kernel before flashing to avoid bootloop risk...
-          ⚠️ *Note:* Power Kernel, Backup your current kernel before flashing to avoid bootloop risk...
-          ⚠️ *Note:* Nova Kernel, Backup your current kernel before flashing to avoid bootloop risk...
-          ⚠️ *Note:* AsteraFork Kernel, Backup your current kernel before flashing to avoid bootloop risk...
+          ⚠️ *Note:* If you are using MIUI, I recommend Astera kernel.
+          ⚠️ *Note:* If you are using Custom Rom (Aosp), I recommend Power and Nova kernel.
+          ⚠️ *Note:* To prevent the risk of your device becoming bootlopped after the kernel installation, please backup your current kernel before flashing the kernel.
 
           *Please Read:*
           https://t.me/cvnertnc/218
 
           Astera Kernel by [MrErenK](https://t.me/Mr_ErenK)
           Power Kernel by [Sai Krishna](https://t.me/Saikrishna1504)
-          Nova Kernel by [Nova-Kernels Dev](https://github.com/Nova-Kernels)
-          AsteraFork Kernel by [CEHunter ⚝](https://t.me/the_CEHunter)
+          Nova Kernel by [Abdul7852](https://t.me/Abdul7852)
           KernelSU, KernelSU-Next and Susfs patches by [CEHunter ⚝](https://t.me/the_CEHunter)
 
           *Follow:* [cvnertnc](https://t.me/cvnertnc)
