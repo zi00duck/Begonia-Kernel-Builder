@@ -211,7 +211,7 @@ jobs:
         working-directory: ${{ env.KERNEL_NAME }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
-        if: ${{ env.withRoot == 'ksu' || env.withRoot == 'ksun' }}
+        if: ${{ env.withRoot == 'rksu' || env.withRoot == 'ksun' }}
         run: |
           if [ -d "./KernelSU" ]; then
             rm -rf "./KernelSU"
@@ -223,7 +223,7 @@ jobs:
             rm -rf "./SUSFS"
           fi
 
-          if [[ "$withRoot" == "ksu" ]]; then
+          if [[ "$withRoot" == "rksu" ]]; then
             curl -LSs "https://raw.githubusercontent.com/rsuntk/KernelSU/main/kernel/setup.sh" | bash -s main
           else
             curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
@@ -252,13 +252,11 @@ jobs:
           echo -e "SUSFS_REF=$SUSFS_REF" >> $GITHUB_OUTPUT
           echo -e "SUSFS_BRANCH=$SUSFS_BRANCH" >> $GITHUB_OUTPUT
 
-          if [[ "$withRoot" == "ksu" ]]; then
+          if [[ "$withRoot" == "rksu" ]]; then
             if [[ "$KNAME" == "power" ]]; then
               patch -p1 < SUSFS/kernel_patches/kernels/power/0001-fs-implement-KSU.patch
             elif [[ "$KNAME" == "nova" ]]; then
               patch -p1 < SUSFS/kernel_patches/kernels/nova/0001-fs-implement-KSU.patch
-            elif [[ "$KNAME" == "asterafork" ]]; then
-              patch -p1 < SUSFS/kernel_patches/kernels/astera-fork/0001-fs-implement-KSU.patch
             else
               patch -p1 < SUSFS/kernel_patches/0001-fs-implement-KSU.patch
             fi
@@ -267,8 +265,6 @@ jobs:
               patch -p1 < SUSFS/kernel_patches/kernels/power/0001-fs-implement-KSUN.patch
             elif [[ "$KNAME" == "nova" ]]; then
               patch -p1 < SUSFS/kernel_patches/kernels/nova/0001-fs-implement-KSUN.patch
-            elif [[ "$KNAME" == "asterafork" ]]; then
-              patch -p1 < SUSFS/kernel_patches/kernels/astera-fork/0001-fs-implement-KSUN.patch
             else
               patch -p1 < SUSFS/kernel_patches/0001-fs-implement-KSUN.patch
             fi
@@ -279,7 +275,7 @@ jobs:
         working-directory: ${{ env.KERNEL_NAME }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
-        if: ${{ (env.withRoot == 'ksu' || env.withRoot == 'ksun') && env.withSUSFS == 'true' }}
+        if: ${{ (env.withRoot == 'rksu' || env.withRoot == 'ksun') && env.withSUSFS == 'true' }}
         run: |
 
           if [ -d "./SUSFS" ]; then
@@ -308,8 +304,6 @@ jobs:
             patch -p1 < SUSFS/kernel_patches/kernels/power/50_add_susfs_in_kernel-4.14.patch
           elif [[ "$KNAME" == "nova" ]]; then
             patch -p1 < SUSFS/kernel_patches/kernels/nova/50_add_susfs_in_kernel-4.14.patch
-          elif [[ "$KNAME" == "asterafork" ]]; then
-            patch -p1 < SUSFS/kernel_patches/kernels/astera-fork/50_add_susfs_in_kernel-4.14.patch
           else
             patch -p1 < SUSFS/kernel_patches/50_add_susfs_in_kernel-4.14.patch
           fi
