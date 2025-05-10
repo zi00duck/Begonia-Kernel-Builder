@@ -257,8 +257,6 @@ jobs:
               patch -p1 < SUSFS/kernel_patches/kernels/power/0001-fs-implement-KSU.patch
             elif [[ "$KNAME" == "nova" ]]; then
               patch -p1 < SUSFS/kernel_patches/kernels/nova/0001-fs-implement-KSU.patch
-            elif [[ "$KNAME" == "asterafork" ]]; then
-              patch -p1 < SUSFS/kernel_patches/kernels/astera-fork/0001-fs-implement-KSU.patch
             else
               patch -p1 < SUSFS/kernel_patches/0001-fs-implement-KSU.patch
             fi
@@ -267,8 +265,6 @@ jobs:
               patch -p1 < SUSFS/kernel_patches/kernels/power/0001-fs-implement-KSUN.patch
             elif [[ "$KNAME" == "nova" ]]; then
               patch -p1 < SUSFS/kernel_patches/kernels/nova/0001-fs-implement-KSUN.patch
-            elif [[ "$KNAME" == "asterafork" ]]; then
-              patch -p1 < SUSFS/kernel_patches/kernels/astera-fork/0001-fs-implement-KSUN.patch
             else
               patch -p1 < SUSFS/kernel_patches/0001-fs-implement-KSUN.patch
             fi
@@ -301,18 +297,18 @@ jobs:
               patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch
           else
             rm -rf KernelSU
-            git clone --recursive -j $(nproc) --branch susfs-v1.5.5 https://github.com/rsuntk/KernelSU KernelSU
+            git clone --recursive -j $(nproc) --branch susfs-v1.5.7 https://github.com/rsuntk/KernelSU KernelSU
           fi
 
           if [[ "$KNAME" == "power" ]]; then
             patch -p1 < SUSFS/kernel_patches/kernels/power/50_add_susfs_in_kernel-4.14.patch
           elif [[ "$KNAME" == "nova" ]]; then
             patch -p1 < SUSFS/kernel_patches/kernels/nova/50_add_susfs_in_kernel-4.14.patch
-          elif [[ "$KNAME" == "asterafork" ]]; then
-            patch -p1 < SUSFS/kernel_patches/kernels/astera-fork/50_add_susfs_in_kernel-4.14.patch
           else
             patch -p1 < SUSFS/kernel_patches/50_add_susfs_in_kernel-4.14.patch
           fi
+
+          patch -p1 --verbose < SUSFS/kernel_patches/backport-fs-upstream-susfs-v1.5.7-non-gki.patch
 
           echo -e "#Susfs4ksu" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
           echo -e "CONFIG_KSU_SUSFS=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}

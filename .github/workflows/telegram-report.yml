@@ -84,7 +84,7 @@ jobs:
              (KernelSU for Power-Kernel is not currently available...)
           ▫️ *KernelSU-Next:* ${{ env.KERNELSU_NEXT_VERSION }}
 
-          ▫️ *SUSFS:* Supported
+          ▫️ *SUSFS:* 1.5.7 Supported
           ▫️ *Mountify:* Supported
           ▫️ *Release:* ${{ env.RELEASE_NAME }}
 
