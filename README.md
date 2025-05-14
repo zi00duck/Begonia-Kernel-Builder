@@ -35,7 +35,7 @@ Also see here [`CONFIG.md`](./CONFIG.md).
 | Kernels | Build | [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) | [KernelSU](https://github.com/rsuntk/kernelsu) | [SUSFS](https://gitlab.com/simonpunk/susfs4ksu) |
 |---------|-------|--------------|----------|-------|
 | [Astera](https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ |
-| [Power](https://github.com/Saikrishna1504/kernel_xiaomi_mt6785) | ✅ | ✅ | ⏰ | ✅ |
+| [Power](https://github.com/Saikrishna1504/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ |
 | [Nova](https://github.com/Nova-Kernels/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ |
 
 ## Thanks

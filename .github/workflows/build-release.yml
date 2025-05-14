@@ -231,14 +231,16 @@ jobs:
             git clone --recursive -j $(nproc) --branch next https://github.com/KernelSU-Next/KernelSU-Next KernelSU
           fi
 
-          KERNELSU_NEXT_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
+          ROOT_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
 
-          echo -e "\n💡 KernelSU Next version: $KERNELSU_NEXT_VERSION\n"
+          echo -e "\n💡 KernelSU version: $ROOT_VERSION\n"
 
-          echo -e "KERNELSU_NEXT_VERSION=$KERNELSU_NEXT_VERSION" >> $GITHUB_OUTPUT
+          echo -e "ROOT_VERSION=$ROOT_VERSION" >> $GITHUB_OUTPUT
 
           echo -e 'CONFIG_KSU=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
-          if [[ "$withRoot" == "ksun" ]]; then
+          if [[ "$withRoot" == "rksu" ]]; then
+            echo -e 'CONFIG_KSU_MANUAL_HOOK=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          else
             echo -e 'CONFIG_KSU_WITH_KPROBES=n' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
           fi
 
@@ -252,21 +254,19 @@ jobs:
           echo -e "SUSFS_REF=$SUSFS_REF" >> $GITHUB_OUTPUT
           echo -e "SUSFS_BRANCH=$SUSFS_BRANCH" >> $GITHUB_OUTPUT
 
-          if [[ "$withRoot" == "rksu" ]]; then
-            if [[ "$KNAME" == "power" ]]; then
-              patch -p1 < SUSFS/kernel_patches/kernels/power/0001-fs-implement-KSU.patch
-            elif [[ "$KNAME" == "nova" ]]; then
-              patch -p1 < SUSFS/kernel_patches/kernels/nova/0001-fs-implement-KSU.patch
+          if [[ "$KNAME" == "power" ]]; then
+              patch -p1 < SUSFS/kernel_patches/kernels/power/0001-syscall-ksu-hook.patch
+          elif [[ "$KNAME" == "nova" ]]; then
+            if [[ "$withRoot" == "rksu" ]]; then
+              patch -p1 < SUSFS/kernel_patches/kernels/nova/0001-standard-ksu-hook.patch
             else
-              patch -p1 < SUSFS/kernel_patches/0001-fs-implement-KSU.patch
+              patch -p1 < SUSFS/kernel_patches/kernels/nova/0001-syscall-ksu-hook.patch
             fi
           else
-            if [[ "$KNAME" == "power" ]]; then
-              patch -p1 < SUSFS/kernel_patches/kernels/power/0001-fs-implement-KSUN.patch
-            elif [[ "$KNAME" == "nova" ]]; then
-              patch -p1 < SUSFS/kernel_patches/kernels/nova/0001-fs-implement-KSUN.patch
+            if [[ "$withRoot" == "rksu" ]]; then
+              patch -p1 < SUSFS/kernel_patches/0001-standard-ksu-hook.patch
             else
-              patch -p1 < SUSFS/kernel_patches/0001-fs-implement-KSUN.patch
+              patch -p1 < SUSFS/kernel_patches/0001-syscall-ksu-hook.patch
             fi
           fi
 
@@ -293,11 +293,11 @@ jobs:
           cp -v SUSFS/kernel_patches/fs/* fs/
           cp -v SUSFS/kernel_patches/include/linux/* include/linux/
 
-          if [[ "$withRoot" == "ksun" ]]; then
-              patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch
-          else
+          if [[ "$withRoot" == "rksu" ]]; then
             rm -rf KernelSU
             git clone --recursive -j $(nproc) --branch susfs-v1.5.7 https://github.com/rsuntk/KernelSU KernelSU
+          else
+            patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch
           fi
 
           if [[ "$KNAME" == "power" ]]; then
@@ -355,7 +355,7 @@ jobs:
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
         with:
-          name: Image.gz-${{ env.KERNEL_DEVICE }}-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-${{ env.KERNEL_NAME }}-${{ env.builddate }}
+          name: Image.gz-${{ env.KERNEL_DEVICE }}-${{ steps.integrate-kernelsu-next.outputs.ROOT_VERSION }}-${{ env.KERNEL_NAME }}-${{ env.builddate }}
           path: ${{ env.OUT_DIR }}/arch/${{ env.arch }}/boot/Image.gz
           if-no-files-found: ignore
           retention-days: 90
@@ -364,7 +364,7 @@ jobs:
         if: ${{ env.useAnykernel == 'true' }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
-          anykernel: "${{ env.WORKSPACE }}/${{ env.KERNEL_DEVICE }}-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-${{ env.KERNEL_NAME }}-${{ env.builddate }}"
+          anykernel: "${{ env.WORKSPACE }}/${{ env.KERNEL_DEVICE }}-${{ steps.integrate-kernelsu-next.outputs.ROOT_VERSION }}-${{ env.KERNEL_NAME }}-${{ env.builddate }}"
         run: |
           ls -al
 
@@ -379,7 +379,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: ${{ env.useAnykernel == 'true' }}
         with:
-          name: "${{ env.KERNEL_DEVICE }}-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-${{ env.KERNEL_NAME }}-${{ env.builddate }}"
+          name: "${{ env.KERNEL_DEVICE }}-${{ steps.integrate-kernelsu-next.outputs.ROOT_VERSION }}-${{ env.KERNEL_NAME }}-${{ env.builddate }}"
           path: AnyKernel3/*
 
       - name: 🧧 Create GitHub Release => (${{ env.builddate }})
@@ -394,6 +394,6 @@ jobs:
           draft: false
           generate_release_notes: false
           body: "Astera Kernel by [MrErenK](https://github.com/MrErenK)\nNova Kernel by [Wahid7852](https://github.com/Wahid7852)\nPower kernel By [Saikrishna1504](https://github.com/Saikrishna1504)\nBuild with Github by [cvnertnc](https://github.com/cvnertnc)\nAll Linux kernel patched with [KernelSU](https://github.com/rsuntk/KernelSU) and [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) + [SUSFS patches](https://gitlab.com/simonpunk/susfs4ksu) for Xiaomi Redmi Note 8 Pro (begonia).\n\n**Installation:**\n1. Flash the kernel from this release.\n2. Download and install the Manager\n\nKernelSU:\n> [Stable Version](https://github.com/rsuntk/KernelSU/releases/latest) || [Nightly Version](https://nightly.link/rsuntk/KernelSU/workflows/build-manager/main)\n\nKernelSU Next:\n> [Stable Version](https://github.com/KernelSU-Next/KernelSU-Next/releases/latest) || [Nightly Version](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager/next/manager)\n\n3. Download and install the SUSFS Module:\n> [Stable Version](https://github.com/sidex15/susfs4ksu-module/releases/latest) || [Nightly Version](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)\n\n4. Download and install the Mountify Module from here: https://github.com/backslashxx/mountify/releases/latest"
-          files: "${{ env.WORKSPACE }}/${{ env.KERNEL_DEVICE }}-${{ steps.integrate-kernelsu-next.outputs.KERNELSU_NEXT_VERSION }}-${{ env.KERNEL_NAME }}-${{ env.builddate }}.zip"
+          files: "${{ env.WORKSPACE }}/${{ env.KERNEL_DEVICE }}-${{ steps.integrate-kernelsu-next.outputs.ROOT_VERSION }}-${{ env.KERNEL_NAME }}-${{ env.builddate }}.zip"
           fail_on_unmatched_files: true
           preserve_order: true
