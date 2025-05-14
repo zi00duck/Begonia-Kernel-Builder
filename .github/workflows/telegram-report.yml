@@ -59,11 +59,11 @@ jobs:
 
           git clone --recursive -j $(nproc) --branch next https://github.com/KernelSU-Next/KernelSU-Next KernelSU-Next
 
-          KERNELSU_NEXT_VERSION=$(git -C KernelSU-Next describe --abbrev=0 --tags)
+          ROOT_VERSION=$(git -C KernelSU-Next describe --abbrev=0 --tags)
 
-          echo "KernelSU Next version: $KERNELSU_NEXT_VERSION"
+          echo "KernelSU version: $ROOT_VERSION"
 
-          echo "KERNELSU_NEXT_VERSION=$KERNELSU_NEXT_VERSION" >> $GITHUB_ENV
+          echo "ROOT_VERSION=$ROOT_VERSION" >> $GITHUB_ENV
 
       - name: Report to Telegram
         env:
@@ -72,7 +72,7 @@ jobs:
         run: |
           TG_CHAT="@cvnertnc"
 
-          MSG="🚀 *For all Kernels KernelSU-Next and KernelSU Version is Updated!* 🔥
+          MSG="🚀 *For all Kernels KernelSU and KernelSU-Next Version is Updated!* 🔥
 
           ▫️ *Kernel:* 4.14.336.Astera
           ▫️ *Kernel:* 4.14.355.Power
@@ -81,10 +81,9 @@ jobs:
           ▫️ *Device:* Begonia
           ▫️ *Non-Patch Variant*
           ▫️ *KernelSU:* ${{ env.KERNELSU_VERSION }}
-             (KernelSU for Power-Kernel is not currently available...)
-          ▫️ *KernelSU-Next:* ${{ env.KERNELSU_NEXT_VERSION }}
+          ▫️ *KernelSU-Next:* ${{ env.ROOT_VERSION }}
 
-          ▫️ *SUSFS:* 1.5.7 Supported
+          ▫️ *SUSFS:* v1.5.7 Supported
           ▫️ *Mountify:* Supported
           ▫️ *Release:* ${{ env.RELEASE_NAME }}
 
@@ -93,8 +92,9 @@ jobs:
           - KernelSU Manager:
             [Release](https://github.com/rsuntk/KernelSU/releases/${{ env.KERNELSU_VERSION }}) | [Nightly](https://nightly.link/rsuntk/KernelSU/workflows/build-manager/main)
           - KernelSU-Next Manager:
-            [Release](https://github.com/KernelSU-Next/KernelSU-Next/releases/${{ env.KERNELSU_NEXT_VERSION }}) | [Nightly](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager-ci/next/Manager)
-          - SUSFS Module: [Release](https://github.com/sidex15/susfs4ksu-module/releases/latest) | [Nightly](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)
+            [Release](https://github.com/KernelSU-Next/KernelSU-Next/releases/${{ env.ROOT_VERSION }}) | [Nightly](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager-ci/next/Manager)
+          - SUSFS Module: 
+            [Release](https://github.com/sidex15/susfs4ksu-module/releases/latest) | [Nightly](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)
           - Mountify Module: [Release](https://github.com/backslashxx/mountify/releases/latest)
 
           ⚠️ *Note:* If you are using MIUI, I recommend Astera kernel.
