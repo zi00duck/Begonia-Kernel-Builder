@@ -72,7 +72,7 @@ jobs:
         run: |
           TG_CHAT="@cvnertnc"
 
-          MSG="🚀 *For all Kernels KernelSU Version is Updated! KernelSU has been archived.* 🔥
+          MSG="🚀 *For all Kernels KernelSU-Next and KernelSU Version is Updated!* 🔥
 
           ▫️ *Kernel:* 4.14.336.Astera
           ▫️ *Kernel:* 4.14.355.Power
