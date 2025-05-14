@@ -13,10 +13,10 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v3
 
-      - name: Fetch the latest commit from rsuntk/KernelSU
+      - name: Fetch the latest commit from KernelSU-Next/KernelSU-Next
         id: fetch_latest_commit
         run: |
-          curl -s https://api.github.com/repos/rsuntk/KernelSU/commits/next > latest_commit.json
+          curl -s https://api.github.com/repos/KernelSU-Next/KernelSU-Next/commits/next > latest_commit.json
           latest_commit=$(jq -r '.sha' latest_commit.json)
           latest_commit_date=$(jq -r '.commit.author.date' latest_commit.json)
           echo "latest_commit=$latest_commit" >> $GITHUB_ENV
