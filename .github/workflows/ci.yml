@@ -13,14 +13,31 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v3
 
-      - name: Fetch the latest commit from KernelSU-Next/KernelSU-Next
-        id: fetch_latest_commit
+      - name: Fetch latest commits from all repos
+        id: fetch_latest_commits
         run: |
-          curl -s https://api.github.com/repos/KernelSU-Next/KernelSU-Next/commits/next > latest_commit.json
-          latest_commit=$(jq -r '.sha' latest_commit.json)
-          latest_commit_date=$(jq -r '.commit.author.date' latest_commit.json)
-          echo "latest_commit=$latest_commit" >> $GITHUB_ENV
-          echo "latest_commit_date=$latest_commit_date" >> $GITHUB_ENV
+          declare -A repos=(
+            ["KernelSU-Next"]="KernelSU-Next/KernelSU-Next"
+            ["RKSU"]="rsuntk/KernelSU"
+            ["MKSU"]="backslashxx/KernelSU"
+          )
+
+          touch new_build.md
+          update_needed="false"
+
+          for key in "${!repos[@]}"; do
+            repo="${repos[$key]}"
+            curl -s "https://api.github.com/repos/${repo}/commits/next" > latest_${key}.json
+            latest_commit=$(jq -r '.sha' latest_${key}.json)
+            latest_date=$(jq -r '.commit.author.date' latest_${key}.json)
+
+            echo "${key}_commit=$latest_commit" >> $GITHUB_ENV
+            echo "${key}_date=$latest_date" >> $GITHUB_ENV
+
+            echo "$key Commit ID: $latest_commit" >> new_build.md
+            echo "$key Commit Date: $latest_date" >> new_build.md
+            echo "" >> new_build.md
+          done
 
       - name: Check if update branch exists
         id: check_branch
@@ -52,27 +69,20 @@ jobs:
       - name: Compare commits and decide
         id: compare_commits
         run: |
-          if [ -f build.md ]; then
-            last_commit=$(grep 'Commit ID:' build.md | awk '{print $3}')
+          update_needed="false"
+          if [ ! -f build.md ]; then
+            update_needed="true"
           else
-            last_commit=""
+            diff -q build.md new_build.md > /dev/null || update_needed="true"
           fi
 
-          if [ "$last_commit" != "$latest_commit" ]; then
-            echo "New update available"
-            echo "update=true" >> $GITHUB_ENV
-          else
-            echo "No update"
-            echo "update=false" >> $GITHUB_ENV
-          fi
+          echo "update=$update_needed" >> $GITHUB_ENV
 
       - name: Update build.md and trigger build
         if: env.update == 'true' || env.branch_exists == 'false'
         run: |
-          # Remove all files except build.md
           git rm -rf --ignore-unmatch .
-          echo "Commit ID: $latest_commit" > build.md
-          echo "Commit Date: $latest_commit_date" >> build.md
+          mv new_build.md build.md
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add build.md
