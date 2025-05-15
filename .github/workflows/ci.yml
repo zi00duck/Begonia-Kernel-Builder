@@ -17,23 +17,23 @@ jobs:
         id: fetch_latest_commits
         run: |
           declare -A repos=(
-            ["KernelSU-Next"]="KernelSU-Next/KernelSU-Next"
-            ["RKSU"]="rsuntk/KernelSU"
-            ["MKSU"]="backslashxx/KernelSU"
+            ["KernelSU-Next"]="KernelSU-Next/KernelSU-Next@main"
+            ["RKSU"]="rsuntk/KernelSU@main"
+            ["MKSU"]="backslashxx/KernelSU@magic"
           )
-
+          
           touch new_build.md
-          update_needed="false"
-
+          
           for key in "${!repos[@]}"; do
-            repo="${repos[$key]}"
-            curl -s "https://api.github.com/repos/${repo}/commits/next" > latest_${key}.json
-            latest_commit=$(jq -r '.sha' latest_${key}.json)
-            latest_date=$(jq -r '.commit.author.date' latest_${key}.json)
-
+            IFS='@' read -r repo branch <<< "${repos[$key]}"
+            
+            response=$(curl -s "https://api.github.com/repos/${repo}/commits/${branch}")
+            latest_commit=$(echo "$response" | jq -r '.sha')
+            latest_date=$(echo "$response" | jq -r '.commit.author.date')
+          
             echo "${key}_commit=$latest_commit" >> $GITHUB_ENV
             echo "${key}_date=$latest_date" >> $GITHUB_ENV
-
+          
             echo "$key Commit ID: $latest_commit" >> new_build.md
             echo "$key Commit Date: $latest_date" >> new_build.md
             echo "" >> new_build.md
