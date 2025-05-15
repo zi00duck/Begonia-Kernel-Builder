@@ -35,7 +35,7 @@ jobs:
             echo "RELEASE_TAG=$(echo $LATEST_RELEASE | jq -r '.tag_name')" >> $GITHUB_ENV
           fi
 
-      - name: Getting KernelSU version
+      - name: Getting RKSU version
         id: integrate-kernelsu
         run: |
           if [ -d "./KernelSU" ]; then
@@ -44,11 +44,26 @@ jobs:
 
           git clone --recursive -j $(nproc) --branch main https://github.com/rsuntk/KernelSU KernelSU
 
-          KERNELSU_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
+          RKSU_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
 
-          echo "KernelSU version: $KERNELSU_VERSION"
+          echo "RKSU version: $RKSU_VERSION"
 
-          echo "KERNELSU_VERSION=$KERNELSU_VERSION" >> $GITHUB_ENV
+          echo "RKSU_VERSION=$RKSU_VERSION" >> $GITHUB_ENV
+
+      - name: Getting MKSU version
+        id: integrate-kernelsu
+        run: |
+          if [ -d "./KernelSU" ]; then
+            rm -rf "./KernelSU"
+          fi
+
+          git clone --recursive -j $(nproc) --branch main https://github.com/backslashxx/KernelSU KernelSU
+
+          MKSU_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
+
+          echo "MKSU version: $MKSU_VERSION"
+
+          echo "MKSU_VERSION=$MKSU_VERSION" >> $GITHUB_ENV
 
       - name: Getting KernelSU-Next version
         id: integrate-kernelsu-next
@@ -59,11 +74,11 @@ jobs:
 
           git clone --recursive -j $(nproc) --branch next https://github.com/KernelSU-Next/KernelSU-Next KernelSU-Next
 
-          ROOT_VERSION=$(git -C KernelSU-Next describe --abbrev=0 --tags)
+          KERNELSUN_VERSION=$(git -C KernelSU-Next describe --abbrev=0 --tags)
 
-          echo "KernelSU version: $ROOT_VERSION"
+          echo "KernelSU-Next version: $KERNELSUN_VERSION"
 
-          echo "ROOT_VERSION=$ROOT_VERSION" >> $GITHUB_ENV
+          echo "KERNELSUN_VERSION=$KERNELSUN_VERSION" >> $GITHUB_ENV
 
       - name: Report to Telegram
         env:
@@ -80,8 +95,9 @@ jobs:
 
           ▫️ *Device:* Begonia
           ▫️ *Non-Patch Variant*
-          ▫️ *KernelSU:* ${{ env.KERNELSU_VERSION }}
-          ▫️ *KernelSU-Next:* ${{ env.ROOT_VERSION }}
+          ▫️ *RKSU:* ${{ env.RKSU_VERSION }}
+          ▫️ *MKSU:* ${{ env.MKSU_VERSION }}
+          ▫️ *KernelSU-Next:* ${{ env.KERNELSUN_VERSION }}
 
           ▫️ *SUSFS:* v1.5.7 Supported
           ▫️ *Mountify:* Supported
@@ -89,10 +105,12 @@ jobs:
 
           📥 *Download Links:*
           - GitHub Release: [${{ env.RELEASE_NAME }}](${{ env.RELEASE_URL }})
-          - KernelSU Manager:
-            [Release](https://github.com/rsuntk/KernelSU/releases/${{ env.KERNELSU_VERSION }}) | [Nightly](https://nightly.link/rsuntk/KernelSU/workflows/build-manager/main)
+          - RKSU Manager:
+            [Release](https://github.com/rsuntk/KernelSU/releases/${{ env.RKSU_VERSION }}) | [Nightly](https://nightly.link/rsuntk/KernelSU/workflows/build-manager/main)
+          - MKSU Manager:
+            [Release](https://github.com/backslashxx/KernelSU/releases/${{ env.MKSU_VERSION }}) | [Nightly](https://nightly.link/backslashxx/KernelSU/workflows/build-manager/magic)
           - KernelSU-Next Manager:
-            [Release](https://github.com/KernelSU-Next/KernelSU-Next/releases/${{ env.ROOT_VERSION }}) | [Nightly](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager-ci/next/Manager)
+            [Release](https://github.com/KernelSU-Next/KernelSU-Next/releases/${{ env.KERNELSUN_VERSION }}) | [Nightly](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager-ci/next/Manager)
           - SUSFS Module: 
             [Release](https://github.com/sidex15/susfs4ksu-module/releases/latest) | [Nightly](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)
           - Mountify Module: [Release](https://github.com/backslashxx/mountify/releases/latest)
