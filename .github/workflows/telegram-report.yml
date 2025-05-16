@@ -65,6 +65,21 @@ jobs:
 
           echo "MKSU_VERSION=$MKSU_VERSION" >> $GITHUB_ENV
 
+      - name: Getting SukiSU-Ultra version
+        id: integrate-sukisu-ultra
+        run: |
+          if [ -d "./KernelSU" ]; then
+            rm -rf "./KernelSU"
+          fi
+
+          git clone --recursive -j $(nproc) --branch main https://github.com/ShirkNeko/SukiSU-Ultra KernelSU
+
+          SUKISU_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
+
+          echo "SUKISU version: $SUKISU_VERSION"
+
+          echo "SUKISU_VERSION=$SUKISU_VERSION" >> $GITHUB_ENV
+
       - name: Getting KernelSU-Next version
         id: integrate-kernelsu-next
         run: |
@@ -97,6 +112,7 @@ jobs:
           ▫️ *Non-Patch Variant*
           ▫️ *RKSU:* ${{ env.RKSU_VERSION }}
           ▫️ *MKSU:* ${{ env.MKSU_VERSION }}
+          ▫️ *SukiSU-Ultra:* ${{ env.SUKISU_VERSION }}
           ▫️ *KernelSU-Next:* ${{ env.KERNELSUN_VERSION }}
 
           ▫️ *SUSFS:* v1.5.7 Supported
@@ -109,6 +125,8 @@ jobs:
             [Release](https://github.com/rsuntk/KernelSU/releases/${{ env.RKSU_VERSION }}) | [Nightly](https://nightly.link/rsuntk/KernelSU/workflows/build-manager/main)
           - MKSU Manager:
             [Release](https://github.com/backslashxx/KernelSU/releases/${{ env.MKSU_VERSION }}) | [Nightly](https://nightly.link/backslashxx/KernelSU/workflows/build-manager/magic)
+          - SukiSU-Ultra Manager:
+            [Release](https://github.com/ShirkNeko/SukiSU-Ultra/releases/${{ env.SUKISU_VERSION }}) | [Nightly](https://nightly.link/ShirkNeko/SukiSU-Ultra/workflows/build-manager/main)
           - KernelSU-Next Manager:
             [Release](https://github.com/KernelSU-Next/KernelSU-Next/releases/${{ env.KERNELSUN_VERSION }}) | [Nightly](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager-ci/next/Manager)
           - SUSFS Module: 

@@ -211,7 +211,7 @@ jobs:
         working-directory: ${{ env.KERNEL_NAME }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
-        if: ${{ env.withRoot == 'rksu' || env.withRoot == 'mksu' || env.withRoot == 'ksun' }}
+        if: ${{ env.withRoot == 'rksu' || env.withRoot == 'mksu' || env.withRoot == 'sukisu' || env.withRoot == 'ksun' }}
         run: |
           if [ -d "./KernelSU" ]; then
             rm -rf "./KernelSU"
@@ -226,11 +226,20 @@ jobs:
           if [[ "$withRoot" == "rksu" ]]; then
             curl -LSs "https://raw.githubusercontent.com/rsuntk/KernelSU/main/kernel/setup.sh" | bash -s main
           elif [[ "$withRoot" == "mksu" ]]; then
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git config --global user.name "github-actions[bot]"
             curl -LSs "https://raw.githubusercontent.com/backslashxx/KernelSU/magic/kernel/setup.sh" | bash -s magic
             git remote add upstream https://github.com/cvnertnc/kernel_xiaomi_mt6785
             git fetch upstream
-            git config --global user.email "the.civanertunc@gmail.com"
-            git config --global user.name "cvnertnc"
+            git cherry-pick 0a0c51e54d52b91d4e96bbb0415a3ebc0ee5b4fb
+            git cherry-pick 999ee323e42030e122c3a2b0ac17ebdab09c7067
+            git cherry-pick b68f3a7f6afc58f87cba841f01593de60261281d
+          elif [[ "$withRoot" == "sukisu" ]]; then
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git config --global user.name "github-actions[bot]"
+            curl -LSs "https://raw.githubusercontent.com/ShirkNeko/SukiSU-Ultra/main/kernel/setup.sh" | bash -s nongki
+            git remote add upstream https://github.com/cvnertnc/kernel_xiaomi_mt6785
+            git fetch upstream
             git cherry-pick 0a0c51e54d52b91d4e96bbb0415a3ebc0ee5b4fb
             git cherry-pick 999ee323e42030e122c3a2b0ac17ebdab09c7067
             git cherry-pick b68f3a7f6afc58f87cba841f01593de60261281d
@@ -249,6 +258,10 @@ jobs:
           echo -e 'CONFIG_KSU=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
           if [[ "$withRoot" == "rksu" ]]; then
             echo -e 'CONFIG_KSU_MANUAL_HOOK=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          elif [[ "$withRoot" == "sukisu" ]]; then
+            echo -e 'CONFIG_KPM=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+            echo -e 'CONFIG_KALLSYMS_ALL=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+            echo -e 'CONFIG_KSU_MANUAL_HOOK=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
           elif [[ "$withRoot" == "ksun" ]]; then
             echo -e 'CONFIG_KSU_WITH_KPROBES=n' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
           fi
@@ -266,13 +279,13 @@ jobs:
           if [[ "$KNAME" == "power" ]]; then
               patch -p1 < SUSFS/kernel_patches/kernels/power/0001-syscall-ksu-hook.patch
           elif [[ "$KNAME" == "nova" ]]; then
-            if [[ "$withRoot" == "rksu" || "$withRoot" == "mksu" ]]; then
+            if [[ "$withRoot" == "rksu" || "$withRoot" == "mksu" || "$withRoot" == "sukisu" ]]; then
               patch -p1 < SUSFS/kernel_patches/kernels/nova/0001-standard-ksu-hook.patch
             else
               patch -p1 < SUSFS/kernel_patches/kernels/nova/0001-syscall-ksu-hook.patch
             fi
           else
-            if [[ "$withRoot" == "rksu" || "$withRoot" == "mksu" ]]; then
+            if [[ "$withRoot" == "rksu" || "$withRoot" == "mksu" || "$withRoot" == "sukisu" ]]; then
               patch -p1 < SUSFS/kernel_patches/0001-standard-ksu-hook.patch
             else
               patch -p1 < SUSFS/kernel_patches/0001-syscall-ksu-hook.patch
@@ -284,7 +297,7 @@ jobs:
         working-directory: ${{ env.KERNEL_NAME }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
-        if: ${{ (env.withRoot == 'rksu' || env.withRoot == 'mksu' || env.withRoot == 'ksun') && env.withSUSFS == 'true' }}
+        if: ${{ (env.withRoot == 'rksu' || env.withRoot == 'mksu' || env.withRoot == 'sukisu' || env.withRoot == 'ksun') && env.withSUSFS == 'true' }}
         run: |
 
           if [ -d "./SUSFS" ]; then
@@ -307,7 +320,9 @@ jobs:
             git clone --recursive -j $(nproc) --branch susfs-v1.5.7 https://github.com/rsuntk/KernelSU KernelSU
           elif [[ "$withRoot" == "mksu" ]]; then
             rm -rf KernelSU
-            git clone --recursive -j $(nproc) --branch 12083+sus155 https://github.com/backslashxx/KernelSU KernelSU
+            git clone --recursive -j $(nproc) --branch 12090-sus155 https://github.com/backslashxx/KernelSU KernelSU
+          elif [[ "$withRoot" == "sukisu" ]]; then
+            patch -d KernelSU -p1 < SUSFS/kernel_patches/SukiSU/10_enable_susfs_for_ksu.patch
           else
             patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch
           fi
