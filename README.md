@@ -27,6 +27,9 @@ If you are using RKSU, download and install the manager
 If you are using MKSU, download and install the manager
 > [Stable Version](https://github.com/backslashxx/KernelSU/releases/latest) || [Nightly Version](https://nightly.link/backslashxx/KernelSU/workflows/build-manager/magic)
 
+If you are using SukiSU-Ultra, download and install the manager
+> [Stable Version](https://github.com/ShirkNeko/SukiSU-Ultra/releases/latest) || [Nightly Version](https://nightly.link/ShirkNeko/SukiSU-Ultra/workflows/build-manager/main)
+
 Download and install SUSFS Module
 > [Stable Version](https://github.com/sidex15/susfs4ksu-module/releases/latest) || [Nightly Version](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)
 
@@ -34,12 +37,12 @@ Download and install [Mountify Module](https://github.com/backslashxx/mountify/r
 
 Also see here [`CONFIG.md`](./CONFIG.md).
 
-## Supported Begonia Kernels  
-| Kernels | Build | [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) | [RKSU](https://github.com/rsuntk/kernelsu) | [MKSU](https://github.com/backslashxx/KernelSU) | [SUSFS](https://gitlab.com/simonpunk/susfs4ksu) |  
-|---------|-------|--------------|----------|----------|-------|  
-| [Astera](https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ |  
-| [Power](https://github.com/Saikrishna1504/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ |  
-| [Nova](https://github.com/Nova-Kernels/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ |
+## Supported Begonia Kernels    
+| Kernels | Build | [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) | [RKSU](https://github.com/rsuntk/kernelsu) | [MKSU](https://github.com/backslashxx/KernelSU) | [SukiSU-Ultra](https://github.com/ShirkNeko/SukiSU-Ultra) | [SUSFS](https://gitlab.com/simonpunk/susfs4ksu) |    
+|---------|-------|--------------|----------|----------|------------------------|-------|    
+| [Astera](https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    
+| [Power](https://github.com/Saikrishna1504/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    
+| [Nova](https://github.com/Nova-Kernels/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 ## Thanks
   
