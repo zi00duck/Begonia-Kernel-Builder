@@ -44,6 +44,9 @@ Also see here [`CONFIG.md`](./CONFIG.md).
 | [Power](https://github.com/Saikrishna1504/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    
 | [Nova](https://github.com/Nova-Kernels/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
+There is no KPM support with SukiSU.⛔
+Currently, Non-Patches variants of the latest kernel builds support APatch.✅
+
 ## Thanks
   
 > Many Thanks [Sidex15](https://github.com/sidex15) for all the [Bug Fixes](https://github.com/cvnertnc/Begonia-Kernel-Builder/commit/a6aad58fa292b0fab54199ab4f982c286b35cb6d)
