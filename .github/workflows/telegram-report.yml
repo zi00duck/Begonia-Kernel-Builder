@@ -102,7 +102,7 @@ jobs:
         run: |
           TG_CHAT="@cvnertnc"
 
-          MSG="🚀 *For all Kernels KernelSU and KernelSU-Next Version is Updated!* 🔥
+          MSG="🚀 *For all Kernels ROOT Version is Updated!* 🔥
 
           ▫️ *Kernel:* 4.14.336.Astera
           ▫️ *Kernel:* 4.14.355.Power
@@ -114,8 +114,11 @@ jobs:
           ▫️ *MKSU:* ${{ env.MKSU_VERSION }}
           ▫️ *SukiSU-Ultra:* ${{ env.SUKISU_VERSION }}
           ▫️ *KernelSU-Next:* ${{ env.KERNELSUN_VERSION }}
+          ▫️ *APatch: Supported*
+            [Non-Patches variants from the latest builds currently support Apatch.]
 
           ▫️ *SUSFS:* v1.5.7 Supported
+          ▫️ *KPM:* Current kernels do not support KPM with SukiSU.
           ▫️ *Mountify:* Supported
           ▫️ *Release:* ${{ env.RELEASE_NAME }}
 
