@@ -10,6 +10,7 @@
     },
     "withRoot": "none",
     "withSUSFS": false,
+    "withKPM": false,
     "toolchains": [
       {
         "repo": "https://gitlab.com/PixelOS-Devices/playgroundtc",
@@ -58,6 +59,7 @@
     },
     "withRoot": "rksu",
     "withSUSFS": true,
+    "withKPM": false,
     "toolchains": [
       {
         "repo": "https://gitlab.com/PixelOS-Devices/playgroundtc",
@@ -106,6 +108,7 @@
     },
     "withRoot": "mksu",
     "withSUSFS": true,
+    "withKPM": false,
     "toolchains": [
       {
         "repo": "https://gitlab.com/PixelOS-Devices/playgroundtc",
@@ -148,12 +151,13 @@
     "kernelSource": {
       "device": "begonia",
       "defconfig": "begonia_user_defconfig",
-      "name": "Astera-SukiSU-Ultra-SUSFS",
+      "name": "Astera-SukiSU-SUSFS",
       "repo": "https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785",
       "branch": "fifteen"
     },
     "withRoot": "sukisu",
     "withSUSFS": true,
+    "withKPM": false,
     "toolchains": [
       {
         "repo": "https://gitlab.com/PixelOS-Devices/playgroundtc",
@@ -202,6 +206,7 @@
     },
     "withRoot": "ksun",
     "withSUSFS": true,
+    "withKPM": false,
     "toolchains": [
       {
         "repo": "https://gitlab.com/PixelOS-Devices/playgroundtc",
