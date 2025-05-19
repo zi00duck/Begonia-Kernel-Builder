@@ -10,6 +10,7 @@
     },
     "withRoot": "none",
     "withSUSFS": false,
+    "withKPM": false,
     "toolchains": [
       {
         "repo": "https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379",
@@ -58,6 +59,7 @@
     },
     "withRoot": "rksu",
     "withSUSFS": true,
+    "withKPM": false,
     "toolchains": [
       {
         "repo": "https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379",
@@ -106,6 +108,7 @@
     },
     "withRoot": "mksu",
     "withSUSFS": true,
+    "withKPM": false,
     "toolchains": [
       {
         "repo": "https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379",
@@ -154,6 +157,7 @@
     },
     "withRoot": "sukisu",
     "withSUSFS": true,
+    "withKPM": true,
     "toolchains": [
       {
         "repo": "https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379",
@@ -202,6 +206,7 @@
     },
     "withRoot": "ksun",
     "withSUSFS": true,
+    "withKPM": false,
     "toolchains": [
       {
         "repo": "https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379",

@@ -53,6 +53,7 @@ jobs:
 
       withRoot: ${{ matrix.repos.withRoot }}
       withSUSFS: ${{ matrix.repos.withSUSFS }}
+      withKPM: ${{ matrix.repos.withKPM }}
       ccache: ${{ matrix.repos.ccache }}
       useAnykernel: ${{ matrix.repos.AnyKernel3.use }}
       release: ${{ matrix.repos.AnyKernel3.release }}
@@ -206,16 +207,14 @@ jobs:
           echo "ARCH=$ARCH" >> $GITHUB_OUTPUT
           echo "args=$args" >> $GITHUB_OUTPUT
 
-      - name: "💉 APatch and SukiSU setup"
+      - name: "💉 APatch, SukiSU and MKSU setup"
         working-directory: ${{ env.KERNEL_NAME }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
         run: |
           echo -e 'CONFIG_KALLSYMS_ALL=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
 
-          curl -LSs https://github.com/cvnertnc/kernel_xiaomi_mt6785/commit/0a0c51e54d52b91d4e96bbb0415a3ebc0ee5b4fb.patch | patch -p1
-          curl -LSs https://github.com/cvnertnc/kernel_xiaomi_mt6785/commit/999ee323e42030e122c3a2b0ac17ebdab09c7067.patch | patch -p1
-          curl -LSs https://github.com/cvnertnc/kernel_xiaomi_mt6785/commit/b68f3a7f6afc58f87cba841f01593de60261281d.patch | patch -p1
+          curl -LSs https://github.com/cvnertnc/kernel_xiaomi_mt6785/commit/d01168989c97157ccd3710d28000a4db83c46e58.patch | patch -p1
 
           cat arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
 
@@ -321,7 +320,8 @@ jobs:
           elif [[ "$withRoot" == "sukisu" ]]; then
             patch -d KernelSU -p1 < SUSFS/kernel_patches/SukiSU/10_enable_susfs_for_ksu.patch
           else
-            patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch
+            rm -rf KernelSU
+            git clone --recursive -j $(nproc) --branch next-susfs-dev https://github.com/KernelSU-Next/KernelSU-Next KernelSU
           fi
 
           if [[ "$KNAME" == "power" ]]; then
@@ -354,6 +354,16 @@ jobs:
           echo -e "#Mountify" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
           echo -e "CONFIG_OVERLAY_FS=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
           echo -e "CONFIG_TMPFS_XATTR=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+
+          cat arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+
+      - name: "☯️ KPM Injection"
+        working-directory: ${{ env.KERNEL_NAME }}
+        env:
+          arch: ${{ steps.generate-args.outputs.ARCH }}
+        if: ${{ env.withRoot == 'sukisu' || env.withKPM == 'true' }}
+        run: |
+          echo -e 'CONFIG_KPM=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
 
           cat arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
 
