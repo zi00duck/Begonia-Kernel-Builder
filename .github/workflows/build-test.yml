@@ -257,6 +257,9 @@ jobs:
           if [[ "$withRoot" == "rksu" ]]; then
             echo -e 'CONFIG_KSU_MANUAL_HOOK=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
           elif [[ "$withRoot" == "sukisu" ]]; then
+            if [[ "$withKPM" == "true" ]]; then
+              echo -e 'CONFIG_KPM=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+            fi
             echo -e 'CONFIG_KSU_MANUAL_HOOK=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
           elif [[ "$withRoot" == "ksun" ]]; then
             echo -e 'CONFIG_KSU_WITH_KPROBES=n' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
@@ -316,7 +319,7 @@ jobs:
             git clone --recursive -j $(nproc) --branch susfs-v1.5.7 https://github.com/rsuntk/KernelSU KernelSU
           elif [[ "$withRoot" == "mksu" ]]; then
             rm -rf KernelSU
-            git clone --recursive -j $(nproc) --branch 12093-sus155 https://github.com/backslashxx/KernelSU KernelSU
+            git clone --recursive -j $(nproc) --branch 12083+sus155 https://github.com/backslashxx/KernelSU KernelSU
           elif [[ "$withRoot" == "sukisu" ]]; then
             patch -d KernelSU -p1 < SUSFS/kernel_patches/SukiSU/10_enable_susfs_for_ksu.patch
           else
@@ -357,16 +360,6 @@ jobs:
 
           cat arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
 
-      - name: "☯️ KPM Injection"
-        working-directory: ${{ env.KERNEL_NAME }}
-        env:
-          arch: ${{ steps.generate-args.outputs.ARCH }}
-        if: ${{ env.withRoot == 'sukisu' || env.withKPM == 'true' }}
-        run: |
-          echo -e 'CONFIG_KPM=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
-
-          cat arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
-
       - name: "👍 Make defconfig"
         working-directory: ${{ env.KERNEL_NAME }}
         env:
@@ -383,6 +376,28 @@ jobs:
         run: |
           echo "PATH Variable: $PATH"
           make ${{ env.args }}
+
+      - name: "☯️ KPM Injection"
+        working-directory: ${{ env.KERNEL_NAME }}
+        env:
+          arch: ${{ steps.generate-args.outputs.ARCH }}
+        if: ${{ env.withRoot == 'sukisu' && env.withKPM == 'true' }}
+        run: |
+          mkdir ~/SukiSUPatch
+          cd ~/SukiSUPatch
+          TAG=$(curl -s https://api.github.com/repos/ShirkNeko/SukiSU_KernelPatch_patch/releases | \
+            jq -r 'map(select(.prerelease)) | first | .tag_name')
+          echo "Latest tag is: $TAG"
+          curl -Ls -o patch_linux "https://github.com/ShirkNeko/SukiSU_KernelPatch_patch/releases/download/$TAG/patch_linux"
+          chmod +x patch_linux
+          mv ${{ env.OUT_DIR }}/arch/${{ env.arch }}/boot/Image ~/SukiSUPatch/Image
+          rm -rf ${{ env.OUT_DIR }}/arch/${{ env.arch }}/boot/Image.gz
+          ./patch_linux
+          rm -rf ./Image
+          mv -f oImage Image
+          gzip -k Image
+          mv ~/SukiSUPatch/Image.gz ${{ env.OUT_DIR }}/arch/${{ env.arch }}/boot/Image.gz
+          cd ..
 
       # - name: "💙 Upload Image.gz"
         # uses: actions/upload-artifact@v4

@@ -114,11 +114,11 @@ jobs:
           ▫️ *MKSU:* ${{ env.MKSU_VERSION }}
           ▫️ *SukiSU-Ultra:* ${{ env.SUKISU_VERSION }}
           ▫️ *KernelSU-Next:* ${{ env.KERNELSUN_VERSION }}
-          ▫️ *APatch: Supported*
+          ▫️ *APatch:* Supported
             [Non-Patches variants from the latest builds currently support Apatch.]
 
           ▫️ *SUSFS:* v1.5.7 Supported
-          ▫️ *KPM:* Current kernels do not support KPM with SukiSU.
+          ▫️ *KPM:* Supported with SukiSU
           ▫️ *Mountify:* Supported
           ▫️ *Release:* ${{ env.RELEASE_NAME }}
 
