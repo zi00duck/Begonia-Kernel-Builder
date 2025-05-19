@@ -320,7 +320,8 @@ jobs:
           elif [[ "$withRoot" == "sukisu" ]]; then
             patch -d KernelSU -p1 < SUSFS/kernel_patches/SukiSU/10_enable_susfs_for_ksu.patch
           else
-            patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch
+            rm -rf KernelSU
+            git clone --recursive -j $(nproc) --branch next-susfs-dev https://github.com/KernelSU-Next/KernelSU-Next KernelSU
           fi
 
           if [[ "$KNAME" == "power" ]]; then
