@@ -240,7 +240,7 @@ jobs:
           elif [[ "$withRoot" == "mksu" ]]; then
             curl -LSs "https://raw.githubusercontent.com/backslashxx/KernelSU/magic/kernel/setup.sh" | bash -s magic
           elif [[ "$withRoot" == "sukisu" ]]; then
-            curl -LSs "https://raw.githubusercontent.com/ShirkNeko/SukiSU-Ultra/main/kernel/setup.sh" | bash -s nongki
+            curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s nongki
           else
             curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
             rm -rf KernelSU
@@ -385,10 +385,10 @@ jobs:
         run: |
           mkdir ~/SukiSUPatch
           cd ~/SukiSUPatch
-          TAG=$(curl -s https://api.github.com/repos/ShirkNeko/SukiSU_KernelPatch_patch/releases | \
+          TAG=$(curl -s https://api.github.com/repos/SukiSU-Ultra/SukiSU_KernelPatch_patch/releases | \
             jq -r 'map(select(.prerelease)) | first | .tag_name')
           echo "Latest tag is: $TAG"
-          curl -Ls -o patch_linux "https://github.com/ShirkNeko/SukiSU_KernelPatch_patch/releases/download/$TAG/patch_linux"
+          curl -Ls -o patch_linux "https://github.com/SukiSU-Ultra/SukiSU_KernelPatch_patch/releases/download/$TAG/patch_linux"
           chmod +x patch_linux
           mv ${{ env.OUT_DIR }}/arch/${{ env.arch }}/boot/Image ~/SukiSUPatch/Image
           rm -rf ${{ env.OUT_DIR }}/arch/${{ env.arch }}/boot/Image.gz

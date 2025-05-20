@@ -151,7 +151,7 @@
     "kernelSource": {
       "device": "begonia",
       "defconfig": "begonia_user_defconfig",
-      "name": "Power-SukiSU-Ultra-SUSFS",
+      "name": "Power-SukiSU-KPM-SUSFS",
       "repo": "https://github.com/Saikrishna1504/kernel_xiaomi_mt6785",
       "branch": "vic"
     },
