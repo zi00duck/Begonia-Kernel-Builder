@@ -2,9 +2,9 @@
 # Begonia-Kernel-Builder
 ![Artifacts](./.assets/aboutphoto.jpg)
 
-> Automatically follow daily RKSU, MKSU and KernelSU-Next updates and build the android kernel for Xiaomi Redmi Note 8 Pro(begonia)
+> Automatically follow daily RKSU, MKSU, SukiSU-Ultra and KernelSU-Next updates and build the android kernel for Xiaomi Redmi Note 8 Pro(begonia)
 
-These builds are created for the Xiaomi Redmi Note 8 Pro(begonia) device. It is built with [KernelSU Next](https://github.com/KernelSU-Next/KernelSU-Next) and [SUSFS](https://gitlab.com/simonpunk/susfs4ksu)
+These builds are created for the Xiaomi Redmi Note 8 Pro(begonia) device. It is built with RKSU, MKSU, SukiSU-Ultra and KernelSU-Next and [SUSFS](https://gitlab.com/simonpunk/susfs4ksu)
 
 If you are using a kernel with magisk installed, uninstall magisk before installing the Your kernel. After removing magisk, you can install the Your kernel.
 

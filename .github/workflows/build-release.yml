@@ -318,7 +318,8 @@ jobs:
             rm -rf KernelSU
             git clone --recursive -j $(nproc) --branch susfs-v1.5.7 https://github.com/rsuntk/KernelSU KernelSU
           elif [[ "$withRoot" == "mksu" ]]; then
-            patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/10_enable_susfs_for_mksu.patch
+            rm -rf KernelSU
+            git clone --recursive -j $(nproc) --branch 12095-sus155 https://github.com/backslashxx/KernelSU
           elif [[ "$withRoot" == "sukisu" ]]; then
             patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/10_enable_susfs_for_sukisu.patch
           else
