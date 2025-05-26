@@ -38,11 +38,11 @@ Download and install [Mountify Module](https://github.com/backslashxx/mountify/r
 Also see here [`CONFIG.md`](./CONFIG.md).
 
 ## Supported Begonia Kernels    
-| Kernels | Build | [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) | [RKSU](https://github.com/rsuntk/kernelsu) | [MKSU](https://github.com/backslashxx/KernelSU) | [SukiSU-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) | [SUSFS](https://gitlab.com/simonpunk/susfs4ksu) | [KPM](https://github.com/SukiSU-Ultra/SukiSU_KernelPatch_patch) |    
-|---------|-------|--------------|----------|----------|------------------------|-------|-------|    
-| [Astera](https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    
-| [Power](https://github.com/Saikrishna1504/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    
-| [Nova](https://github.com/Nova-Kernels/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Kernels | Build | [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) | [RKSU](https://github.com/rsuntk/kernelsu) | [SukiSU-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) | [SUSFS](https://gitlab.com/simonpunk/susfs4ksu) | [KPM](https://github.com/SukiSU-Ultra/SukiSU_KernelPatch_patch) |    
+|---------|-------|--------------|----------|------------------------|-------|-------|    
+| [Astera](https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    
+| [Power](https://github.com/Saikrishna1504/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    
+| [Nova](https://github.com/Nova-Kernels/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 Currently, Non-Patches variants of the latest kernel builds support APatch.✅
 
@@ -54,7 +54,6 @@ Currently, Non-Patches variants of the latest kernel builds support APatch.✅
 [rifsxd](https://github.com/rifsxd)  
 [ShirkNeko](https://github.com/ShirkNeko)  
 [rsuntk](https://github.com/rsuntk)  
-[backslashxx](https://github.com/backslashxx)  
 [Saikrishna1504](https://github.com/Saikrishna1504)  
 [Wahid7852](https://github.com/Wahid7852)  
 [PhamtomK12](https://github.com/PhamtomK12)  
