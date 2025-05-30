@@ -322,11 +322,19 @@ jobs:
           fi
 
           if [[ "$KNAME" == "power" ]]; then
-            patch -p1 < SUSFS/kernel_patches/kernels/power/50_add_susfs_in_kernel-4.14.patch
+            patch -p1 < SUSFS/kernel_patches/kernels/power/50-susfs-kernel-4.14.patch
           elif [[ "$KNAME" == "nova" ]]; then
-            patch -p1 < SUSFS/kernel_patches/kernels/nova/50_add_susfs_in_kernel-4.14.patch
+            if [[ "$withRoot" == "rksu" || "$withRoot" == "sukisu" ]]; then
+              patch -p1 < SUSFS/kernel_patches/kernels/nova/50-susfs-kernel-4.14-ksu.patch
+            else
+              patch -p1 < SUSFS/kernel_patches/kernels/nova/50-susfs-kernel-4.14-ksun.patch
+            fi
           else
-            patch -p1 < SUSFS/kernel_patches/50_add_susfs_in_kernel-4.14.patch
+            if [[ "$withRoot" == "rksu" || "$withRoot" == "sukisu" ]]; then
+              patch -p1 < SUSFS/kernel_patches/50-susfs-kernel-4.14-ksu.patch
+            else
+              patch -p1 < SUSFS/kernel_patches/50-susfs-kernel-4.14-ksun.patch
+            fi
           fi
 
           patch -p1 --verbose < SUSFS/kernel_patches/backport-fs-upstream-susfs-v1.5.7-non-gki.patch
