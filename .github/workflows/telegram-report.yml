@@ -50,6 +50,21 @@ jobs:
 
           echo "RKSU_VERSION=$RKSU_VERSION" >> $GITHUB_ENV
 
+      - name: Getting MKSU version
+        id: integrate-mksu
+        run: |
+          if [ -d "./KernelSU" ]; then
+            rm -rf "./KernelSU"
+          fi
+
+          git clone --recursive -j $(nproc) --branch magic https://github.com/backslashxx/KernelSU KernelSU
+
+          MKSU_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
+
+          echo "MKSU version: $MKSU_VERSION"
+
+          echo "MKSU_VERSION=$MKSU_VERSION" >> $GITHUB_ENV
+
       - name: Getting SukiSU-Ultra version
         id: integrate-sukisu-ultra
         run: |
@@ -96,6 +111,7 @@ jobs:
           ▫️ *Device:* Begonia
           ▫️ *Non-Patch Variant*
           ▫️ *RKSU:* ${{ env.RKSU_VERSION }}
+          ▫️ *MKSU:* ${{ env.MKSU_VERSION }}
           ▫️ *SukiSU-Ultra:* ${{ env.SUKISU_VERSION }}
           ▫️ *KernelSU-Next:* ${{ env.KERNELSUN_VERSION }}
           ▫️ *APatch:* Supported
@@ -110,6 +126,8 @@ jobs:
           - GitHub Release: [${{ env.RELEASE_NAME }}](${{ env.RELEASE_URL }})
           - RKSU Manager:
             [Release](https://github.com/rsuntk/KernelSU/releases/${{ env.RKSU_VERSION }}) | [Nightly](https://nightly.link/rsuntk/KernelSU/workflows/build-manager/main)
+          - MKSU Manager:
+            [Release](https://github.com/backslashxx/KernelSU/releases/${{ env.MKSU_VERSION }}) | [Nightly](https://nightly.link/backslashxx/KernelSU/workflows/build-manager/magic)
           - SukiSU-Ultra Manager:
             [Release](https://github.com/ShirkNeko/SukiSU-Ultra/releases/${{ env.SUKISU_VERSION }}) | [Nightly](https://nightly.link/ShirkNeko/SukiSU-Ultra/workflows/build-manager/main)
           - KernelSU-Next Manager:
