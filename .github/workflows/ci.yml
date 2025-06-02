@@ -19,7 +19,8 @@ jobs:
           declare -A repos=(
             ["KernelSU-Next"]="KernelSU-Next/KernelSU-Next@next"
             ["RKSU"]="rsuntk/KernelSU@main"
-            ["SukiSU-Ultra"]="SukiSU-Ultra/SukiSU-Ultra@main"
+            ["MKSU"]="backslashxx/KernelSU@magic"
+            ["SukiSU-Ultra"]="ShirkNeko/SukiSU-Ultra@main"
           )
           
           touch new_build.md
