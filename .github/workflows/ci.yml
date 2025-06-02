@@ -18,7 +18,7 @@ jobs:
         run: |
           declare -A repos=(
             ["KernelSU-Next"]="KernelSU-Next/KernelSU-Next@next"
-            ["RKSU"]="rsuntk/KernelSU@main"
+            ["KernelSU"]="rsuntk/KernelSU@main"
             ["SukiSU-Ultra"]="SukiSU-Ultra/SukiSU-Ultra@main"
           )
           

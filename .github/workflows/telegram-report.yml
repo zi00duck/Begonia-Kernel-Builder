@@ -35,8 +35,8 @@ jobs:
             echo "RELEASE_TAG=$(echo $LATEST_RELEASE | jq -r '.tag_name')" >> $GITHUB_ENV
           fi
 
-      - name: Getting RKSU version
-        id: integrate-rksu
+      - name: Getting KernelSU version
+        id: integrate-ksu
         run: |
           if [ -d "./KernelSU" ]; then
             rm -rf "./KernelSU"
@@ -44,11 +44,11 @@ jobs:
 
           git clone --recursive -j $(nproc) --branch main https://github.com/rsuntk/KernelSU KernelSU
 
-          RKSU_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
+          KernelSU_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
 
-          echo "RKSU version: $RKSU_VERSION"
+          echo "KernelSU version: $KernelSU_VERSION"
 
-          echo "RKSU_VERSION=$RKSU_VERSION" >> $GITHUB_ENV
+          echo "KernelSU_VERSION=$KernelSU_VERSION" >> $GITHUB_ENV
 
       - name: Getting SukiSU-Ultra version
         id: integrate-sukisu-ultra
@@ -95,7 +95,7 @@ jobs:
 
           ▫️ *Device:* Begonia
           ▫️ *Non-Patch Variant*
-          ▫️ *RKSU:* ${{ env.RKSU_VERSION }}
+          ▫️ *KernelSU:* ${{ env.KernelSU_VERSION }}
           ▫️ *SukiSU-Ultra:* ${{ env.SUKISU_VERSION }}
           ▫️ *KernelSU-Next:* ${{ env.KERNELSUN_VERSION }}
           ▫️ *APatch:* Supported
@@ -108,8 +108,8 @@ jobs:
 
           📥 *Download Links:*
           - GitHub Release: [${{ env.RELEASE_NAME }}](${{ env.RELEASE_URL }})
-          - RKSU Manager:
-            [Release](https://github.com/rsuntk/KernelSU/releases/${{ env.RKSU_VERSION }}) | [Nightly](https://nightly.link/rsuntk/KernelSU/workflows/build-manager/main)
+          - KernelSU Manager:
+            [Release](https://github.com/rsuntk/KernelSU/releases/${{ env.KernelSU_VERSION }}) | [Nightly](https://nightly.link/rsuntk/KernelSU/workflows/build-manager/main)
           - SukiSU-Ultra Manager:
             [Release](https://github.com/ShirkNeko/SukiSU-Ultra/releases/${{ env.SUKISU_VERSION }}) | [Nightly](https://nightly.link/ShirkNeko/SukiSU-Ultra/workflows/build-manager/main)
           - KernelSU-Next Manager:

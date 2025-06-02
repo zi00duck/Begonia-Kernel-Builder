@@ -53,11 +53,11 @@
     "kernelSource": {
       "device": "begonia",
       "defconfig": "begonia_user_defconfig",
-      "name": "Power-RKSU-SUSFS",
+      "name": "Power-KernelSU-SUSFS",
       "repo": "https://github.com/Saikrishna1504/kernel_xiaomi_mt6785",
       "branch": "vic"
     },
-    "withRoot": "rksu",
+    "withRoot": "ksu",
     "withSUSFS": true,
     "withKPM": false,
     "toolchains": [
