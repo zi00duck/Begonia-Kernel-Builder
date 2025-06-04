@@ -312,13 +312,16 @@ jobs:
           cp -v SUSFS/kernel_patches/fs/* fs/
           cp -v SUSFS/kernel_patches/include/linux/* include/linux/
 
-          if [[ "$withRoot" == "ksu" ]]; then
-            rm -rf KernelSU
-            git clone --recursive -j $(nproc) --branch susfs-main https://github.com/rsuntk/KernelSU KernelSU
-          elif [[ "$withRoot" == "sukisu" ]]; then
-            patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/10_enable_susfs_for_sukisu.patch
-          else
+          if [[ "$withRoot" == "ksun" ]]; then
             patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/10_enable_susfs_for_ksun.patch
+          else
+            rm -rf "./KernelSU"
+            rm -rf "./drivers/kernelsu"
+            if [[ "$withRoot" == "ksu" ]]; then
+              curl -LSs "https://raw.githubusercontent.com/rsuntk/KernelSU/main/kernel/setup.sh" | bash -s susfs-main
+            else
+              curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-dev
+            fi
           fi
 
           if [[ "$KNAME" == "power" ]]; then
