@@ -4,12 +4,13 @@
 
 > Automatically follow daily KernelSU, SukiSU-Ultra and KernelSU-Next updates and build the android kernel for Xiaomi Redmi Note 8 Pro(begonia)
 
-These builds are created for the Xiaomi Redmi Note 8 Pro(begonia) device. It is built with KernelSU, SukiSU-Ultra and KernelSU-Next and [SUSFS](https://gitlab.com/simonpunk/susfs4ksu)
+These builds are created for the Xiaomi Redmi Note 8 Pro(begonia) device. It is built with KernelSU, SukiSU-Ultra and KernelSU-Next and SUSFS
 
 If you are using a kernel with magisk installed, uninstall magisk before installing the Your kernel. After removing magisk, you can install the Your kernel.
 
-Get the [latest Build release](https://github.com/cvnertnc/Begonia-Kernel-Builder/releases/latest)
+Get the [latest CI release](https://github.com/cvnertnc/Begonia-Kernel-Builder/releases/latest)
 
+[![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/cvnertnc)
 [![CI for Updates](https://github.com/cvnertnc/Begonia-Kernel-Builder/actions/workflows/ci.yml/badge.svg)](https://github.com/cvnertnc/Begonia-Kernel-Builder/actions/workflows/ci.yml)
 
 Astera Kernel By [MrErenK](https://github.com/MrErenK)
@@ -35,8 +36,8 @@ Download and install [Mountify Module](https://github.com/backslashxx/mountify/r
 Also see here [`CONFIG.md`](./CONFIG.md).
 
 ## Supported Begonia Kernels      
-| Kernels | Build | [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) | [KernelSU](https://github.com/rsuntk/kernelsu) | [SukiSU-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) | [SUSFS](https://gitlab.com/simonpunk/susfs4ksu) | [KPM](https://github.com/SukiSU-Ultra/SukiSU_KernelPatch_patch) | [APatch](https://github.com/SukiSU-Ultra/APatch) |      
-|---------|-------|--------------|----------|------------------------|-------|-------|--------|    
+| Kernels | Build | [KernelSU](https://github.com/rsuntk/kernelsu) | [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) | [SukiSU-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) | [SUSFS](https://gitlab.com/simonpunk/susfs4ksu) | [KPM](https://github.com/SukiSU-Ultra/SukiSU_KernelPatch_patch) | [APatch](https://github.com/SukiSU-Ultra/APatch) |      
+|---------|-------|----------|--------------|------------------------|-------|-------|--------|    
 | [Astera](https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ |    
 | [Power](https://github.com/Saikrishna1504/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    
 | [Nova](https://github.com/Nova-Kernels/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
