@@ -6,7 +6,10 @@
 
 These builds are created for the Xiaomi Redmi Note 8 Pro(begonia) device. It is built with KernelSU, SukiSU-Ultra and KernelSU-Next and SUSFS
 
-If you are using a kernel with magisk installed, uninstall magisk before installing the Your kernel. After removing magisk, you can install the Your kernel.
+> [!NOTE]
+> If your current kernel has Magisk installed, please uninstall Magisk **before installing Your kernel**.  
+> After removing Magisk, you can safely proceed with installing Your kernel.
+>
 
 Get the [latest CI release](https://github.com/cvnertnc/Begonia-Kernel-Builder/releases/latest)
 
