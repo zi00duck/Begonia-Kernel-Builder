@@ -10,7 +10,7 @@ If you are using a kernel with magisk installed, uninstall magisk before install
 
 Get the [latest Build release](https://github.com/cvnertnc/Begonia-Kernel-Builder/releases/latest)
 
-[![CI for Updates](https://github.com/cvnertnc/Begonia-Kernel-Builder/actions/workflows/ci.yml/badge.svg?event=workflow_dispatch)](https://github.com/cvnertnc/Begonia-Kernel-Builder/actions/workflows/ci.yml)
+[![CI for Updates](https://github.com/cvnertnc/Begonia-Kernel-Builder/actions/workflows/ci.yml/badge.svg)](https://github.com/cvnertnc/Begonia-Kernel-Builder/actions/workflows/ci.yml)
 
 Astera Kernel By [MrErenK](https://github.com/MrErenK)
 
@@ -34,14 +34,12 @@ Download and install [Mountify Module](https://github.com/backslashxx/mountify/r
 
 Also see here [`CONFIG.md`](./CONFIG.md).
 
-## Supported Begonia Kernels    
-| Kernels | Build | [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) | [KernelSU](https://github.com/rsuntk/kernelsu) | [SukiSU-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) | [SUSFS](https://gitlab.com/simonpunk/susfs4ksu) | [KPM](https://github.com/SukiSU-Ultra/SukiSU_KernelPatch_patch) |    
-|---------|-------|--------------|----------|------------------------|-------|-------|    
-| [Astera](https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    
-| [Power](https://github.com/Saikrishna1504/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    
-| [Nova](https://github.com/Nova-Kernels/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-
-Currently, Non-Patches variants of the latest kernel builds support APatch.✅
+## Supported Begonia Kernels      
+| Kernels | Build | [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) | [KernelSU](https://github.com/rsuntk/kernelsu) | [SukiSU-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) | [SUSFS](https://gitlab.com/simonpunk/susfs4ksu) | [KPM](https://github.com/SukiSU-Ultra/SukiSU_KernelPatch_patch) | [APatch](https://github.com/SukiSU-Ultra/APatch) |      
+|---------|-------|--------------|----------|------------------------|-------|-------|--------|    
+| [Astera](https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ |    
+| [Power](https://github.com/Saikrishna1504/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    
+| [Nova](https://github.com/Nova-Kernels/kernel_xiaomi_mt6785) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 ## Thanks
   
