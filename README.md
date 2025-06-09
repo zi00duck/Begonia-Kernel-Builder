@@ -22,21 +22,30 @@ Power Kernel By [Saikrishna1504](https://github.com/Saikrishna1504/kernel_xiaomi
 
 Nova Kernel By [Wahid7852](https://github.com/Wahid7852)
 
-Download and install KernelSU-Next Manager
-> [Stable Version](https://github.com/KernelSU-Next/KernelSU-Next/releases/latest) || [Nightly Version](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager/next/manager)
+Also see here [`CONFIG.md`](./CONFIG.md).
 
-If you are using KernelSU, download and install the manager
+## Manager - Modules
+> [!NOTE]
+> You can download the manager for whatever kernel and root alternative you are using from here.
+>
+> Since all the root alternatives below support SUSFS, I definitely recommend installing it.
+>
+> If you want to use Mountify, you can download and install it from the SUSFS module.
+>
+
+Manager for KernelSU users
 > [Stable Version](https://github.com/rsuntk/kernelsu/releases/latest) || [Nightly Version](https://nightly.link/rsuntk/KernelSU/workflows/build-manager/main)
 
-If you are using SukiSU-Ultra, download and install the manager
+Manager for KernelSU-Next users
+> [Stable Version](https://github.com/KernelSU-Next/KernelSU-Next/releases/latest) || [Nightly Version](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager/next/manager)
+
+Manager fot SukiSU-Ultra users
 > [Stable Version](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases/latest) || [Nightly Version](https://nightly.link/SukiSU-Ultra/SukiSU-Ultra/workflows/build-manager/main)
 
 Download and install SUSFS Module
 > [Stable Version](https://github.com/sidex15/susfs4ksu-module/releases/latest) || [Nightly Version](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)
 
 Download and install [Mountify Module](https://github.com/backslashxx/mountify/releases/latest)
-
-Also see here [`CONFIG.md`](./CONFIG.md).
 
 ## Supported Begonia Kernels      
 | Kernels | Build | [KernelSU](https://github.com/rsuntk/kernelsu) | [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) | [SukiSU-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) | [SUSFS](https://gitlab.com/simonpunk/susfs4ksu) | [KPM](https://github.com/SukiSU-Ultra/SukiSU_KernelPatch_patch) | [APatch](https://github.com/SukiSU-Ultra/APatch) |      
