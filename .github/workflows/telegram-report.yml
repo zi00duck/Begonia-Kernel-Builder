@@ -118,8 +118,8 @@ jobs:
             [Release](https://github.com/sidex15/susfs4ksu-module/releases/latest) | [Nightly](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)
           - Mountify Module: [Release](https://github.com/backslashxx/mountify/releases/latest)
 
-          ⚠️ *Note:* If you are using MIUI, I recommend Astera kernel.
-          ⚠️ *Note:* If you are using Custom Rom (Aosp), I recommend Power and Nova kernel.
+          ⚠️ *Note:* Regardless of MIUI or AOSP. The best working for my device is Power Kernel. I recommend you to use Power Kernel variants.
+          ⚠️ *Note:* Using Astera and Nova kernel is completely your choice. Test it and use the best kernel for your device.
           ⚠️ *Note:* To prevent the risk of your device becoming bootlopped after the kernel installation, please backup your current kernel before flashing the kernel.
 
           *Please Read:*
