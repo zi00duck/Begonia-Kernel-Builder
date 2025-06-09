@@ -13,7 +13,7 @@
 
 Get the [latest CI release](https://github.com/cvnertnc/Begonia-Kernel-Builder/releases/latest)
 
-[![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/cvnertnc)
+[![Telegram](https://img.shields.io/badge/Follow-Telegram-blue.svg?logo=telegram)](https://t.me/cvnertnc)
 [![CI for Updates](https://github.com/cvnertnc/Begonia-Kernel-Builder/actions/workflows/ci.yml/badge.svg)](https://github.com/cvnertnc/Begonia-Kernel-Builder/actions/workflows/ci.yml)
 
 Astera Kernel By [MrErenK](https://github.com/MrErenK)
