@@ -10,6 +10,8 @@
 > If your current kernel has Magisk installed, please uninstall Magisk **before installing Your kernel**.  
 > After removing Magisk, you can safely proceed with installing Your kernel.
 >
+> Test the kernels and use what works best for your particular device.
+>
 
 Get the [latest CI release](https://github.com/cvnertnc/Begonia-Kernel-Builder/releases/latest)
 
@@ -28,19 +30,17 @@ Also see here [`CONFIG.md`](./CONFIG.md).
 > [!NOTE]
 > You can download the manager for whatever kernel and root alternative you are using from here.
 >
-> Since all the root alternatives below support SUSFS, I definitely recommend installing it.
->
-> If you want to use Mountify, you can download and install it from the SUSFS module.
+> I strongly recommend you to install the SUSFS module to hide root. If you want to use the Mountify Module, you can download and install it.
 >
 
 Manager for KernelSU users
-> [Stable Version](https://github.com/rsuntk/kernelsu/releases/latest) || [Nightly Version](https://nightly.link/rsuntk/KernelSU/workflows/build-manager/main)
+> [Stable Version](https://github.com/rsuntk/kernelsu/releases/latest) || [Nightly Version](https://nightly.link/rsuntk/KernelSU/workflows/build-manager/main/manager)
 
 Manager for KernelSU-Next users
-> [Stable Version](https://github.com/KernelSU-Next/KernelSU-Next/releases/latest) || [Nightly Version](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager/next/manager)
+> [Stable Version](https://github.com/KernelSU-Next/KernelSU-Next/releases/latest) || [Nightly Version](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager-ci/next/Manager)
 
 Manager fot SukiSU-Ultra users
-> [Stable Version](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases/latest) || [Nightly Version](https://nightly.link/SukiSU-Ultra/SukiSU-Ultra/workflows/build-manager/main)
+> [Stable Version](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases/latest) || [Nightly Version](https://nightly.link/SukiSU-Ultra/SukiSU-Ultra/workflows/build-manager/main/manager)
 
 Download and install SUSFS Module
 > [Stable Version](https://github.com/sidex15/susfs4ksu-module/releases/latest) || [Nightly Version](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)
