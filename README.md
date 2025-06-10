@@ -2,7 +2,7 @@
 # Begonia-Kernel-Builder
 ![Artifacts](./.assets/aboutphoto.jpg)
 [![Telegram](https://img.shields.io/badge/Follow-Telegram-blue.svg?logo=telegram)](https://t.me/cvnertnc)
-[![latest CI release](https://img.shields.io/github/v/release/cvnertnc/rvx-app?label=Release&logo=github)](https://github.com/cvnertnc/Begonia-Kernel-Builder/releases/latest)
+[![latest CI release](https://img.shields.io/github/v/release/cvnertnc/cvnertnc/Begonia-Kernel-Builder?label=Release&logo=github)](https://github.com/cvnertnc/Begonia-Kernel-Builder/releases/latest)
 [![CI for Updates](https://github.com/cvnertnc/Begonia-Kernel-Builder/actions/workflows/ci.yml/badge.svg)](https://github.com/cvnertnc/Begonia-Kernel-Builder/actions/workflows/ci.yml)
 
 > Automatically follow daily KernelSU, KernelSU-Next and SukiSU-Ultra updates and build the android kernel for Xiaomi Redmi Note 8 Pro(begonia)
