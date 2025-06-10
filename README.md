@@ -43,9 +43,9 @@ Manager fot SukiSU-Ultra users
 > [![Stable Version](https://img.shields.io/github/v/release/SukiSU-Ultra/SukiSU-Ultra?label=Release&logo=github)](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/SukiSU-Ultra/SukiSU-Ultra/workflows/build-manager/main/manager)
 
 Download and install SUSFS Module
-> [Stable Version](https://github.com/sidex15/susfs4ksu-module/releases/latest) || [Nightly Version](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)
+> [![Stable Version](https://img.shields.io/github/v/release/sidex15/susfs4ksu-module?label=Release&logo=github)](https://github.com/sidex15/susfs4ksu-module/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)
 
-Download and install [Mountify Module](https://github.com/backslashxx/mountify/releases/latest)
+Download and install Mountify Module [![Mountify Module](https://img.shields.io/github/v/release/backslashxx/mountify?label=Release&logo=github)](https://github.com/backslashxx/mountify/releases/latest)
 
 ## Supported Begonia Kernels      
 | Kernels | Build | [KernelSU](https://github.com/rsuntk/kernelsu) | [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) | [SukiSU-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) | [SUSFS](https://gitlab.com/simonpunk/susfs4ksu) | [KPM](https://github.com/SukiSU-Ultra/SukiSU_KernelPatch_patch) | [APatch](https://github.com/SukiSU-Ultra/APatch) |      
