@@ -1,4 +1,4 @@
-name: CI for Updates
+name: CI
 
 on:
   schedule:
