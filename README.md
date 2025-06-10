@@ -2,15 +2,20 @@
 # Begonia-Kernel-Builder
 ![Artifacts](./.assets/aboutphoto.jpg)
 
-> Automatically follow daily KernelSU, SukiSU-Ultra and KernelSU-Next updates and build the android kernel for Xiaomi Redmi Note 8 Pro(begonia)
+> Automatically follow daily KernelSU, KernelSU-Next and SukiSU-Ultra updates and build the android kernel for Xiaomi Redmi Note 8 Pro(begonia)
 
-These builds are created for the Xiaomi Redmi Note 8 Pro(begonia) device. It is built with KernelSU, SukiSU-Ultra and KernelSU-Next and SUSFS
-
-If you are using a kernel with magisk installed, uninstall magisk before installing the Your kernel. After removing magisk, you can install the Your kernel.
+> [!NOTE]
+> These builds are created for the Xiaomi Redmi Note 8 Pro(begonia) device. It is built with KernelSU, KernelSU-Next, SukiSU-Ultra and SUSFS
+>
+> If your current kernel has Magisk installed, please uninstall Magisk **before installing Your kernel**.  
+> After removing Magisk, you can safely proceed with installing Your kernel.
+>
+> Test the kernels and use what works best for your particular device.
+>
 
 Get the [latest CI release](https://github.com/cvnertnc/Begonia-Kernel-Builder/releases/latest)
 
-[![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/cvnertnc)
+[![Telegram](https://img.shields.io/badge/Follow-Telegram-blue.svg?logo=telegram)](https://t.me/cvnertnc)
 [![CI for Updates](https://github.com/cvnertnc/Begonia-Kernel-Builder/actions/workflows/ci.yml/badge.svg)](https://github.com/cvnertnc/Begonia-Kernel-Builder/actions/workflows/ci.yml)
 
 Astera Kernel By [MrErenK](https://github.com/MrErenK)
@@ -19,21 +24,28 @@ Power Kernel By [Saikrishna1504](https://github.com/Saikrishna1504/kernel_xiaomi
 
 Nova Kernel By [Wahid7852](https://github.com/Wahid7852)
 
-Download and install KernelSU-Next Manager
-> [Stable Version](https://github.com/KernelSU-Next/KernelSU-Next/releases/latest) || [Nightly Version](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager/next/manager)
+Also see here [`CONFIG.md`](./CONFIG.md).
 
-If you are using KernelSU, download and install the manager
-> [Stable Version](https://github.com/rsuntk/kernelsu/releases/latest) || [Nightly Version](https://nightly.link/rsuntk/KernelSU/workflows/build-manager/main)
+## Manager - Modules
+> [!NOTE]
+> You can download the manager for whatever kernel and root alternative you are using from here.
+>
+> I strongly recommend you to install the SUSFS module to hide root. If you want to use the Mountify Module, you can download and install it.
+>
 
-If you are using SukiSU-Ultra, download and install the manager
-> [Stable Version](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases/latest) || [Nightly Version](https://nightly.link/SukiSU-Ultra/SukiSU-Ultra/workflows/build-manager/main)
+Manager for KernelSU users
+> [![Stable Version](https://img.shields.io/github/v/release/rsuntk/KernelSU?label=Release&logo=github)](https://github.com/rsuntk/KernelSU/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/rsuntk/KernelSU/workflows/build-manager/main/manager)
+
+Manager for KernelSU-Next users
+> [![Stable Version](https://img.shields.io/github/v/release/KernelSU-Next/KernelSU-Next?label=Release&logo=github)](https://github.com/KernelSU-Next/KernelSU-Next/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager-ci/next/Manager)
+
+Manager fot SukiSU-Ultra users
+> [![Stable Version](https://img.shields.io/github/v/release/SukiSU-Ultra/SukiSU-Ultra?label=Release&logo=github)](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/SukiSU-Ultra/SukiSU-Ultra/workflows/build-manager/main/manager)
 
 Download and install SUSFS Module
-> [Stable Version](https://github.com/sidex15/susfs4ksu-module/releases/latest) || [Nightly Version](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)
+> [![Stable Version](https://img.shields.io/github/v/release/sidex15/susfs4ksu-module?label=Release&logo=github)](https://github.com/sidex15/susfs4ksu-module/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)
 
-Download and install [Mountify Module](https://github.com/backslashxx/mountify/releases/latest)
-
-Also see here [`CONFIG.md`](./CONFIG.md).
+Download and install Mountify Module [![Mountify Module](https://img.shields.io/github/v/release/backslashxx/mountify?label=Release&logo=github)](https://github.com/backslashxx/mountify/releases/latest)
 
 ## Supported Begonia Kernels      
 | Kernels | Build | [KernelSU](https://github.com/rsuntk/kernelsu) | [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) | [SukiSU-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) | [SUSFS](https://gitlab.com/simonpunk/susfs4ksu) | [KPM](https://github.com/SukiSU-Ultra/SukiSU_KernelPatch_patch) | [APatch](https://github.com/SukiSU-Ultra/APatch) |      

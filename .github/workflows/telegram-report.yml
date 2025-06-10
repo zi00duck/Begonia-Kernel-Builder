@@ -102,13 +102,14 @@ jobs:
           ▫️ *Device:* Begonia
           ▫️ *Non-Patch Variant*
           ▫️ *KernelSU:* ${{ env.KernelSU_VERSION }}
-          ▫️ *SukiSU-Ultra:* ${{ env.SUKISU_VERSION }}
           ▫️ *KernelSU-Next:* ${{ env.KERNELSUN_VERSION }}
+          ▫️ *SukiSU-Ultra:* ${{ env.SUKISU_VERSION }}
           ▫️ *APatch:* Supported
-            [Non-Patches variants from the latest builds currently support Apatch.]
+            [Non-patch variants of Power and Nova kernels, except Astera kernel, support APatch.]
 
           ▫️ *SUSFS:* v1.5.7 Supported
-          ▫️ *KPM:* Supported with SukiSU
+          ▫️ *KPM:* Supported
+            [Power and Nova kernels support KPM except Astera kernel.]
           ▫️ *Mountify:* Supported
           ▫️ *Release:* ${{ env.RELEASE_NAME }}
 
@@ -116,10 +117,10 @@ jobs:
           - GitHub Release: [${{ env.RELEASE_NAME }}](${{ env.RELEASE_URL }})
           - KernelSU Manager:
             [Release](https://github.com/rsuntk/KernelSU/releases/${{ env.KernelSU_VERSION }}) | [Nightly](https://nightly.link/rsuntk/KernelSU/workflows/build-manager/main)
-          - SukiSU-Ultra Manager:
-            [Release](https://github.com/ShirkNeko/SukiSU-Ultra/releases/${{ env.SUKISU_VERSION }}) | [Nightly](https://nightly.link/ShirkNeko/SukiSU-Ultra/workflows/build-manager/main)
           - KernelSU-Next Manager:
             [Release](https://github.com/KernelSU-Next/KernelSU-Next/releases/${{ env.KERNELSUN_VERSION }}) | [Nightly](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager-ci/next/Manager)
+          - SukiSU-Ultra Manager:
+            [Release](https://github.com/ShirkNeko/SukiSU-Ultra/releases/${{ env.SUKISU_VERSION }}) | [Nightly](https://nightly.link/ShirkNeko/SukiSU-Ultra/workflows/build-manager/main)
           - SUSFS Module: 
             [Release](https://github.com/sidex15/susfs4ksu-module/releases/latest) | [Nightly](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)
           - Mountify Module: [Release](https://github.com/backslashxx/mountify/releases/latest)
@@ -134,7 +135,7 @@ jobs:
           Astera Kernel by [MrErenK](https://t.me/Mr_ErenK)
           Power Kernel by [Sai Krishna](https://t.me/Saikrishna1504)
           Nova Kernel by [Abdul7852](https://t.me/Abdul7852)
-          KernelSU, KernelSU-Next and Susfs patches by [CEHunter ⚝](https://t.me/the_CEHunter)
+          KernelSU, KernelSU-Next, SukiSU-Ultra and SUSFS patches by [CEHunter ⚝](https://t.me/the_CEHunter)
 
           *Follow:* [cvnertnc](https://t.me/cvnertnc)
           *Join:* [cvnertnc-Chat](https://t.me/cvnertnc_chat)
