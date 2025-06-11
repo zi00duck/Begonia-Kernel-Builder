@@ -61,7 +61,7 @@
     "withRoot": "ksu",
     "withSUSFS": true,
     "withKPM": false,
-    "whichhook": standard,
+    "whichhook": "standard",
     "toolchains": [
       {
         "repo": "https://gitlab.com/PixelOS-Devices/playgroundtc",
@@ -111,7 +111,7 @@
     "withRoot": "ksun",
     "withSUSFS": true,
     "withKPM": false,
-    "whichhook": syscall,
+    "whichhook": "syscall",
     "toolchains": [
       {
         "repo": "https://gitlab.com/PixelOS-Devices/playgroundtc",
@@ -161,7 +161,7 @@
     "withRoot": "sukisu",
     "withSUSFS": true,
     "withKPM": false,
-    "whichhook": standard,
+    "whichhook": "standard",
     "toolchains": [
       {
         "repo": "https://gitlab.com/PixelOS-Devices/playgroundtc",

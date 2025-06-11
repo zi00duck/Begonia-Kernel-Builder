@@ -61,7 +61,7 @@
     "withRoot": "ksu",
     "withSUSFS": true,
     "withKPM": false,
-    "whichhook": syscall,
+    "whichhook": "syscall",
     "toolchains": [
       {
         "repo": "https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379",
@@ -111,7 +111,7 @@
     "withRoot": "ksun",
     "withSUSFS": true,
     "withKPM": false,
-    "whichhook": syscall,
+    "whichhook": "syscall",
     "toolchains": [
       {
         "repo": "https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379",
@@ -161,7 +161,7 @@
     "withRoot": "sukisu",
     "withSUSFS": true,
     "withKPM": true,
-    "whichhook": syscall,
+    "whichhook": "syscall",
     "toolchains": [
       {
         "repo": "https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379",
