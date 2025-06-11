@@ -245,6 +245,8 @@ jobs:
             git clone --recursive -j $(nproc) --branch next https://github.com/KernelSU-Next/KernelSU-Next KernelSU
           fi
 
+          curl -LSs https://github.com/backslashxx/mojito_krenol/commit/caa66aa.patch | patch -d KernelSU -p1
+
           ROOT_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
 
           echo -e "\n💡 ROOT version: $ROOT_VERSION\n"
@@ -274,12 +276,12 @@ jobs:
           echo -e "SUSFS_BRANCH=$SUSFS_BRANCH" >> $GITHUB_OUTPUT
 
           if [[ "$KNAME" == "power" ]]; then
-              patch -p1 < SUSFS/kernel_patches/kernels/power/0001-syscall-ksu-hook.patch
+            patch -p1 < SUSFS/kernel_patches/0001-syscall-ksu-hook.patch
           elif [[ "$KNAME" == "nova" ]]; then
             if [[ "$withRoot" == "ksu" || "$withRoot" == "sukisu" ]]; then
               patch -p1 < SUSFS/kernel_patches/kernels/nova/0001-standard-ksu-hook.patch
             else
-              patch -p1 < SUSFS/kernel_patches/kernels/nova/0001-syscall-ksu-hook.patch
+              patch -p1 < SUSFS/kernel_patches/0001-syscall-ksu-hook.patch
             fi
           else
             if [[ "$withRoot" == "ksu" || "$withRoot" == "sukisu" ]]; then
@@ -323,6 +325,8 @@ jobs:
               curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-dev
             fi
           fi
+
+          curl -LSs https://github.com/backslashxx/mojito_krenol/commit/caa66aa.patch | patch -d KernelSU -p1
 
           if [[ "$KNAME" == "power" ]]; then
             patch -p1 < SUSFS/kernel_patches/kernels/power/50_add_susfs_in_kernel-4.14.patch
