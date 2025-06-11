@@ -322,7 +322,7 @@ jobs:
 
           if [[ "$whichhook" == "standard" && ( "$withRoot" == "ksu" || "$withRoot" == "sukisu" ) ]]; then
             echo -e "Standard KernelSU patches selected."
-          elif [[ "$whichhook" == "syscall" && ( "$withRoot" == "ksu" || "$withRoot" == "ksun" || "$withRoot" == "sukisu" ) ]]; then
+          elif [[ "$whichhook" == "syscall" && ( "$withRoot" == "ksu" || "$withRoot" == "sukisu" ) ]]; then
             curl -LSs https://github.com/backslashxx/KernelSU/commit/bbeeb36.patch | patch -d KernelSU -p1
           fi
 
