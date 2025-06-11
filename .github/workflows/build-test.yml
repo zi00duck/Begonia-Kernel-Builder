@@ -54,6 +54,7 @@ jobs:
       withRoot: ${{ matrix.repos.withRoot }}
       withSUSFS: ${{ matrix.repos.withSUSFS }}
       withKPM: ${{ matrix.repos.withKPM }}
+      whichhook: ${{ matrix.repos.whichhook }}
       ccache: ${{ matrix.repos.ccache }}
       useAnykernel: ${{ matrix.repos.AnyKernel3.use }}
       release: ${{ matrix.repos.AnyKernel3.release }}
@@ -273,23 +274,15 @@ jobs:
           echo -e "SUSFS_REF=$SUSFS_REF" >> $GITHUB_OUTPUT
           echo -e "SUSFS_BRANCH=$SUSFS_BRANCH" >> $GITHUB_OUTPUT
 
-          if [[ "$KNAME" == "power" ]]; then
-            patch -p1 < SUSFS/kernel_patches/0001-syscall-ksu-hook.patch
-            curl -LSs https://github.com/backslashxx/KernelSU/commit/bbeeb36.patch | patch -d KernelSU -p1
-          elif [[ "$KNAME" == "nova" ]]; then
-            if [[ "$withRoot" == "ksu" || "$withRoot" == "sukisu" ]]; then
+          if [[ "$whichhook" == "standard" && ( "$withRoot" == "ksu" || "$withRoot" == "sukisu" ) ]]; then
+            if [[ "$KNAME" == "nova" ]]; then
               patch -p1 < SUSFS/kernel_patches/kernels/nova/0001-standard-ksu-hook.patch
             else
-              patch -p1 < SUSFS/kernel_patches/0001-syscall-ksu-hook.patch
-              curl -LSs https://github.com/backslashxx/KernelSU/commit/bbeeb36.patch | patch -d KernelSU -p1
-            fi
-          else
-            if [[ "$withRoot" == "ksu" || "$withRoot" == "sukisu" ]]; then
               patch -p1 < SUSFS/kernel_patches/0001-standard-ksu-hook.patch
-            else
-              patch -p1 < SUSFS/kernel_patches/0001-syscall-ksu-hook.patch
-              curl -LSs https://github.com/backslashxx/KernelSU/commit/bbeeb36.patch | patch -d KernelSU -p1
             fi
+          elif [[ "$whichhook" == "syscall" && ( "$withRoot" == "ksu" || "$withRoot" == "ksun" || "$withRoot" == "sukisu" ) ]]; then
+            patch -p1 < SUSFS/kernel_patches/0001-syscall-ksu-hook.patch
+            curl -LSs https://github.com/backslashxx/KernelSU/commit/bbeeb36.patch | patch -d KernelSU -p1
           fi
 
       - name: "🥷 Add SUSFS patches"
@@ -327,23 +320,10 @@ jobs:
             fi
           fi
 
-          if [[ "$KNAME" == "power" ]]; then
-            echo -e "----------"
+          if [[ "$whichhook" == "standard" && ( "$withRoot" == "ksu" || "$withRoot" == "sukisu" ) ]]; then
+            echo -e "Standard KernelSU patches selected."
+          elif [[ "$whichhook" == "syscall" && ( "$withRoot" == "ksu" || "$withRoot" == "ksun" || "$withRoot" == "sukisu" ) ]]; then
             curl -LSs https://github.com/backslashxx/KernelSU/commit/bbeeb36.patch | patch -d KernelSU -p1
-          elif [[ "$KNAME" == "nova" ]]; then
-            if [[ "$withRoot" == "ksu" || "$withRoot" == "sukisu" ]]; then
-              echo -e "----------"
-            else
-              echo -e "----------"
-              curl -LSs https://github.com/backslashxx/KernelSU/commit/bbeeb36.patch | patch -d KernelSU -p1
-            fi
-          else
-            if [[ "$withRoot" == "ksu" || "$withRoot" == "sukisu" ]]; then
-              echo -e "----------"
-            else
-              echo -e "----------"
-              curl -LSs https://github.com/backslashxx/KernelSU/commit/bbeeb36.patch | patch -d KernelSU -p1
-            fi
           fi
 
           if [[ "$KNAME" == "power" ]]; then
