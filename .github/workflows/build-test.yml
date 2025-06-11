@@ -245,8 +245,6 @@ jobs:
             git clone --recursive -j $(nproc) --branch next https://github.com/KernelSU-Next/KernelSU-Next KernelSU
           fi
 
-          curl -LSs https://github.com/backslashxx/KernelSU/commit/bbeeb36.patch | patch -d KernelSU -p1
-
           ROOT_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
 
           echo -e "\n💡 ROOT version: $ROOT_VERSION\n"
@@ -277,17 +275,20 @@ jobs:
 
           if [[ "$KNAME" == "power" ]]; then
             patch -p1 < SUSFS/kernel_patches/0001-syscall-ksu-hook.patch
+            curl -LSs https://github.com/backslashxx/KernelSU/commit/bbeeb36.patch | patch -d KernelSU -p1
           elif [[ "$KNAME" == "nova" ]]; then
             if [[ "$withRoot" == "ksu" || "$withRoot" == "sukisu" ]]; then
               patch -p1 < SUSFS/kernel_patches/kernels/nova/0001-standard-ksu-hook.patch
             else
               patch -p1 < SUSFS/kernel_patches/0001-syscall-ksu-hook.patch
+              curl -LSs https://github.com/backslashxx/KernelSU/commit/bbeeb36.patch | patch -d KernelSU -p1
             fi
           else
             if [[ "$withRoot" == "ksu" || "$withRoot" == "sukisu" ]]; then
               patch -p1 < SUSFS/kernel_patches/0001-standard-ksu-hook.patch
             else
               patch -p1 < SUSFS/kernel_patches/0001-syscall-ksu-hook.patch
+              curl -LSs https://github.com/backslashxx/KernelSU/commit/bbeeb36.patch | patch -d KernelSU -p1
             fi
           fi
 
@@ -326,7 +327,24 @@ jobs:
             fi
           fi
 
-          curl -LSs https://github.com/backslashxx/KernelSU/commit/bbeeb36.patch | patch -d KernelSU -p1
+          if [[ "$KNAME" == "power" ]]; then
+            echo -e "----------"
+            curl -LSs https://github.com/backslashxx/KernelSU/commit/bbeeb36.patch | patch -d KernelSU -p1
+          elif [[ "$KNAME" == "nova" ]]; then
+            if [[ "$withRoot" == "ksu" || "$withRoot" == "sukisu" ]]; then
+              echo -e "----------"
+            else
+              echo -e "----------"
+              curl -LSs https://github.com/backslashxx/KernelSU/commit/bbeeb36.patch | patch -d KernelSU -p1
+            fi
+          else
+            if [[ "$withRoot" == "ksu" || "$withRoot" == "sukisu" ]]; then
+              echo -e "----------"
+            else
+              echo -e "----------"
+              curl -LSs https://github.com/backslashxx/KernelSU/commit/bbeeb36.patch | patch -d KernelSU -p1
+            fi
+          fi
 
           if [[ "$KNAME" == "power" ]]; then
             patch -p1 < SUSFS/kernel_patches/kernels/power/50_add_susfs_in_kernel-4.14.patch
