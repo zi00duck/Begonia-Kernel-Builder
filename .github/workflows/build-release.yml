@@ -245,7 +245,7 @@ jobs:
             git clone --recursive -j $(nproc) --branch next https://github.com/KernelSU-Next/KernelSU-Next KernelSU
           fi
 
-          curl -LSs https://github.com/backslashxx/mojito_krenol/commit/caa66aa.patch | patch -d KernelSU -p1
+          curl -LSs https://github.com/backslashxx/KernelSU/commit/bbeeb36.patch | patch -d KernelSU -p1
 
           ROOT_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
 
@@ -326,7 +326,7 @@ jobs:
             fi
           fi
 
-          curl -LSs https://github.com/backslashxx/mojito_krenol/commit/caa66aa.patch | patch -d KernelSU -p1
+          curl -LSs https://github.com/backslashxx/KernelSU/commit/bbeeb36.patch | patch -d KernelSU -p1
 
           if [[ "$KNAME" == "power" ]]; then
             patch -p1 < SUSFS/kernel_patches/kernels/power/50_add_susfs_in_kernel-4.14.patch
