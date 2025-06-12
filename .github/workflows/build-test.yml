@@ -280,7 +280,9 @@ jobs:
             else
               patch -p1 < SUSFS/kernel_patches/0001-standard-ksu-hook.patch
             fi
-          elif [[ "$whichhook" == "syscall" && ( "$withRoot" == "ksu" || "$withRoot" == "ksun" || "$withRoot" == "sukisu" ) ]]; then
+          elif [[ "$whichhook" == "syscall" && ( "$withRoot" == "ksu" || "$withRoot" == "sukisu" ) ]]; then
+            patch -p1 < SUSFS/kernel_patches/0001-syscall-ksu-hook.patch
+          elif [[ "$whichhook" == "syscall" && "$withRoot" == "ksun" ]]; then
             patch -p1 < SUSFS/kernel_patches/0001-syscall-ksu-hook.patch
             curl -LSs https://github.com/backslashxx/KernelSU/commit/bbeeb36.patch | patch -d KernelSU -p1
           fi
@@ -323,6 +325,9 @@ jobs:
           if [[ "$whichhook" == "standard" && ( "$withRoot" == "ksu" || "$withRoot" == "sukisu" ) ]]; then
             echo -e "Standard KernelSU patches selected."
           elif [[ "$whichhook" == "syscall" && ( "$withRoot" == "ksu" || "$withRoot" == "sukisu" ) ]]; then
+            patch -p1 < SUSFS/kernel_patches/0001-syscall-ksu-hook.patch
+          elif [[ "$whichhook" == "syscall" && "$withRoot" == "ksun" ]]; then
+            patch -p1 < SUSFS/kernel_patches/0001-syscall-ksu-hook.patch
             curl -LSs https://github.com/backslashxx/KernelSU/commit/bbeeb36.patch | patch -d KernelSU -p1
           fi
 
