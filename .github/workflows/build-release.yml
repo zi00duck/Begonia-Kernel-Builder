@@ -324,6 +324,8 @@ jobs:
             patch -p1 < SUSFS/kernel_patches/50_add_susfs_in_kernel-4.14_1.patch
           fi
 
+          patch -p1 --verbose < SUSFS/kernel_patches/backport-fs-upstream-susfs-v1.5.7-non-gki.patch
+
           echo -e "#Susfs4ksu" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
           echo -e "CONFIG_KSU_SUSFS=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
           echo -e "CONFIG_KSU_SUSFS_HAS_MAGIC_MOUNT=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
