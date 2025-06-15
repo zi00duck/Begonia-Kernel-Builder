@@ -241,9 +241,7 @@ jobs:
           elif [[ "$withRoot" == "sukisu" ]]; then
             curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s nongki
           else
-            curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
-            rm -rf KernelSU
-            git clone --recursive -j $(nproc) --branch next https://github.com/KernelSU-Next/KernelSU-Next KernelSU
+            curl -LSs "https://raw.githubusercontent.com/cvnertnc/Begonia-Kernel-Builder/dev/.github/script/ksun.sh" | bash -s next
           fi
 
           ROOT_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
