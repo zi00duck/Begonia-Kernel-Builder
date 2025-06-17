@@ -6,7 +6,7 @@
       "defconfig": "begonia_user_defconfig",
       "name": "Power-Non-Patches",
       "repo": "https://github.com/Saikrishna1504/kernel_xiaomi_mt6785",
-      "branch": "vic"
+      "branch": "bka"
     },
     "withRoot": "none",
     "withSUSFS": false,
@@ -56,7 +56,7 @@
       "defconfig": "begonia_user_defconfig",
       "name": "Power-KernelSU-SUSFS",
       "repo": "https://github.com/Saikrishna1504/kernel_xiaomi_mt6785",
-      "branch": "vic"
+      "branch": "bka"
     },
     "withRoot": "ksu",
     "withSUSFS": true,
@@ -106,7 +106,7 @@
       "defconfig": "begonia_user_defconfig",
       "name": "Power-KSU-Next-SUSFS",
       "repo": "https://github.com/Saikrishna1504/kernel_xiaomi_mt6785",
-      "branch": "vic"
+      "branch": "bka"
     },
     "withRoot": "ksun",
     "withSUSFS": true,
@@ -156,7 +156,7 @@
       "defconfig": "begonia_user_defconfig",
       "name": "Power-SukiSU-KPM-SUSFS",
       "repo": "https://github.com/Saikrishna1504/kernel_xiaomi_mt6785",
-      "branch": "vic"
+      "branch": "bka"
     },
     "withRoot": "sukisu",
     "withSUSFS": true,
