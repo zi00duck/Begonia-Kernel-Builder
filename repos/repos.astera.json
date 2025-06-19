@@ -54,11 +54,11 @@
     "kernelSource": {
       "device": "begonia",
       "defconfig": "begonia_user_defconfig",
-      "name": "Astera-KernelSU-SUSFS",
+      "name": "Astera-RKSU-SUSFS",
       "repo": "https://github.com/xiaomi-begonia-dev/android_kernel_xiaomi_mt6785",
       "branch": "fifteen"
     },
-    "withRoot": "ksu",
+    "withRoot": "rksu",
     "withSUSFS": true,
     "withKPM": false,
     "whichhook": "standard",

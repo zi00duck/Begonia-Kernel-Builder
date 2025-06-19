@@ -224,7 +224,7 @@ jobs:
         working-directory: ${{ env.KERNEL_NAME }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
-        if: ${{ env.withRoot == 'ksu' || env.withRoot == 'sukisu' || env.withRoot == 'ksun' }}
+        if: ${{ env.withRoot == 'rksu' || env.withRoot == 'sukisu' || env.withRoot == 'ksun' }}
         run: |
           if [ -d "./KernelSU" ]; then
             rm -rf "./KernelSU"
@@ -236,7 +236,7 @@ jobs:
             rm -rf "./SUSFS"
           fi
 
-          if [[ "$withRoot" == "ksu" ]]; then
+          if [[ "$withRoot" == "rksu" ]]; then
             curl -LSs "https://raw.githubusercontent.com/rsuntk/KernelSU/main/kernel/setup.sh" | bash -s main
           elif [[ "$withRoot" == "sukisu" ]]; then
             curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s nongki
@@ -251,7 +251,7 @@ jobs:
           echo -e "ROOT_VERSION=$ROOT_VERSION" >> $GITHUB_OUTPUT
 
           echo -e 'CONFIG_KSU=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
-          if [[ "$withRoot" == "ksu" ]]; then
+          if [[ "$withRoot" == "rksu" ]]; then
             echo -e 'CONFIG_KSU_MANUAL_HOOK=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
           elif [[ "$withRoot" == "sukisu" ]]; then
             if [[ "$withKPM" == "true" ]]; then
@@ -286,7 +286,7 @@ jobs:
         working-directory: ${{ env.KERNEL_NAME }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
-        if: ${{ (env.withRoot == 'ksu' || env.withRoot == 'sukisu' || env.withRoot == 'ksun') && env.withSUSFS == 'true' }}
+        if: ${{ (env.withRoot == 'rksu' || env.withRoot == 'sukisu' || env.withRoot == 'ksun') && env.withSUSFS == 'true' }}
         run: |
 
           if [ -d "./SUSFS" ]; then
@@ -309,7 +309,7 @@ jobs:
           else
             rm -rf "./KernelSU"
             rm -rf "./drivers/kernelsu"
-            if [[ "$withRoot" == "ksu" ]]; then
+            if [[ "$withRoot" == "rksu" ]]; then
               curl -LSs "https://raw.githubusercontent.com/rsuntk/KernelSU/main/kernel/setup.sh" | bash -s susfs-main
             else
               curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-main
