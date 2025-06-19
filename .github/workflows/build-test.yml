@@ -237,7 +237,7 @@ jobs:
           fi
 
           if [[ "$withRoot" == "ksu" ]]; then
-            curl -LSs "https://raw.githubusercontent.com/rsuntk/KernelSU/main/kernel/setup.sh" | bash -s main
+            curl -LSs "https://raw.githubusercontent.com/backslashxx/KernelSU/magic/kernel/setup.sh" | bash -s magic
           elif [[ "$withRoot" == "sukisu" ]]; then
             curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s nongki
           else
@@ -251,9 +251,7 @@ jobs:
           echo -e "ROOT_VERSION=$ROOT_VERSION" >> $GITHUB_OUTPUT
 
           echo -e 'CONFIG_KSU=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
-          if [[ "$withRoot" == "ksu" ]]; then
-            echo -e 'CONFIG_KSU_MANUAL_HOOK=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
-          elif [[ "$withRoot" == "sukisu" ]]; then
+          if [[ "$withRoot" == "sukisu" ]]; then
             if [[ "$withKPM" == "true" ]]; then
               echo -e 'CONFIG_KPM=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
             fi
@@ -310,7 +308,7 @@ jobs:
             rm -rf "./KernelSU"
             rm -rf "./drivers/kernelsu"
             if [[ "$withRoot" == "ksu" ]]; then
-              curl -LSs "https://raw.githubusercontent.com/rsuntk/KernelSU/main/kernel/setup.sh" | bash -s susfs-main
+              curl -LSs "https://raw.githubusercontent.com/backslashxx/KernelSU/magic/kernel/setup.sh" | bash -s 12103+155
             else
               curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-main
             fi
