@@ -42,7 +42,7 @@ jobs:
           fi
 
       - name: Getting KernelSU version
-        id: integrate-rksu
+        id: integrate-ksu
         run: |
           if [ -d "./KernelSU" ]; then
             rm -rf "./KernelSU"
@@ -50,26 +50,11 @@ jobs:
 
           git clone --recursive -j $(nproc) --branch main https://github.com/rsuntk/KernelSU KernelSU
 
-          RKSU_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
+          KernelSU_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
 
-          echo "KernelSU version: $RKSU_VERSION"
+          echo "KernelSU version: $KernelSU_VERSION"
 
-          echo "RKSU_VERSION=$RKSU_VERSION" >> $GITHUB_ENV
-
-      - name: Getting KernelSU version
-        id: integrate-mksu
-        run: |
-          if [ -d "./KernelSU" ]; then
-            rm -rf "./KernelSU"
-          fi
-
-          git clone --recursive -j $(nproc) --branch main https://github.com/rsuntk/KernelSU KernelSU
-
-          MKSU_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
-
-          echo "KernelSU version: $MKSU_VERSION"
-
-          echo "MKSU_VERSION=$MKSU_VERSION" >> $GITHUB_ENV
+          echo "KernelSU_VERSION=$KernelSU_VERSION" >> $GITHUB_ENV
 
       - name: Getting SukiSU-Ultra version
         id: integrate-sukisu-ultra
@@ -116,8 +101,7 @@ jobs:
 
           ▫️ *Device:* Begonia
           ▫️ *Non-Patch Variant*
-          ▫️ *RKSU:* ${{ env.RKSU_VERSION }}
-          ▫️ *MKSU:* ${{ env.MKSU_VERSION }}
+          ▫️ *KernelSU:* ${{ env.KernelSU_VERSION }}
           ▫️ *KernelSU-Next:* ${{ env.KERNELSUN_VERSION }}
           ▫️ *SukiSU-Ultra:* ${{ env.SUKISU_VERSION }}
           ▫️ *APatch:* Supported
@@ -131,10 +115,8 @@ jobs:
 
           📥 *Download Links:*
           - GitHub Release: [${{ env.RELEASE_NAME }}](${{ env.RELEASE_URL }})
-          - RKSU Manager:
-            [Release](https://github.com/rsuntk/KernelSU/releases/${{ env.RKSU_VERSION }}) | [Nightly](https://nightly.link/rsuntk/KernelSU/workflows/build-manager/main)
-          - MKSU Manager:
-            [Release](https://github.com/backslashxx/KernelSU/releases/${{ env.MKSU_VERSION }}) | [Nightly](https://nightly.link/backslashxx/KernelSU/workflows/build-manager/magic)
+          - KernelSU Manager:
+            [Release](https://github.com/backslashxx/KernelSU/releases/${{ env.KernelSU_VERSION }}) | [Nightly](https://nightly.link/backslashxx/KernelSU/workflows/build-manager/magic)
           - KernelSU-Next Manager:
             [Release](https://github.com/KernelSU-Next/KernelSU-Next/releases/${{ env.KERNELSUN_VERSION }}) | [Nightly](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager-ci/next/Manager)
           - SukiSU-Ultra Manager:
@@ -142,6 +124,8 @@ jobs:
           - SUSFS Module: 
             [Release](https://github.com/sidex15/susfs4ksu-module/releases/latest) | [Nightly](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)
           - Mountify Module: [Release](https://github.com/backslashxx/mountify/releases/latest)
+
+          ⚠️ *Note:* There has been a variant change for KernelSU. If you are using KernelSU and have updated, please delete the manager on your device and download from release or nightly and update your manager.
 
           ⚠️ *Note:* Regardless of MIUI or AOSP. The best working for my device is Power Kernel. I recommend you to use Power Kernel variants.
           ⚠️ *Note:* Using Astera and Nova kernel is completely your choice. Test it and use the best kernel for your device.

@@ -224,7 +224,7 @@ jobs:
         working-directory: ${{ env.KERNEL_NAME }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
-        if: ${{ env.withRoot == 'rksu' || env.withRoot == 'mksu' || env.withRoot == 'sukisu' || env.withRoot == 'ksun' }}
+        if: ${{ env.withRoot == 'ksu' || env.withRoot == 'sukisu' || env.withRoot == 'ksun' }}
         run: |
           if [ -d "./KernelSU" ]; then
             rm -rf "./KernelSU"
@@ -236,10 +236,8 @@ jobs:
             rm -rf "./SUSFS"
           fi
 
-          if [[ "$withRoot" == "rksu" ]]; then
-            curl -LSs "https://raw.githubusercontent.com/rsuntk/KernelSU/main/kernel/setup.sh" | bash -s main
-          elif [[ "$withRoot" == "mksu" ]]; then
-            curl -LSs "https://raw.githubusercontent.com/backslashxx/KernelSU/main/kernel/setup.sh" | bash -s magic
+          if [[ "$withRoot" == "ksu" ]]; then
+            curl -LSs "https://raw.githubusercontent.com/backslashxx/KernelSU/magic/kernel/setup.sh" | bash -s magic
           elif [[ "$withRoot" == "sukisu" ]]; then
             curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s nongki
           else
@@ -253,9 +251,7 @@ jobs:
           echo -e "ROOT_VERSION=$ROOT_VERSION" >> $GITHUB_OUTPUT
 
           echo -e 'CONFIG_KSU=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
-          if [[ "$withRoot" == "rksu" ]]; then
-            echo -e 'CONFIG_KSU_MANUAL_HOOK=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
-          elif [[ "$withRoot" == "sukisu" ]]; then
+          if [[ "$withRoot" == "sukisu" ]]; then
             if [[ "$withKPM" == "true" ]]; then
               echo -e 'CONFIG_KPM=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
             fi
@@ -288,7 +284,7 @@ jobs:
         working-directory: ${{ env.KERNEL_NAME }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
-        if: ${{ (env.withRoot == 'rksu' || env.withRoot == 'mksu' || env.withRoot == 'sukisu' || env.withRoot == 'ksun') && env.withSUSFS == 'true' }}
+        if: ${{ (env.withRoot == 'ksu' || env.withRoot == 'sukisu' || env.withRoot == 'ksun') && env.withSUSFS == 'true' }}
         run: |
 
           if [ -d "./SUSFS" ]; then
@@ -311,10 +307,8 @@ jobs:
           else
             rm -rf "./KernelSU"
             rm -rf "./drivers/kernelsu"
-            if [[ "$withRoot" == "rksu" ]]; then
-              curl -LSs "https://raw.githubusercontent.com/rsuntk/KernelSU/main/kernel/setup.sh" | bash -s susfs-main
-            elif [[ "$withRoot" == "mksu" ]]; then
-              curl -LSs "https://raw.githubusercontent.com/backslashxx/KernelSU/main/kernel/setup.sh" | bash -s 12103+155
+            if [[ "$withRoot" == "ksu" ]]; then
+              curl -LSs "https://raw.githubusercontent.com/backslashxx/KernelSU/magic/kernel/setup.sh" | bash -s 12103+155
             else
               curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-main
             fi
@@ -421,7 +415,7 @@ jobs:
           prerelease: false
           draft: false
           generate_release_notes: false
-          body: "Astera Kernel by [MrErenK](https://github.com/MrErenK)\nNova Kernel by [Wahid7852](https://github.com/Wahid7852)\nPower kernel By [Saikrishna1504](https://github.com/Saikrishna1504)\nBuild with Github by [cvnertnc](https://github.com/cvnertnc)\nAll Linux kernel patched with [KernelSU](https://github.com/rsuntk/KernelSU), [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) and [SukiSU-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) + [SUSFS](https://gitlab.com/simonpunk/susfs4ksu) for Xiaomi Redmi Note 8 Pro (begonia).\n\n**Installation:**\n1. Flash the kernel from this release.\n2. Download and install the Manager\n\nKernelSU:\n> [![Stable Version](https://img.shields.io/github/v/release/rsuntk/KernelSU?label=Release&logo=github)](https://github.com/rsuntk/KernelSU/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/rsuntk/KernelSU/workflows/build-manager/main/manager)\n\nKernelSU Next:\n> [![Stable Version](https://img.shields.io/github/v/release/KernelSU-Next/KernelSU-Next?label=Release&logo=github)](https://github.com/KernelSU-Next/KernelSU-Next/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager-ci/next/Manager)\n\nSukiSU-Ultra:\n> [![Stable Version](https://img.shields.io/github/v/release/SukiSU-Ultra/SukiSU-Ultra?label=Release&logo=github)](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/SukiSU-Ultra/SukiSU-Ultra/workflows/build-manager/main/manager)\n\n3. Download and install the SUSFS Module:\n> [![Stable Version](https://img.shields.io/github/v/release/sidex15/susfs4ksu-module?label=Release&logo=github)](https://github.com/sidex15/susfs4ksu-module/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)\n\n4. Download and install Mountify Module [![Mountify Module](https://img.shields.io/github/v/release/backslashxx/mountify?label=Release&logo=github)](https://github.com/backslashxx/mountify/releases/latest)"
+          body: "Astera Kernel by [MrErenK](https://github.com/MrErenK)\nNova Kernel by [Wahid7852](https://github.com/Wahid7852)\nPower kernel By [Saikrishna1504](https://github.com/Saikrishna1504)\nBuild with Github by [cvnertnc](https://github.com/cvnertnc)\nAll Linux kernel patched with [KernelSU](https://github.com/backslashxx/KernelSU), [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) and [SukiSU-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) + [SUSFS](https://gitlab.com/simonpunk/susfs4ksu) for Xiaomi Redmi Note 8 Pro (begonia).\n\n**Installation:**\n1. Flash the kernel from this release.\n2. Download and install the Manager\n\nKernelSU:\n> [![Stable Version](https://img.shields.io/github/v/release/backslashxx/KernelSU?label=Release&logo=github)](https://github.com/backslashxx/KernelSU/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/backslashxx/KernelSU/workflows/build-manager/magic/manager)\n\nKernelSU Next:\n> [![Stable Version](https://img.shields.io/github/v/release/KernelSU-Next/KernelSU-Next?label=Release&logo=github)](https://github.com/KernelSU-Next/KernelSU-Next/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager-ci/next/Manager)\n\nSukiSU-Ultra:\n> [![Stable Version](https://img.shields.io/github/v/release/SukiSU-Ultra/SukiSU-Ultra?label=Release&logo=github)](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/SukiSU-Ultra/SukiSU-Ultra/workflows/build-manager/main/manager)\n\n3. Download and install the SUSFS Module:\n> [![Stable Version](https://img.shields.io/github/v/release/sidex15/susfs4ksu-module?label=Release&logo=github)](https://github.com/sidex15/susfs4ksu-module/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)\n\n4. Download and install Mountify Module [![Mountify Module](https://img.shields.io/github/v/release/backslashxx/mountify?label=Release&logo=github)](https://github.com/backslashxx/mountify/releases/latest)"
           files: "${{ env.WORKSPACE }}/${{ env.KERNEL_DEVICE }}-${{ steps.integrate-kernelsu-next.outputs.ROOT_VERSION }}-${{ env.KERNEL_NAME }}-${{ env.builddate }}.zip"
           fail_on_unmatched_files: true
           preserve_order: true
