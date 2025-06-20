@@ -274,8 +274,8 @@ jobs:
             patch -p1 < SUSFS/kernel_patches/0001-standard-ksu-hook.patch
           elif [[ "$whichhook" == "syscall" ]]; then
             patch -p1 < SUSFS/kernel_patches/0001-syscall-ksu-hook.patch
-            if [[ "$withRoot" == "ksun" ]]; then
-              curl -LSs https://github.com/backslashxx/KernelSU/commit/bbeeb36.patch | patch -d KernelSU -p1
+            if [[ "$withRoot" == "ksun" || "$withRoot" == "sukisu" ]]; then
+              patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/security_bprm_check_for_ksun_sukisu.patch
             fi
           fi
 
@@ -310,7 +310,10 @@ jobs:
             if [[ "$withRoot" == "ksu" ]]; then
               curl -LSs "https://raw.githubusercontent.com/backslashxx/KernelSU/magic/kernel/setup.sh" | bash -s 12103+155
             else
-              curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-main
+              curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-1.5.8
+              if [[ "$whichhook" == "syscall" ]]; then
+                patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/security_bprm_check_for_ksun_sukisu.patch
+              fi
             fi
           fi
 
