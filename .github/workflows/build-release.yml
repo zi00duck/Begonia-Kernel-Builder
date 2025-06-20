@@ -310,7 +310,7 @@ jobs:
             if [[ "$withRoot" == "ksu" ]]; then
               curl -LSs "https://raw.githubusercontent.com/backslashxx/KernelSU/magic/kernel/setup.sh" | bash -s 12103+155
             else
-              curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-1.5.8
+              curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-main
               if [[ "$whichhook" == "syscall" ]]; then
                 patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/security_bprm_check_for_sukisu.patch
               fi
