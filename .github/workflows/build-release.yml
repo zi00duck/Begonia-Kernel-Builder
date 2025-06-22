@@ -263,7 +263,7 @@ jobs:
 
           cat arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
 
-          SUSFS_BRANCH=dev
+          SUSFS_BRANCH=new
 
           git clone --recursive -j $(nproc) --branch $SUSFS_BRANCH https://github.com/cvnertnc/susfs4ksu-begonia SUSFS
 
@@ -292,7 +292,7 @@ jobs:
             rm -rf "./SUSFS"
           fi
 
-          SUSFS_BRANCH=dev
+          SUSFS_BRANCH=new
 
           git clone --recursive -j $(nproc) --branch $SUSFS_BRANCH https://github.com/cvnertnc/susfs4ksu-begonia SUSFS
 
