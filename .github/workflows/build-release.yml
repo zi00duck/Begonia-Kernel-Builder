@@ -53,6 +53,7 @@ jobs:
 
       withRoot: ${{ matrix.repos.withRoot }}
       withSUSFS: ${{ matrix.repos.withSUSFS }}
+      whichSUSFS: ${{ matrix.repos.whichSUSFS }}
       withKPM: ${{ matrix.repos.withKPM }}
       whichhook: ${{ matrix.repos.whichhook }}
       ccache: ${{ matrix.repos.ccache }}
@@ -262,7 +263,7 @@ jobs:
 
           cat arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
 
-          SUSFS_BRANCH=dev
+          SUSFS_BRANCH=new
 
           git clone --recursive -j $(nproc) --branch $SUSFS_BRANCH https://github.com/cvnertnc/susfs4ksu-begonia SUSFS
 
@@ -291,7 +292,7 @@ jobs:
             rm -rf "./SUSFS"
           fi
 
-          SUSFS_BRANCH=dev
+          SUSFS_BRANCH=new
 
           git clone --recursive -j $(nproc) --branch $SUSFS_BRANCH https://github.com/cvnertnc/susfs4ksu-begonia SUSFS
 
@@ -299,11 +300,11 @@ jobs:
           echo -e "SUSFS_REF=$SUSFS_REF" >> $GITHUB_OUTPUT
           echo -e "SUSFS_BRANCH=$SUSFS_BRANCH" >> $GITHUB_OUTPUT
 
-          cp -v SUSFS/kernel_patches/fs/* fs/
-          cp -v SUSFS/kernel_patches/include/linux/* include/linux/
+          cp -v SUSFS/kernel_patches/${{ matrix.repos.whichSUSFS }}/fs/* fs/
+          cp -v SUSFS/kernel_patches/${{ matrix.repos.whichSUSFS }}/include/linux/* include/linux/
 
           if [[ "$withRoot" == "ksun" ]]; then
-            patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/10_enable_susfs_for_ksun.patch
+            patch -d KernelSU -p1 < SUSFS/kernel_patches/${{ matrix.repos.whichSUSFS }}/KernelSU/10_enable_susfs_for_ksun.patch
           else
             rm -rf "./KernelSU"
             rm -rf "./drivers/kernelsu"
@@ -318,9 +319,9 @@ jobs:
           fi
 
           if [[ "$KNAME" == "nova" || "$KNAME" == "power" ]]; then
-            patch -p1 < SUSFS/kernel_patches/50_add_susfs_in_kernel-4.14_2.patch
+            patch -p1 < SUSFS/kernel_patches/${{ matrix.repos.whichSUSFS }}/50_add_susfs_in_kernel-4.14_2.patch
           else
-            patch -p1 < SUSFS/kernel_patches/50_add_susfs_in_kernel-4.14_1.patch
+            patch -p1 < SUSFS/kernel_patches/${{ matrix.repos.whichSUSFS }}/50_add_susfs_in_kernel-4.14_1.patch
           fi
 
           echo -e "#Susfs4ksu" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
