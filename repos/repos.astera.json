@@ -10,6 +10,7 @@
     },
     "withRoot": "none",
     "withSUSFS": false,
+    "whichSUSFS": false,
     "withKPM": false,
     "whichhook": false,
     "toolchains": [
@@ -60,6 +61,7 @@
     },
     "withRoot": "ksu",
     "withSUSFS": true,
+    "whichSUSFS": "157",
     "withKPM": false,
     "whichhook": "standard",
     "toolchains": [
@@ -110,6 +112,7 @@
     },
     "withRoot": "ksun",
     "withSUSFS": true,
+    "whichSUSFS": "157",
     "withKPM": false,
     "whichhook": "syscall",
     "toolchains": [
@@ -160,6 +163,7 @@
     },
     "withRoot": "sukisu",
     "withSUSFS": true,
+    "whichSUSFS": "157",
     "withKPM": false,
     "whichhook": "standard",
     "toolchains": [
