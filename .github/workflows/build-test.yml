@@ -90,6 +90,12 @@ jobs:
           sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 2 || true
           cd ..
 
+      - name: "🚮 Clear older runs"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh run list -L400 --json databaseId -q '.[].databaseId' | tail -n+5 | xargs -IID gh api "repos/$GITHUB_REPOSITORY/actions/runs/ID" -X DELETE || :
+
       - name: "🚄 Create cache key from `repos`"
         if: ${{ env.ccache == 'true' }}
         id: ccache_key
