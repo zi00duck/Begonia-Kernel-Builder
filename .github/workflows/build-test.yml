@@ -215,7 +215,7 @@ jobs:
           echo "ARCH=$ARCH" >> $GITHUB_OUTPUT
           echo "args=$args" >> $GITHUB_OUTPUT
 
-      - name: "💉 APatch and SukiSU setup"
+      - name: "💉 APatch, SukiSU setup and [BACKPORT]: ptrace"
         working-directory: ${{ env.KERNEL_NAME }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
@@ -223,6 +223,7 @@ jobs:
           echo -e 'CONFIG_KALLSYMS_ALL=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
 
           curl -LSs https://github.com/cvnertnc/kernel_xiaomi_mt6785/commit/d01168989c97157ccd3710d28000a4db83c46e58.patch | patch -p1
+          curl -LSs https://github.com/sidex15/android_kernel_lge_sm8150/commit/fcc59dc3310d3a1511d02dc3ac6d1e113517ece1.patch | patch -p1
 
           cat arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
 
