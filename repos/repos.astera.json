@@ -61,7 +61,7 @@
     },
     "withRoot": "ksu",
     "withSUSFS": true,
-    "whichSUSFS": "157",
+    "whichSUSFS": "158",
     "withKPM": false,
     "whichhook": "standard",
     "toolchains": [
@@ -112,7 +112,7 @@
     },
     "withRoot": "ksun",
     "withSUSFS": true,
-    "whichSUSFS": "157",
+    "whichSUSFS": "158",
     "withKPM": false,
     "whichhook": "syscall",
     "toolchains": [
@@ -163,7 +163,7 @@
     },
     "withRoot": "sukisu",
     "withSUSFS": true,
-    "whichSUSFS": "157",
+    "whichSUSFS": "158",
     "withKPM": false,
     "whichhook": "standard",
     "toolchains": [
