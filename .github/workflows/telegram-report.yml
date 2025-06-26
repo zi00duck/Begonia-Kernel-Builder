@@ -107,7 +107,7 @@ jobs:
           ▫️ *APatch:* Supported
             [Non-patch variants of Power and Nova kernels, except Astera kernel, support APatch.]
 
-          ▫️ *SUSFS:* v1.5.7 Supported
+          ▫️ *SUSFS:* v1.5.8 Supported
           ▫️ *KPM:* Supported
             [Power and Nova kernels support KPM except Astera kernel.]
           ▫️ *Mountify:* Supported
