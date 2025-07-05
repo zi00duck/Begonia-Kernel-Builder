@@ -245,7 +245,7 @@ jobs:
           fi
 
           if [[ "$withRoot" == "ksu" ]]; then
-            curl -LSs "https://raw.githubusercontent.com/backslashxx/KernelSU/magic/kernel/setup.sh" | bash -s magic
+            curl -LSs "https://raw.githubusercontent.com/backslashxx/KernelSU/master/kernel/setup.sh" | bash -s master
           elif [[ "$withRoot" == "sukisu" ]]; then
             curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s nongki
           else
@@ -270,7 +270,7 @@ jobs:
 
           cat arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
 
-          SUSFS_BRANCH=dev
+          SUSFS_BRANCH=main
 
           git clone --recursive -j $(nproc) --branch $SUSFS_BRANCH https://github.com/cvnertnc/susfs4ksu-begonia SUSFS
 
@@ -299,7 +299,7 @@ jobs:
             rm -rf "./SUSFS"
           fi
 
-          SUSFS_BRANCH=dev
+          SUSFS_BRANCH=main
 
           git clone --recursive -j $(nproc) --branch $SUSFS_BRANCH https://github.com/cvnertnc/susfs4ksu-begonia SUSFS
 
@@ -316,7 +316,7 @@ jobs:
             rm -rf "./KernelSU"
             rm -rf "./drivers/kernelsu"
             if [[ "$withRoot" == "ksu" ]]; then
-              curl -LSs "https://raw.githubusercontent.com/backslashxx/KernelSU/magic/kernel/setup.sh" | bash -s 12103+155
+              curl -LSs "https://raw.githubusercontent.com/backslashxx/KernelSU/master/kernel/setup.sh" | bash -s 12104+155
             else
               if [[ "$whichSUSFS" == "157" ]]; then
                 curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-1.5.7
