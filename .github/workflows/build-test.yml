@@ -272,7 +272,7 @@ jobs:
 
           SUSFS_BRANCH=main
 
-          git clone --recursive -j $(nproc) --branch $SUSFS_BRANCH https://github.com/cvnertnc/susfs4ksu-begonia SUSFS
+          git clone --recursive -j $(nproc) --branch $SUSFS_BRANCH https://x-access-token:${{ secrets.GH_PAT }}@github.com/cvnertnc/susfs4ksu-begonia SUSFS
 
           SUSFS_REF=$(git -C SUSFS rev-parse --short HEAD)
           echo -e "SUSFS_REF=$SUSFS_REF" >> $GITHUB_OUTPUT
@@ -301,7 +301,7 @@ jobs:
 
           SUSFS_BRANCH=main
 
-          git clone --recursive -j $(nproc) --branch $SUSFS_BRANCH https://github.com/cvnertnc/susfs4ksu-begonia SUSFS
+          git clone --recursive -j $(nproc) --branch $SUSFS_BRANCH https://x-access-token:${{ secrets.GH_PAT }}@github.com/cvnertnc/susfs4ksu-begonia SUSFS
 
           SUSFS_REF=$(git -C SUSFS rev-parse --short HEAD)
           echo -e "SUSFS_REF=$SUSFS_REF" >> $GITHUB_OUTPUT
