@@ -17,7 +17,7 @@ jobs:
         id: fetch_latest_commits
         run: |
           declare -A repos=(
-            ["KernelSU"]="backslashxx/KernelSU@magic"
+            ["KernelSU"]="backslashxx/KernelSU@master"
             ["KernelSU-Next"]="KernelSU-Next/KernelSU-Next@next"
             ["SukiSU-Ultra"]="SukiSU-Ultra/SukiSU-Ultra@main"
           )

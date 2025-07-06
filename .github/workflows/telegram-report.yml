@@ -48,28 +48,13 @@ jobs:
             rm -rf "./KernelSU"
           fi
 
-          git clone --recursive -j $(nproc) --branch main https://github.com/rsuntk/KernelSU KernelSU
+          git clone --recursive -j $(nproc) --branch master https://github.com/backslashxx/KernelSU KernelSU
 
           KernelSU_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
 
           echo "KernelSU version: $KernelSU_VERSION"
 
           echo "KernelSU_VERSION=$KernelSU_VERSION" >> $GITHUB_ENV
-
-      - name: Getting SukiSU-Ultra version
-        id: integrate-sukisu-ultra
-        run: |
-          if [ -d "./KernelSU" ]; then
-            rm -rf "./KernelSU"
-          fi
-
-          git clone --recursive -j $(nproc) --branch main https://github.com/ShirkNeko/SukiSU-Ultra KernelSU
-
-          SUKISU_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
-
-          echo "SUKISU version: $SUKISU_VERSION"
-
-          echo "SUKISU_VERSION=$SUKISU_VERSION" >> $GITHUB_ENV
 
       - name: Getting KernelSU-Next version
         id: integrate-kernelsu-next
@@ -85,6 +70,21 @@ jobs:
           echo "KernelSU-Next version: $KERNELSUN_VERSION"
 
           echo "KERNELSUN_VERSION=$KERNELSUN_VERSION" >> $GITHUB_ENV
+
+      - name: Getting SukiSU-Ultra version
+        id: integrate-sukisu-ultra
+        run: |
+          if [ -d "./KernelSU" ]; then
+            rm -rf "./KernelSU"
+          fi
+
+          git clone --recursive -j $(nproc) --branch main https://github.com/ShirkNeko/SukiSU-Ultra KernelSU
+
+          SUKISU_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
+
+          echo "SUKISU version: $SUKISU_VERSION"
+
+          echo "SUKISU_VERSION=$SUKISU_VERSION" >> $GITHUB_ENV
 
       - name: Report to Telegram
         env:
@@ -116,7 +116,7 @@ jobs:
           📥 *Download Links:*
           - GitHub Release: [${{ env.RELEASE_NAME }}](${{ env.RELEASE_URL }})
           - KernelSU Manager:
-            [Release](https://github.com/backslashxx/KernelSU/releases/${{ env.KernelSU_VERSION }}) | [Nightly](https://nightly.link/backslashxx/KernelSU/workflows/build-manager/magic)
+            [Release](https://github.com/backslashxx/KernelSU/releases/${{ env.KernelSU_VERSION }}) | [Nightly](https://nightly.link/backslashxx/KernelSU/workflows/build-manager/master)
           - KernelSU-Next Manager:
             [Release](https://github.com/KernelSU-Next/KernelSU-Next/releases/${{ env.KERNELSUN_VERSION }}) | [Nightly](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager-ci/next/Manager)
           - SukiSU-Ultra Manager:
