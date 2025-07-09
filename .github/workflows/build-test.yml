@@ -216,6 +216,7 @@ jobs:
           echo "args=$args" >> $GITHUB_OUTPUT
 
       - name: "💉 APatch, SukiSU setup and [BACKPORT]: ptrace"
+        id: apatch-sukisu-setup
         working-directory: ${{ env.KERNEL_NAME }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
@@ -390,6 +391,7 @@ jobs:
           make ${{ env.args }}
 
       - name: "☯️ KPM Injection"
+        id: kpm-inject
         working-directory: ${{ env.KERNEL_NAME }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
