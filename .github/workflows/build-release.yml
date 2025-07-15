@@ -295,6 +295,9 @@ jobs:
             patch -p1 < SUSFS/kernel_patches/0001-standard-ksu-hook.patch
           elif [[ "$whichhook" == "syscall" ]]; then
             patch -p1 < SUSFS/kernel_patches/0001-syscall-ksu-hook.patch
+            if [[ "$withRoot" == "ksun" ]]; then
+              patch -p1 < SUSFS/kernel_patches/KernelSU/ksu_access_ok_for_ksun.patch
+            fi
           fi
 
       - name: "🥷 Add SUSFS patches"
