@@ -296,7 +296,7 @@ jobs:
           elif [[ "$whichhook" == "syscall" ]]; then
             patch -p1 < SUSFS/kernel_patches/0001-syscall-ksu-hook.patch
             if [[ "$withRoot" == "ksun" || "$withRoot" == "sukisu" ]]; then
-              patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/security_bprm_check_for_ksun_sukisu.patch
+              patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/security_bprm_check_for_${{ matrix.repos.withRoot }}.patch
             fi
           fi
 
