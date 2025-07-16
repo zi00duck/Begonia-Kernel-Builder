@@ -295,6 +295,12 @@ jobs:
             patch -p1 < SUSFS/kernel_patches/0001-standard-ksu-hook.patch
           elif [[ "$whichhook" == "syscall" ]]; then
             patch -p1 < SUSFS/kernel_patches/0001-syscall-ksu-hook.patch
+            if [[ "$withRoot" == "ksun" || "$withRoot" == "ksun" ]]; then
+              patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/security_bprm_check_for_${{ matrix.repos.withRoot }}.patch
+            fi
+            if [[ "$withRoot" == "sukisu" ]]; then
+              patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/ksu_access_ok_for_${{ matrix.repos.withRoot }}.patch
+            fi
           fi
 
       - name: "🥷 Add SUSFS patches"
@@ -332,6 +338,8 @@ jobs:
                 curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-1.5.7
               else
                 curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-main
+                patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/security_bprm_check_for_${{ matrix.repos.withRoot }}.patch
+                patch -d KernelSU -p1 < SUSFS/kernel_patches/KernelSU/ksu_access_ok_for_${{ matrix.repos.withRoot }}.patch
               fi
             fi
           fi
