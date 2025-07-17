@@ -114,7 +114,7 @@
     "withSUSFS": true,
     "whichSUSFS": "159",
     "withKPM": false,
-    "whichhook": "syscall",
+    "whichhook": "standard",
     "toolchains": [
       {
         "repo": "https://gitlab.com/PixelOS-Devices/playgroundtc",
