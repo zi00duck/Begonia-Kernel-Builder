@@ -55,7 +55,6 @@ jobs:
       withSUSFS: ${{ matrix.repos.withSUSFS }}
       whichSUSFS: ${{ matrix.repos.whichSUSFS }}
       withKPM: ${{ matrix.repos.withKPM }}
-      whichhook: ${{ matrix.repos.whichhook }}
       ccache: ${{ matrix.repos.ccache }}
       useAnykernel: ${{ matrix.repos.AnyKernel3.use }}
       release: ${{ matrix.repos.AnyKernel3.release }}
