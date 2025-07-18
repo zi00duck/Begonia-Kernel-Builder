@@ -4,6 +4,6 @@ SukiSU-Ultra Commit Date: 2025-07-17T10:37:31Z
 KernelSU Commit ID: null
 KernelSU Commit Date: null
 
-KernelSU-Next Commit ID: 2c9078e038bcb4b57a16b709e5cc809c690df13f
-KernelSU-Next Commit Date: 2025-07-16T15:06:59Z
+KernelSU-Next Commit ID: 4382dca515b5f481fdccd98353c645897a3b7755
+KernelSU-Next Commit Date: 2025-07-17T17:24:32Z
 
