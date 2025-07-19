@@ -116,11 +116,11 @@ jobs:
           📥 *Download Links:*
           - GitHub Release: [${{ env.RELEASE_NAME }}](${{ env.RELEASE_URL }})
           - KernelSU Manager:
-            [Release](https://github.com/backslashxx/KernelSU/releases/${{ env.KernelSU_VERSION }}) | [Nightly](https://nightly.link/backslashxx/KernelSU/workflows/build-manager/master)
+            [Release](https://github.com/backslashxx/KernelSU/releases/${{ env.KernelSU_VERSION }}) | [Nightly](https://nightly.link/backslashxx/KernelSU/workflows/build-manager/staging/manager)
           - KernelSU-Next Manager:
             [Release](https://github.com/KernelSU-Next/KernelSU-Next/releases/${{ env.KERNELSUN_VERSION }}) | [Nightly](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager-ci/next/Manager)
           - SukiSU-Ultra Manager:
-            [Release](https://github.com/ShirkNeko/SukiSU-Ultra/releases/${{ env.SUKISU_VERSION }}) | [Nightly](https://nightly.link/ShirkNeko/SukiSU-Ultra/workflows/build-manager/main)
+            [Release](https://github.com/ShirkNeko/SukiSU-Ultra/releases/${{ env.SUKISU_VERSION }}) | [Nightly](https://nightly.link/SukiSU-Ultra/SukiSU-Ultra/workflows/build-manager/main/manager)
           - SUSFS Module: 
             [Release](https://github.com/sidex15/susfs4ksu-module/releases/latest) | [Nightly](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)
           - Mountify Module: [Release](https://github.com/backslashxx/mountify/releases/latest)

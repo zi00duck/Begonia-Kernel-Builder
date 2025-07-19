@@ -34,7 +34,7 @@ Also see here [`CONFIG.md`](./CONFIG.md). Hello, the CONFIG.md file is old and I
 >
 
 Manager for KernelSU users
-> [![Stable Version](https://img.shields.io/github/v/release/backslashxx/KernelSU?label=Release&logo=github)](https://github.com/backslashxx/KernelSU/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/backslashxx/KernelSU/workflows/build-manager/master/manager)
+> [![Stable Version](https://img.shields.io/github/v/release/backslashxx/KernelSU?label=Release&logo=github)](https://github.com/backslashxx/KernelSU/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/backslashxx/KernelSU/workflows/build-manager/staging/manager)
 
 Manager for KernelSU-Next users
 > [![Stable Version](https://img.shields.io/github/v/release/KernelSU-Next/KernelSU-Next?label=Release&logo=github)](https://github.com/KernelSU-Next/KernelSU-Next/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager-ci/next/Manager)
