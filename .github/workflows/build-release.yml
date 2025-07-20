@@ -228,6 +228,18 @@ jobs:
           echo "ARCH=$ARCH" >> $GITHUB_OUTPUT
           echo "args=$args" >> $GITHUB_OUTPUT
 
+      - name: "🪡 Receiving scripts"
+        id: receiving-scripts
+        working-directory: ${{ env.KERNEL_NAME }}
+        run: |
+          if [ -d "./BKB" ]; then
+            rm -rf "./BKB"
+          fi
+
+          BKB_BRANCH=bkb
+
+          git clone --recursive -j $(nproc) --branch $BKB_BRANCH https://x-access-token:${{ secrets.GH_PAT }}@github.com/cvnertnc/susfs4ksu-begonia BKB
+
       - name: "💉 APatch, SukiSU setup and [BACKPORT]: ptrace"
         id: apatch-sukisu-setup
         working-directory: ${{ env.KERNEL_NAME }}
@@ -237,8 +249,9 @@ jobs:
           GH_PAT: ${{ secrets.GH_PAT }}
           GITHUB_OUTPUT: ${{ github.output_path }}
         run: |
-          chmod +x .github/scripts/apatch_sukisu_setup.sh
-          ./github/scripts/apatch_sukisu_setup.sh
+          BKB_YML=releases
+          chmod +x BKB/$BKB_YML/apatch_sukisu_setup.sh
+          ./BKB/$BKB_YML/apatch_sukisu_setup.sh
 
       - name: "😋 Integrate KernelSU or KernelSU-Next"
         id: integrate-kernelsu-next
@@ -253,8 +266,9 @@ jobs:
           withKPM: ${{ env.withKPM }}
           KNAME: ${{ env.KNAME }}
         run: |
-          chmod +x .github/scripts/integrate_kernelsu.sh
-          ./github/scripts/integrate_kernelsu.sh
+          BKB_YML=releases
+          chmod +x BKB/$BKB_YML/integrate_kernelsu.sh
+          ./BKB/$BKB_YML/integrate_kernelsu.sh
 
       - name: "🥷 Add SUSFS patches"
         id: add-susfs-patches
@@ -270,8 +284,9 @@ jobs:
           whichSUSFS: ${{ matrix.repos.whichSUSFS }}
           KNAME: ${{ env.KNAME }}
         run: |
-          chmod +x .github/scripts/add_susfs_patches.sh
-          .github/scripts/add_susfs_patches.sh
+          BKB_YML=releases
+          chmod +x BKB/$BKB_YML/add_susfs_patches.sh
+          ./BKB/$BKB_YML/add_susfs_patches.sh
 
       - name: "👍 Make defconfig"
         working-directory: ${{ env.KERNEL_NAME }}
@@ -298,8 +313,9 @@ jobs:
           arch: ${{ steps.generate-args.outputs.ARCH }}
           OUT_DIR: ${{ env.OUT_DIR }}
         run: |
-          chmod +x .github/scripts/kpm_injection.sh
-          .github/scripts/kpm_injection.sh
+          BKB_YML=releases
+          chmod +x BKB/$BKB_YML/kpm_injection.sh
+          ./BKB/$BKB_YML/kpm_injection.sh
 
       - name: "❤️ Pack AnyKernel3.zip"
         if: ${{ env.useAnykernel == 'true' }}
