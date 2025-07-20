@@ -14,9 +14,22 @@ on:
   workflow_dispatch:
 
 jobs:
+  Prevent-Fork:
+    name: "⛔ Prevent unauthorized use"
+    runs-on: ubuntu-latest
+    if: github.repository != 'cvnertnc/Begonia-Kernel-Builder'
+    steps:
+      - name: "Deny fork usage"
+        run: |
+          echo "⚠️ This workflow is restricted to the main repository only."
+          exit 1
+
   Set-repos:
     name: "🐂 Parse repos.json"
     runs-on: ubuntu-latest
+    if: github.repository_owner == 'cvnertnc' && github.repository == 'cvnertnc/Begonia-Kernel-Builder'
+    needs:
+      - Prevent-Fork
     outputs:
       repos: ${{ steps.generate-matrix.outputs.repos }}
       builddate: ${{ steps.generate-builddate.outputs.builddate }}
@@ -37,6 +50,7 @@ jobs:
   Build-Kernel:
     name: "🐎 Build kernel"
     runs-on: ubuntu-latest
+    if: github.repository_owner == 'cvnertnc' && github.repository == 'cvnertnc/Begonia-Kernel-Builder'
     needs:
       - Set-repos
     strategy:
