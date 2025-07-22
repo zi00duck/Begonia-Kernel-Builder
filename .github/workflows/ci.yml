@@ -104,13 +104,11 @@ jobs:
     permissions: write-all
     needs: check-updates
     uses: ./.github/workflows/build-release.yml
-    if: github.repository_owner == 'cvnertnc' && github.repository == 'cvnertnc/Begonia-Kernel-Builder'
     if: ${{ needs.check-updates.outputs.update == 'true' || needs.check-updates.outputs.branch_exists == 'false' }}
     secrets: inherit
 
   trigger-telegram-report:
     runs-on: ubuntu-latest
-    if: github.repository_owner == 'cvnertnc' && github.repository == 'cvnertnc/Begonia-Kernel-Builder'
     needs: build
     steps:
       - name: Telegram Report
