@@ -1,0 +1,202 @@
+[
+  {
+    "kernelName": "powerFORK",
+    "kernelSource": {
+      "device": "begonia",
+      "defconfig": "begonia_user_defconfig",
+      "name": "powerFORK-Non-Patches",
+      "repo": "https://github.com/Neebe3289/kernel_xiaomi_begonia",
+      "branch": "vic-personal"
+    },
+    "withRoot": "none",
+    "withSUSFS": false,
+    "whichSUSFS": false,
+    "withKPM": false,
+    "toolchains": [
+      {
+        "repo": "https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379",
+        "branch": "15.0",
+        "name": "clang-crDroid",
+        "binPath": ["./bin"]
+      }
+    ],
+    "ccache": true,
+    "params": {
+      "ARCH": "arm64",
+      "CC": "clang-crDroid/bin/clang",
+      "externalCommand": {
+        "CROSS_COMPILE": "clang-crDroid/bin/aarch64-linux-gnu-",
+        "CROSS_COMPILE_ARM32": "clang-crDroid/bin/arm-linux-gnueabi-",
+        "LD": "clang-crDroid/bin/ld.lld",
+        "LLVM": "1",
+        "LLVM_IAS": "1",
+        "AR": "clang-crDroid/bin/llvm-ar",
+        "NM": "clang-crDroid/bin/llvm-nm",
+        "OBJCOPY": "clang-crDroid/bin/llvm-objcopy",
+        "OBJDUMP": "clang-crDroid/bin/llvm-objdump",
+        "READELF": "clang-crDroid/bin/llvm-readelf",
+        "OBJSIZE": "clang-crDroid/bin/llvm-size",
+        "STRIP": "clang-crDroid/bin/llvm-strip",
+        "LDGOLD": "clang-crDroid/bin/aarch64-linux-gnu-ld.gold",
+        "LLVM_AR": "clang-crDroid/bin/llvm-ar",
+        "LLVM_DIS": "clang-crDroid/bin/llvm-dis"
+      }
+    },
+    "AnyKernel3": {
+      "use": true,
+      "release": true,
+      "repo": "https://github.com/cvnertnc/AnyKernel3/",
+      "branch": "begonia"
+    }
+  },
+  {
+    "kernelName": "powerFORK",
+    "kernelSource": {
+      "device": "begonia",
+      "defconfig": "begonia_user_defconfig",
+      "name": "powerFORK-KernelSU-SUSFS",
+      "repo": "https://github.com/Neebe3289/kernel_xiaomi_begonia",
+      "branch": "vic-personal"
+    },
+    "withRoot": "ksu",
+    "withSUSFS": true,
+    "whichSUSFS": "158",
+    "withKPM": false,
+    "toolchains": [
+      {
+        "repo": "https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379",
+        "branch": "15.0",
+        "name": "clang-crDroid",
+        "binPath": ["./bin"]
+      }
+    ],
+    "ccache": true,
+    "params": {
+      "ARCH": "arm64",
+      "CC": "clang-crDroid/bin/clang",
+      "externalCommand": {
+        "CROSS_COMPILE": "clang-crDroid/bin/aarch64-linux-gnu-",
+        "CROSS_COMPILE_ARM32": "clang-crDroid/bin/arm-linux-gnueabi-",
+        "LD": "clang-crDroid/bin/ld.lld",
+        "LLVM": "1",
+        "LLVM_IAS": "1",
+        "AR": "clang-crDroid/bin/llvm-ar",
+        "NM": "clang-crDroid/bin/llvm-nm",
+        "OBJCOPY": "clang-crDroid/bin/llvm-objcopy",
+        "OBJDUMP": "clang-crDroid/bin/llvm-objdump",
+        "READELF": "clang-crDroid/bin/llvm-readelf",
+        "OBJSIZE": "clang-crDroid/bin/llvm-size",
+        "STRIP": "clang-crDroid/bin/llvm-strip",
+        "LDGOLD": "clang-crDroid/bin/aarch64-linux-gnu-ld.gold",
+        "LLVM_AR": "clang-crDroid/bin/llvm-ar",
+        "LLVM_DIS": "clang-crDroid/bin/llvm-dis"
+      }
+    },
+    "AnyKernel3": {
+      "use": true,
+      "release": true,
+      "repo": "https://github.com/cvnertnc/AnyKernel3/",
+      "branch": "begonia"
+    }
+  },
+  {
+    "kernelName": "powerFORK",
+    "kernelSource": {
+      "device": "begonia",
+      "defconfig": "begonia_user_defconfig",
+      "name": "powerFORK-KSU-Next-SUSFS",
+      "repo": "https://github.com/Neebe3289/kernel_xiaomi_begonia",
+      "branch": "vic-personal"
+    },
+    "withRoot": "ksun",
+    "withSUSFS": true,
+    "whichSUSFS": "159",
+    "withKPM": false,
+    "toolchains": [
+      {
+        "repo": "https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379",
+        "branch": "15.0",
+        "name": "clang-crDroid",
+        "binPath": ["./bin"]
+      }
+    ],
+    "ccache": true,
+    "params": {
+      "ARCH": "arm64",
+      "CC": "clang-crDroid/bin/clang",
+      "externalCommand": {
+        "CROSS_COMPILE": "clang-crDroid/bin/aarch64-linux-gnu-",
+        "CROSS_COMPILE_ARM32": "clang-crDroid/bin/arm-linux-gnueabi-",
+        "LD": "clang-crDroid/bin/ld.lld",
+        "LLVM": "1",
+        "LLVM_IAS": "1",
+        "AR": "clang-crDroid/bin/llvm-ar",
+        "NM": "clang-crDroid/bin/llvm-nm",
+        "OBJCOPY": "clang-crDroid/bin/llvm-objcopy",
+        "OBJDUMP": "clang-crDroid/bin/llvm-objdump",
+        "READELF": "clang-crDroid/bin/llvm-readelf",
+        "OBJSIZE": "clang-crDroid/bin/llvm-size",
+        "STRIP": "clang-crDroid/bin/llvm-strip",
+        "LDGOLD": "clang-crDroid/bin/aarch64-linux-gnu-ld.gold",
+        "LLVM_AR": "clang-crDroid/bin/llvm-ar",
+        "LLVM_DIS": "clang-crDroid/bin/llvm-dis"
+      }
+    },
+    "AnyKernel3": {
+      "use": true,
+      "release": true,
+      "repo": "https://github.com/cvnertnc/AnyKernel3/",
+      "branch": "begonia"
+    }
+  },
+  {
+    "kernelName": "powerFORK",
+    "kernelSource": {
+      "device": "begonia",
+      "defconfig": "begonia_user_defconfig",
+      "name": "powerFORK-SukiSU-KPM-SUSFS",
+      "repo": "https://github.com/Neebe3289/kernel_xiaomi_begonia",
+      "branch": "vic-personal"
+    },
+    "withRoot": "sukisu",
+    "withSUSFS": true,
+    "whichSUSFS": "159",
+    "withKPM": true,
+    "toolchains": [
+      {
+        "repo": "https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379",
+        "branch": "15.0",
+        "name": "clang-crDroid",
+        "binPath": ["./bin"]
+      }
+    ],
+    "ccache": true,
+    "params": {
+      "ARCH": "arm64",
+      "CC": "clang-crDroid/bin/clang",
+      "externalCommand": {
+        "CROSS_COMPILE": "clang-crDroid/bin/aarch64-linux-gnu-",
+        "CROSS_COMPILE_ARM32": "clang-crDroid/bin/arm-linux-gnueabi-",
+        "LD": "clang-crDroid/bin/ld.lld",
+        "LLVM": "1",
+        "LLVM_IAS": "1",
+        "AR": "clang-crDroid/bin/llvm-ar",
+        "NM": "clang-crDroid/bin/llvm-nm",
+        "OBJCOPY": "clang-crDroid/bin/llvm-objcopy",
+        "OBJDUMP": "clang-crDroid/bin/llvm-objdump",
+        "READELF": "clang-crDroid/bin/llvm-readelf",
+        "OBJSIZE": "clang-crDroid/bin/llvm-size",
+        "STRIP": "clang-crDroid/bin/llvm-strip",
+        "LDGOLD": "clang-crDroid/bin/aarch64-linux-gnu-ld.gold",
+        "LLVM_AR": "clang-crDroid/bin/llvm-ar",
+        "LLVM_DIS": "clang-crDroid/bin/llvm-dis"
+      }
+    },
+    "AnyKernel3": {
+      "use": true,
+      "release": true,
+      "repo": "https://github.com/cvnertnc/AnyKernel3/",
+      "branch": "begonia"
+    }
+  }
+]
