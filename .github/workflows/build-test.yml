@@ -238,8 +238,8 @@ jobs:
           GITHUB_OUTPUT: ${{ github.output_path }}
         run: |
           BKB_YML=test
-          chmod +x BKB/kernel_patches/$BKB_YML/apatch_sukisu_setup.sh
-          ./BKB/kernel_patches/$BKB_YML/apatch_sukisu_setup.sh
+          chmod +x BKB/kernel_patches/bkb/$BKB_YML/apatch_sukisu_setup.sh
+          ./BKB/kernel_patches/bkb/$BKB_YML/apatch_sukisu_setup.sh
 
       - name: "😋 Integrate KernelSU or KernelSU-Next"
         id: integrate-kernelsu-next
@@ -255,8 +255,8 @@ jobs:
           KNAME: ${{ env.KNAME }}
         run: |
           BKB_YML=test
-          chmod +x BKB/kernel_patches/$BKB_YML/integrate_kernelsu.sh
-          ./BKB/kernel_patches/$BKB_YML/integrate_kernelsu.sh
+          chmod +x BKB/kernel_patches/bkb/$BKB_YML/integrate_kernelsu.sh
+          ./BKB/kernel_patches/bkb/$BKB_YML/integrate_kernelsu.sh
 
       - name: "🥷 Add SUSFS patches"
         id: add-susfs-patches
@@ -273,8 +273,8 @@ jobs:
           KNAME: ${{ env.KNAME }}
         run: |
           BKB_YML=test
-          chmod +x BKB/kernel_patches/$BKB_YML/add_susfs_patches.sh
-          ./BKB/kernel_patches/$BKB_YML/add_susfs_patches.sh
+          chmod +x BKB/kernel_patches/bkb/$BKB_YML/add_susfs_patches.sh
+          ./BKB/kernel_patches/bkb/$BKB_YML/add_susfs_patches.sh
 
       - name: "👍 Make defconfig"
         working-directory: ${{ env.KERNEL_NAME }}
@@ -302,8 +302,8 @@ jobs:
           OUT_DIR: ${{ env.OUT_DIR }}
         run: |
           BKB_YML=test
-          chmod +x BKB/kernel_patches/$BKB_YML/kpm_injection.sh
-          ./BKB/kernel_patches/$BKB_YML/kpm_injection.sh
+          chmod +x BKB/kernel_patches/bkb/$BKB_YML/kpm_injection.sh
+          ./BKB/kernel_patches/bkb/$BKB_YML/kpm_injection.sh
 
       - name: "❤️ Pack AnyKernel3.zip"
         if: ${{ env.useAnykernel == 'true' }}
