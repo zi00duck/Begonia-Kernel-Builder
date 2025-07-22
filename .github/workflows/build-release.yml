@@ -17,7 +17,6 @@ jobs:
   Set-repos:
     name: "🐂 Parse repos.json"
     runs-on: ubuntu-latest
-    if: github.repository_owner == 'zi00duck' && github.repository == 'zi00duck/Begonia-Kernel-Builder'
     outputs:
       repos: ${{ steps.generate-matrix.outputs.repos }}
       builddate: ${{ steps.generate-builddate.outputs.builddate }}
@@ -38,7 +37,6 @@ jobs:
   Build-Kernel:
     name: "🐎 Build kernel"
     runs-on: ubuntu-latest
-    if: github.repository_owner == 'zi00duck' && github.repository == 'zi00duck/Begonia-Kernel-Builder'
     needs:
       - Set-repos
     strategy:
@@ -216,65 +214,154 @@ jobs:
           echo "ARCH=$ARCH" >> $GITHUB_OUTPUT
           echo "args=$args" >> $GITHUB_OUTPUT
 
-      - name: "🪡 Receiving scripts"
-        id: receiving-scripts
-        working-directory: ${{ env.KERNEL_NAME }}
-        run: |
-          if [ -d "./BKB" ]; then
-            rm -rf "./BKB"
-          fi
-
-          BKB_BRANCH=main
-
-          git clone --recursive -j $(nproc) --branch $BKB_BRANCH https://x-access-token:${{ secrets.GH_PAT }}@github.com/zi00duck/susfs4ksu-begonia BKB
-
       - name: "💉 APatch, SukiSU setup and [BACKPORT]: ptrace"
         id: apatch-sukisu-setup
         working-directory: ${{ env.KERNEL_NAME }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
-          DEFCONFIG_NAME: ${{ env.DEFCONFIG_NAME }}
-          GH_PAT: ${{ secrets.GH_PAT }}
-          GITHUB_OUTPUT: ${{ github.output_path }}
         run: |
-          BKB_YML=releases
-          chmod +x BKB/kernel_patches/bkb/$BKB_YML/apatch_sukisu_setup.sh
-          ./BKB/kernel_patches/bkb/$BKB_YML/apatch_sukisu_setup.sh
+          if [ -d "./SUSFS" ]; then
+            rm -rf "./SUSFS"
+          fi
+
+          echo -e 'CONFIG_KALLSYMS_ALL=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+
+          SUSFS_BRANCH=main
+
+          git clone --recursive -j $(nproc) --branch $SUSFS_BRANCH https://x-access-token:${{ secrets.GH_PAT }}@github.com/cvnertnc/susfs4ksu-begonia SUSFS
+
+          SUSFS_REF=$(git -C SUSFS rev-parse --short HEAD)
+          echo -e "SUSFS_REF=$SUSFS_REF" >> $GITHUB_OUTPUT
+          echo -e "SUSFS_BRANCH=$SUSFS_BRANCH" >> $GITHUB_OUTPUT
+
+          patch -p1 < SUSFS/kernel_patches/0001-main-patch-kernel.patch
+          curl -LSs https://github.com/sidex15/android_kernel_lge_sm8150/commit/fcc59dc3310d3a1511d02dc3ac6d1e113517ece1.patch | patch -p1
+
+          cat arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
 
       - name: "😋 Integrate KernelSU or KernelSU-Next"
         id: integrate-kernelsu-next
         working-directory: ${{ env.KERNEL_NAME }}
-        if: ${{ env.withRoot == 'ksu' || env.withRoot == 'sukisu' || env.withRoot == 'ksun' }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
-          DEFCONFIG_NAME: ${{ env.DEFCONFIG_NAME }}
-          GH_PAT: ${{ secrets.GH_PAT }}
-          GITHUB_OUTPUT: ${{ github.output_path }}
-          withRoot: ${{ env.withRoot }}
-          withKPM: ${{ env.withKPM }}
-          KNAME: ${{ env.KNAME }}
+        if: ${{ env.withRoot == 'ksu' || env.withRoot == 'sukisu' || env.withRoot == 'ksun' }}
         run: |
-          BKB_YML=releases
-          chmod +x BKB/kernel_patches/bkb/$BKB_YML/integrate_kernelsu.sh
-          ./BKB/kernel_patches/bkb/$BKB_YML/integrate_kernelsu.sh
+          if [ -d "./KernelSU" ]; then
+            rm -rf "./KernelSU"
+          fi
+          if [ -d "./drivers/kernelsu" ]; then
+            rm -rf "./drivers/kernelsu"
+          fi
+          if [ -d "./SUSFS" ]; then
+            rm -rf "./SUSFS"
+          fi
+
+          if [[ "$withRoot" == "ksu" ]]; then
+            curl -LSs "https://raw.githubusercontent.com/backslashxx/KernelSU/master/kernel/setup.sh" | bash -s master
+          elif [[ "$withRoot" == "sukisu" ]]; then
+            curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s nongki
+          else
+            curl -LSs "https://raw.githubusercontent.com/cvnertnc/Begonia-Kernel-Builder/dev/.github/script/ksun.sh" | bash -s next
+          fi
+
+          ROOT_VERSION=$(git -C KernelSU describe --abbrev=0 --tags)
+
+          echo -e "\n💡 ROOT version: $ROOT_VERSION\n"
+
+          echo -e "ROOT_VERSION=$ROOT_VERSION" >> $GITHUB_OUTPUT
+
+          echo -e 'CONFIG_KSU=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          if [[ "$withRoot" == "sukisu" ]]; then
+            if [[ "$withKPM" == "true" ]]; then
+              echo -e 'CONFIG_KPM=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+            fi
+            echo -e 'CONFIG_KSU_MANUAL_HOOK=y' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          elif [[ "$withRoot" == "ksun" ]]; then
+            echo -e 'CONFIG_KSU_WITH_KPROBES=n' >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          fi
+
+          cat arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+
+          SUSFS_BRANCH=main
+
+          git clone --recursive -j $(nproc) --branch $SUSFS_BRANCH https://x-access-token:${{ secrets.GH_PAT }}@github.com/cvnertnc/susfs4ksu-begonia SUSFS
+
+          SUSFS_REF=$(git -C SUSFS rev-parse --short HEAD)
+          echo -e "SUSFS_REF=$SUSFS_REF" >> $GITHUB_OUTPUT
+          echo -e "SUSFS_BRANCH=$SUSFS_BRANCH" >> $GITHUB_OUTPUT
+
+          if [[ "$KNAME" == "astera" || "$KNAME" == "nova" ]]; then
+            patch -p1 < SUSFS/kernel_patches/0001-standard-ksu-hook_1.patch
+          else
+            patch -p1 < SUSFS/kernel_patches/0001-standard-ksu-hook_2.patch
+          fi
 
       - name: "🥷 Add SUSFS patches"
         id: add-susfs-patches
         working-directory: ${{ env.KERNEL_NAME }}
-        if: ${{ (env.withRoot == 'ksu' || env.withRoot == 'sukisu' || env.withRoot == 'ksun') && env.withSUSFS == 'true' }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
-          DEFCONFIG_NAME: ${{ env.DEFCONFIG_NAME }}
-          GH_PAT: ${{ secrets.GH_PAT }}
-          GITHUB_OUTPUT: ${{ github.output_path }}
-          withRoot: ${{ env.withRoot }}
-          withSUSFS: ${{ env.withSUSFS }}
-          whichSUSFS: ${{ matrix.repos.whichSUSFS }}
-          KNAME: ${{ env.KNAME }}
+        if: ${{ (env.withRoot == 'ksu' || env.withRoot == 'sukisu' || env.withRoot == 'ksun') && env.withSUSFS == 'true' }}
         run: |
-          BKB_YML=releases
-          chmod +x BKB/kernel_patches/bkb/$BKB_YML/add_susfs_patches.sh
-          ./BKB/kernel_patches/bkb/$BKB_YML/add_susfs_patches.sh
+
+          if [ -d "./SUSFS" ]; then
+            rm -rf "./SUSFS"
+          fi
+
+          SUSFS_BRANCH=main
+
+          git clone --recursive -j $(nproc) --branch $SUSFS_BRANCH https://x-access-token:${{ secrets.GH_PAT }}@github.com/cvnertnc/susfs4ksu-begonia SUSFS
+
+          SUSFS_REF=$(git -C SUSFS rev-parse --short HEAD)
+          echo -e "SUSFS_REF=$SUSFS_REF" >> $GITHUB_OUTPUT
+          echo -e "SUSFS_BRANCH=$SUSFS_BRANCH" >> $GITHUB_OUTPUT
+
+          cp -v SUSFS/kernel_patches/${{ matrix.repos.whichSUSFS }}/fs/* fs/
+          cp -v SUSFS/kernel_patches/${{ matrix.repos.whichSUSFS }}/include/linux/* include/linux/
+
+          if [[ "$withRoot" == "ksun" ]]; then
+            patch -d KernelSU -p1 < SUSFS/kernel_patches/${{ matrix.repos.whichSUSFS }}/KernelSU/10_enable_susfs_for_ksun.patch
+          else
+            rm -rf "./KernelSU"
+            rm -rf "./drivers/kernelsu"
+            if [[ "$withRoot" == "ksu" ]]; then
+              curl -LSs "https://raw.githubusercontent.com/backslashxx/KernelSU/master/kernel/setup.sh" | bash -s 12104+155
+            else
+              if [[ "$whichSUSFS" == "157" ]]; then
+                curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-1.5.7
+              else
+                curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-main
+              fi
+            fi
+          fi
+
+          if [[ "$KNAME" == "nova" || "$KNAME" == "power" ]]; then
+            patch -p1 < SUSFS/kernel_patches/${{ matrix.repos.whichSUSFS }}/50_add_susfs_in_kernel-4.14_2.patch
+          else
+            patch -p1 < SUSFS/kernel_patches/${{ matrix.repos.whichSUSFS }}/50_add_susfs_in_kernel-4.14_1.patch
+          fi
+
+          echo -e "#Susfs4ksu" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          echo -e "CONFIG_KSU_SUSFS=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          echo -e "CONFIG_KSU_SUSFS_HAS_MAGIC_MOUNT=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          echo -e "CONFIG_KSU_SUSFS_SUS_PATH=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          echo -e "CONFIG_KSU_SUSFS_SUS_MOUNT=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          echo -e "CONFIG_KSU_SUSFS_SUS_KSTAT=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          echo -e "CONFIG_KSU_SUSFS_SUS_OVERLAYFS=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          echo -e "CONFIG_KSU_SUSFS_TRY_UMOUNT=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          echo -e "CONFIG_KSU_SUSFS_SPOOF_UNAME=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          echo -e "CONFIG_KSU_SUSFS_ENABLE_LOG=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          echo -e "CONFIG_KSU_SUSFS_HIDE_KSU_SUSFS_SYMBOLS=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          echo -e "CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          echo -e "CONFIG_KSU_SUSFS_OPEN_REDIRECT=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          echo -e "CONFIG_KSU_SUSFS_AUTO_ADD_SUS_KSU_DEFAULT_MOUNT=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          echo -e "CONFIG_KSU_SUSFS_AUTO_ADD_SUS_BIND_MOUNT=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          echo -e "CONFIG_KSU_SUSFS_AUTO_ADD_TRY_UMOUNT_FOR_BIND_MOUNT=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          echo -e "#Mountify" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          echo -e "CONFIG_OVERLAY_FS=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+          echo -e "CONFIG_TMPFS_XATTR=y" >> arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
+
+          cat arch/${{ env.arch }}/configs/${{ env.DEFCONFIG_NAME }}
 
       - name: "👍 Make defconfig"
         working-directory: ${{ env.KERNEL_NAME }}
@@ -296,14 +383,25 @@ jobs:
       - name: "☯️ KPM Injection"
         id: kpm-inject
         working-directory: ${{ env.KERNEL_NAME }}
-        if: ${{ env.withRoot == 'sukisu' && env.withKPM == 'true' }}
         env:
           arch: ${{ steps.generate-args.outputs.ARCH }}
-          OUT_DIR: ${{ env.OUT_DIR }}
+        if: ${{ env.withRoot == 'sukisu' && env.withKPM == 'true' }}
         run: |
-          BKB_YML=releases
-          chmod +x BKB/kernel_patches/bkb/$BKB_YML/kpm_injection.sh
-          ./BKB/kernel_patches/bkb/$BKB_YML/kpm_injection.sh
+          mkdir ~/SukiSUPatch
+          cd ~/SukiSUPatch
+          TAG=$(curl -s https://api.github.com/repos/SukiSU-Ultra/SukiSU_KernelPatch_patch/releases | \
+            jq -r 'map(select(.prerelease)) | first | .tag_name')
+          echo "Latest tag is: $TAG"
+          curl -Ls -o patch_linux "https://github.com/SukiSU-Ultra/SukiSU_KernelPatch_patch/releases/download/$TAG/patch_linux"
+          chmod +x patch_linux
+          mv ${{ env.OUT_DIR }}/arch/${{ env.arch }}/boot/Image ~/SukiSUPatch/Image
+          rm -rf ${{ env.OUT_DIR }}/arch/${{ env.arch }}/boot/Image.gz
+          ./patch_linux
+          rm -rf ./Image
+          mv -f oImage Image
+          gzip -k Image
+          mv ~/SukiSUPatch/Image.gz ${{ env.OUT_DIR }}/arch/${{ env.arch }}/boot/Image.gz
+          cd ..
 
       - name: "❤️ Pack AnyKernel3.zip"
         if: ${{ env.useAnykernel == 'true' }}
@@ -338,7 +436,7 @@ jobs:
           prerelease: false
           draft: false
           generate_release_notes: false
-          body: "Astera Kernel by [MrErenK](https://github.com/MrErenK)\nNova Kernel by [Wahid7852](https://github.com/Wahid7852)\nPower kernel By [Saikrishna1504](https://github.com/Saikrishna1504)\nBuild with Github by [zi00duck](https://github.com/zi00duck)\nAll Linux kernel patched with [KernelSU](https://github.com/backslashxx/KernelSU), [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) and [SukiSU-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) + [SUSFS](https://gitlab.com/simonpunk/susfs4ksu) for Xiaomi Redmi Note 8 Pro (begonia).\n\n**Installation:**\n1. Flash the kernel from this release.\n2. Download and install the Manager\n\nKernelSU:\n> [![Stable Version](https://img.shields.io/github/v/release/backslashxx/KernelSU?label=Release&logo=github)](https://github.com/backslashxx/KernelSU/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/backslashxx/KernelSU/workflows/build-manager/master/manager)\n\nKernelSU Next:\n> [![Stable Version](https://img.shields.io/github/v/release/KernelSU-Next/KernelSU-Next?label=Release&logo=github)](https://github.com/KernelSU-Next/KernelSU-Next/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager-ci/next/Manager)\n\nSukiSU-Ultra:\n> [![Stable Version](https://img.shields.io/github/v/release/SukiSU-Ultra/SukiSU-Ultra?label=Release&logo=github)](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/SukiSU-Ultra/SukiSU-Ultra/workflows/build-manager/main/manager)\n\n3. Download and install the SUSFS Module:\n> [![Stable Version](https://img.shields.io/github/v/release/sidex15/susfs4ksu-module?label=Release&logo=github)](https://github.com/sidex15/susfs4ksu-module/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)\n\n4. Download and install Mountify Module [![Mountify Module](https://img.shields.io/github/v/release/backslashxx/mountify?label=Release&logo=github)](https://github.com/backslashxx/mountify/releases/latest)"
+          body: "Astera Kernel by [MrErenK](https://github.com/MrErenK)\nNova Kernel by [Wahid7852](https://github.com/Wahid7852)\nPower kernel By [Saikrishna1504](https://github.com/Saikrishna1504)\nBuild with Github by [cvnertnc](https://github.com/cvnertnc)\nAll Linux kernel patched with [KernelSU](https://github.com/backslashxx/KernelSU), [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) and [SukiSU-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) + [SUSFS](https://gitlab.com/simonpunk/susfs4ksu) for Xiaomi Redmi Note 8 Pro (begonia).\n\n**Installation:**\n1. Flash the kernel from this release.\n2. Download and install the Manager\n\nKernelSU:\n> [![Stable Version](https://img.shields.io/github/v/release/backslashxx/KernelSU?label=Release&logo=github)](https://github.com/backslashxx/KernelSU/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/backslashxx/KernelSU/workflows/build-manager/master/manager)\n\nKernelSU Next:\n> [![Stable Version](https://img.shields.io/github/v/release/KernelSU-Next/KernelSU-Next?label=Release&logo=github)](https://github.com/KernelSU-Next/KernelSU-Next/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager-ci/next/Manager)\n\nSukiSU-Ultra:\n> [![Stable Version](https://img.shields.io/github/v/release/SukiSU-Ultra/SukiSU-Ultra?label=Release&logo=github)](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/SukiSU-Ultra/SukiSU-Ultra/workflows/build-manager/main/manager)\n\n3. Download and install the SUSFS Module:\n> [![Stable Version](https://img.shields.io/github/v/release/sidex15/susfs4ksu-module?label=Release&logo=github)](https://github.com/sidex15/susfs4ksu-module/releases/latest) [![Nightly Version](https://img.shields.io/badge/Nightly%20Release-gray?logo=hackthebox&logoColor=fff)](https://nightly.link/sidex15/susfs4ksu-module/workflows/build/v1.5.2+)\n\n4. Download and install Mountify Module [![Mountify Module](https://img.shields.io/github/v/release/backslashxx/mountify?label=Release&logo=github)](https://github.com/backslashxx/mountify/releases/latest)"
           files: "${{ env.WORKSPACE }}/${{ env.KERNEL_DEVICE }}-${{ steps.integrate-kernelsu-next.outputs.ROOT_VERSION }}-${{ env.KERNEL_NAME }}-${{ env.builddate }}.zip"
           fail_on_unmatched_files: true
           preserve_order: true
